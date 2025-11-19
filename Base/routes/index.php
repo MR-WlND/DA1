@@ -6,4 +6,5 @@ match ($action) {
     '/'         => (new HomeController)->index(),
     '/admin/bookings' => (new BookingController($db))->index(),
     '/admin/bookings' => (new BookingController($db))->update(),
+    '/admin/finance' => (new FinanceController($db))->index(),
 };
