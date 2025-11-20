@@ -20,7 +20,7 @@ class AuthController
 
             switch ($user['role']) {
                 case 'admin':
-                    header("Location: index.php?action=adminDashboard");
+                    header("Location: index.php?action=dashboard");
                     break;
                 default:
                     header("Location: index.php?action=guideSchedule");

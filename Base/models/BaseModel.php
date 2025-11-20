@@ -23,4 +23,8 @@ class BaseModel
     {
         $this->pdo = null;
     }
+    public function getConnection()
+    {
+        return $this->pdo;
+}
 }

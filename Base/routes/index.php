@@ -9,6 +9,20 @@ match ($action) {
     'logout'            => (new AuthController)->logout(),
 
     // Dashboard theo vai trò
-    'adminDashboard'    => (new TourCoreController)->dashboard(),
-    'guideSchedule'     => (new GuideViewController)->schedule(),
+    'dashboard'         => (new DashboardController)->index(),
+
+    // User Management 
+    'list-user'         => (new UsersController)->listUser(),
+    'delete-user'       => (new UsersController)->deleteUser(),
+    'create-user'       => (new UsersController)->createUser(),
+    'update-user'       => (new UsersController)->updateUser(),
+    'detail-user'       => (new UsersController)->detailUser(),
+
+    // Tour Management
+    'list-tour'         => (new TourController)->listTour(),
+    'create-tour'       => (new TourController)->createTour(),
+    'update-tour'       => (new TourController)->updateTour(),
+    'delete-tour'       => (new TourController)->deleteTour(),
+    'detail-tour'       => (new TourController)->detailTour(),
+
 };

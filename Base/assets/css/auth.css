@@ -16,7 +16,7 @@ body {
   border: none;
   background: rgba(0, 0, 0, 0.5);
   color: #f9f9f9;
-  width: 300px;
+  width: 320px;
   font-family: "roboto", sans-serif;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
 }
@@ -94,4 +94,56 @@ body {
 }
 .show {
   content: url(../uploads/view.png);
+}
+/* OPTIONS (Remember + Forgot password) */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -10px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* Remember me */
+.remember-me {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+  color: #f9f9f9;
+}
+
+.remember-me input {
+  accent-color: orange;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* Forgot password */
+.forgot-password {
+  color: orange;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+  color: #ffbb55;
+}
+
+/* Admin contact link */
+.admin-contact {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #f9f9f9;
+}
+
+.admin-contact a {
+  color: orange;
+  text-decoration: none;
 }
