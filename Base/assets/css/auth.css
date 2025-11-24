@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #333;
+  background: url("../uploads/background.webp") no-repeat center center/cover;
+}
+.login-form {
+  padding: 3rem 2rem;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f9f9f9;
+  width: 320px;
+  font-family: "roboto", sans-serif;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+}
+.title {
+  display: inline-block;
+  position: relative;
+  color: #f9f9f9;
+  font-size: 1.5rem;
+  font-weight: 100;
+  text-transform: uppercase;
+  margin-bottom: 4rem;
+}
+.title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 4px;
+  background-color: orange;
+}
+.field {
+  font-size: 1.2rem;
+  color: #f9f9f9;
+  padding: 0.2rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #f9f9f9;
+  background: transparent;
+}
+.button {
+  display: block;
+  text-transform: uppercase;
+  margin: 2rem auto 1rem;
+  padding: 0.5rem 4rem;
+  color: #f9f9f9;
+  font-size: 1.2rem;
+  background: orange;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+.box {
+  position: relative;
+}
+.box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #f9f9f9;
+  font-size: 1rem;
+  transition: 0.5s;
+}
+.field:focus ~ label,
+.field:valid ~ label {
+  top: -15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: orange;
+}
+.hide,
+.show {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  appearance: none;
+  filter: brightness(0) invert(1);
+  cursor: pointer;
+}
+.hide {
+  content: url(../uploads/hide.png);
+}
+.show {
+  content: url(../uploads/view.png);
+}
+/* OPTIONS (Remember + Forgot password) */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -10px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* Remember me */
+.remember-me {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+  color: #f9f9f9;
+}
+
+.remember-me input {
+  accent-color: orange;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* Forgot password */
+.forgot-password {
+  color: orange;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+  color: #ffbb55;
+}
+
+/* Admin contact link */
+.admin-contact {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #f9f9f9;
+}
+
+.admin-contact a {
+  color: orange;
+  text-decoration: none;
+}
