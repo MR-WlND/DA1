@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th10 11, 2025 lúc 02:56 PM
+-- Thời gian đã tạo: Th10 22, 2025 lúc 04:59 PM
 -- Phiên bản máy phục vụ: 8.4.3
 -- Phiên bản PHP: 8.3.16
 
@@ -81,6 +81,17 @@ CREATE TABLE `destinations` (
   `country` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `destinations`
+--
+
+INSERT INTO `destinations` (`id`, `name`, `country`) VALUES
+(1, 'Sapa', 'Việt Nam'),
+(2, 'Hội An', 'Việt Nam'),
+(3, 'Phú Quốc', 'Việt Nam'),
+(4, 'Seoul', 'Hàn Quốc'),
+(5, 'Tokyo', 'Nhật Bản');
+
 -- --------------------------------------------------------
 
 --
@@ -137,8 +148,41 @@ CREATE TABLE `tours` (
   `cancellation_policy` text COMMENT 'Chính sách hủy tour',
   `destination_id` int NOT NULL,
   `image` varchar(255) DEFAULT NULL COMMENT 'Đường dẫn ảnh đại diện',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `category_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `tours`
+--
+
+INSERT INTO `tours` (`id`, `name`, `tour_type`, `description`, `base_price`, `cancellation_policy`, `destination_id`, `image`, `created_at`, `category_id`) VALUES
+(1, 'Tour Hà Nội - Sapa 3 ngày', 'Nội địa', 'Khám phá Sapa với núi non hùng vĩ, bản làng truyền thống.', 3500000.00, 'Hủy trước 7 ngày miễn phí, sau đó mất 50%', 1, 'images/sapa.jpg', '2025-11-20 19:55:42', NULL),
+(2, 'Tour Đà Nẵng - Hội An 4 ngày', 'Nội địa', 'Tham quan Đà Nẵng và phố cổ Hội An, trải nghiệm ẩm thực địa phương.', 4200000.00, 'Hủy trước 5 ngày miễn phí, sau đó mất 30%', 2, 'images/hoian.jpg', '2025-11-20 19:55:42', NULL),
+(3, 'Tour Phú Quốc 3 ngày', 'Nội địa', 'Thư giãn tại Phú Quốc, khám phá biển đảo và hải sản tươi ngon.', 3800000.00, 'Hủy trước 7 ngày miễn phí, sau đó mất 50%', 3, 'images/phuquoc.jpg', '2025-11-20 19:55:42', NULL),
+(4, 'Tour Hàn Quốc 5 ngày', 'Quốc tế', 'Khám phá Seoul, Busan, trải nghiệm văn hóa và ẩm thực Hàn Quốc.', 12000000.00, 'Hủy trước 14 ngày miễn phí, sau đó mất 70%', 4, 'images/korea.jpg', '2025-11-20 19:55:42', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tour_categories`
+--
+
+CREATE TABLE `tour_categories` (
+  `id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `tour_categories`
+--
+
+INSERT INTO `tour_categories` (`id`, `name`, `description`, `created_at`) VALUES
+(1, 'Tour Khám phá (Exploration)', 'Các tour tập trung vào địa điểm hoang dã, tự nhiên.', '2025-11-22 14:21:05'),
+(2, 'Tour Nghỉ dưỡng (Relaxation)', 'Các tour nghỉ ngơi tại resort, bãi biển.', '2025-11-22 14:21:05'),
+(3, 'Tour Văn hóa & Lịch sử', 'Các tour tham quan di tích, bảo tàng.', '2025-11-22 14:21:05');
 
 -- --------------------------------------------------------
 
@@ -193,8 +237,22 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `name`, `phone`, `role`, `hdv_experience`, `hdv_languages`, `created_at`) VALUES
-(1, 'longadmin@gmail.com', '1bbd886460827015e5d605ed44252251', 'long', '1111111111', 'admin', NULL, NULL, '2025-11-11 14:54:31'),
-(2, 'a@gmail.com', '11111111', 'a', '1234567890', 'guide', 3, 'english', '2025-11-21 14:54:34');
+(1, 'longadmin@gmail.com', 'd41d8cd98f00b204e9800998ecf8427e', 'long', '0000000001', 'admin', NULL, NULL, '2025-11-11 14:54:31'),
+(2, 'admin@tour.vn', '0192023a7bbd73250516f069df18b500', 'Nguyễn Thị Quản Lý', '0901234567', 'admin', NULL, NULL, '2025-11-20 05:54:49'),
+(3, 'admin3@example.com', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Văn C', '0903333333', 'admin', NULL, NULL, '2025-11-20 05:55:48'),
+(4, 'admin4@example.com', 'e10adc3949ba59abbe56e057f20f883e', 'Phạm Thị D', '0904444444', 'admin', NULL, NULL, '2025-11-20 05:55:48'),
+(5, 'admin5@example.com', 'd41d8cd98f00b204e9800998ecf8427e', 'Hoàng Văn E', '0405555554', 'admin', NULL, NULL, '2025-11-20 05:55:48'),
+(6, 'customer1@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Vũ Đình Khách', '0916666666', 'customer', NULL, NULL, '2025-11-20 05:55:48'),
+(7, 'customer2@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Thị Hoa', '0917777777', 'customer', NULL, NULL, '2025-11-20 05:55:48'),
+(8, 'customer3@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Đinh Văn Nam', '0918888888', 'customer', NULL, NULL, '2025-11-20 05:55:48'),
+(9, 'customer4@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Bùi Thanh Tú', '0919999999', 'customer', NULL, NULL, '2025-11-20 05:55:48'),
+(10, 'customer5@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Lý Ngọc Hân', '0910000000', 'customer', NULL, NULL, '2025-11-20 05:55:48'),
+(11, 'guide1@tour.com', '7fa8282ad93047a4d6fe6111c93b308a', 'Phan Hướng Đạo', '0981111111', 'guide', 5, 'Anh, Pháp', '2025-11-20 05:55:48'),
+(12, 'guide2@tour.com', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Thị Trinh', '0982222222', 'guide', 2, 'Việt, Anh', '2025-11-20 05:55:48'),
+(13, 'guide3@tour.com', 'e10adc3949ba59abbe56e057f20f883e', 'Hoàng Văn Minh', '0983333333', 'guide', 10, 'Anh, Đức, Tây Ban Nha', '2025-11-20 05:55:48'),
+(14, 'guide4@tour.com', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Quốc Tuấn', '0984444444', 'guide', 7, 'Anh, Trung', '2025-11-20 05:55:48'),
+(15, 'guide5@tour.com', 'e10adc3949ba59abbe56e057f20f883e', 'Đoàn Thị Vân', '0985555555', 'guide', 3, 'Việt, Nhật', '2025-11-20 05:55:48'),
+(18, 'long16730z@gmail.com', 'bbb8aae57c104cda40c93843ad5e6db8', 'long', '1111111111', 'customer', NULL, NULL, '2025-11-21 00:41:46');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -256,7 +314,15 @@ ALTER TABLE `payments`
 --
 ALTER TABLE `tours`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_tours_destination` (`destination_id`);
+  ADD KEY `fk_tours_destination` (`destination_id`),
+  ADD KEY `fk_tour_category` (`category_id`);
+
+--
+-- Chỉ mục cho bảng `tour_categories`
+--
+ALTER TABLE `tour_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Chỉ mục cho bảng `tour_departures`
@@ -306,7 +372,7 @@ ALTER TABLE `departure_resources`
 -- AUTO_INCREMENT cho bảng `destinations`
 --
 ALTER TABLE `destinations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `financial_transactions`
@@ -330,7 +396,13 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT cho bảng `tours`
 --
 ALTER TABLE `tours`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT cho bảng `tour_categories`
+--
+ALTER TABLE `tour_categories`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `tour_departures`
@@ -348,7 +420,7 @@ ALTER TABLE `tour_logs`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -396,6 +468,7 @@ ALTER TABLE `payments`
 -- Các ràng buộc cho bảng `tours`
 --
 ALTER TABLE `tours`
+  ADD CONSTRAINT `fk_tour_category` FOREIGN KEY (`category_id`) REFERENCES `tour_categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_tours_destination` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --

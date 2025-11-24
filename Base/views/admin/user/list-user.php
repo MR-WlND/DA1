@@ -76,7 +76,7 @@
                             <td><span style="color: blue;"><?= $user['role'] ?></span></td>
                             <td>
                                 <a href="<?= BASE_URL ?>?action=update-user&id=<?= $user['id'] ?>" class="btn view">Sửa</a>
-                                <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>" onclick="return confirm('Xóa Admin?')" class="btn delete">Xóa</a>
+                                <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>" onclick="return confirm('Xóa Hướng dẫn viên?')" class="btn delete">Xóa</a>
                                 <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $user['id'] ?>" class="btn edit">Xem</a>
                             </td>
                         </tr>
@@ -116,7 +116,7 @@
                             <td><?= $user['role'] ?></td>
                             <td>
                                 <a href="<?= BASE_URL ?>?action=update-user&id=<?= $user['id'] ?>" class="btn view">Sửa</a>
-                                <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>" onclick="return confirm('Xóa Admin?')" class="btn delete">Xóa</a>
+                                <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>" onclick="return confirm('Xóa khách hàng?')" class="btn delete">Xóa</a>
                                 <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $user['id'] ?>" class="btn edit">Xem</a>
                             </td>
                         </tr>

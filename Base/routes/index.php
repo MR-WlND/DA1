@@ -10,6 +10,7 @@ match ($action) {
 
     // Dashboard theo vai trò
     'dashboard'         => (new DashboardController)->index(),
+    'guideSchedule'     => (new GuideViewController)->schedule(),
 
     // User Management 
     'list-user'         => (new UsersController)->listUser(),
@@ -25,4 +26,15 @@ match ($action) {
     'delete-tour'       => (new TourController)->deleteTour(),
     'detail-tour'       => (new TourController)->detailTour(),
 
+    // Categories Management
+    'list-category'         => (new CategoryController)->listCategory(),
+    'create-category'       => (new CategoryController)->createCategory(),
+    'update-category'       => (new CategoryController)->updateCategory(),
+    'delete-category'       => (new CategoryController)->deleteCategory(),
+
+    // Customer Management
+    'list-customer'         => (new CustomerController)->listCustomer(),
+    'create-customer'       => (new CustomerController)->createCustomer(),
+    'update-customer'       => (new CustomerController)->updateCustomer(),
+    'delete-customer'       => (new CustomerController)->deleteCustomer(),
 };
