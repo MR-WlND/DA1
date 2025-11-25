@@ -10,54 +10,83 @@ class TourController
     }
     public function createTour()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $destinationModel = new DestinationModel();
+            $listDestinations = $destinationModel->getList();
+
+            $categoryModel = new CategoryModel();
+            $listCategories = $categoryModel->getList();
+            // GET → hiện form
+            $view = "admin/tour/create-tour";
+            require_once PATH_VIEW . 'main.php';
+        } else {
+            // POST → xử lý dữ liệu
+            $file = $_FILES['image'] ?? null;
+            $path = '';
+            if ($file && $file['error'] === UPLOAD_ERR_OK) {
+                $path = upload_file('tours', $file);
+            }
+
             $tourModel = new TourModel();
             $tourModel->insert(
-                $_POST['name'],
-                $_POST['tour_type'],
-                $_POST['description'],
-                $_POST['base_price'],
-                $_POST['cancellation_policy'],
-                $_POST['destination_id'],
-                $_POST['image'] ?? null
+                $_POST['name'] ?? '',
+                $_POST['tour_type'] ?? '',
+                $_POST['description'] ?? '',
+                $_POST['base_price'] ?? 0,
+                $_POST['cancellation_policy'] ?? '',
+                $_POST['destination_id'] ?? null,
+                $_POST['category_id'] ?? null,
+                $path,              
             );
+
             header('Location:' . BASE_URL . '?action=list-tour');
             exit();
         }
-        $view = "admin/tour/create-tour";
-        require_once PATH_VIEW . 'main.php';
     }
+
     public function updateTour()
     {
-        $id = $_GET['id'] ?? null;
-        if (!$id) {
-            header('Location: ' . BASE_URL . '?action=list-tour');
-            exit();
-        }
-
         $tourModel = new TourModel();
+        $tour = $tourModel->getOne($_GET['id']);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $destinationModel = new DestinationModel();
+            $listDestinations = $destinationModel->getList();
+
+            $categoryModel = new CategoryModel();
+            $listCategories = $categoryModel->getList();
+            // GET → hiện form với dữ liệu cũ
+            $view = "admin/tour/update-tour";
+            require_once PATH_VIEW . 'main.php';
+        } else {
+            // POST → xử lý upload file
+            $file = $_FILES['image'] ?? null;
+            $path = $tour['image']; // giữ ảnh cũ
+            if ($file && $file['error'] === UPLOAD_ERR_OK) {
+                // Xóa ảnh cũ nếu có
+                if (!empty($tour['image']) && file_exists(PATH_ASSETS_UPLOADS . 'tours/' . $tour['image'])) {
+                    unlink(PATH_ASSETS_UPLOADS . 'tours/' . $tour['image']);
+                }
+                // Upload ảnh mới
+                $path = upload_file('tours', $file);
+            }
+
+            // Cập nhật tour
             $tourModel->update(
-                $id,
-                $_POST['name'],
-                $_POST['tour_type'],
-                $_POST['description'],
-                $_POST['base_price'],
-                $_POST['cancellation_policy'],
-                $_POST['destination_id'],
-                $_POST['image']
+                $_GET['id'],
+                $_POST['name'] ?? '',
+                $_POST['tour_type'] ?? '',
+                $_POST['description'] ?? '',
+                $_POST['base_price'] ?? 0,
+                $_POST['cancellation_policy'] ?? '',
+                $_POST['destination_id'] ?? null,
+                $_POST['category_id'] ?? null,
+                $path,
             );
-            header('Location: ' . BASE_URL . '?action=list-tour');
-            exit();
-        }
 
-        $tour = $tourModel->getOne($id);
-        if (!$tour) {
-            header('Location: ' . BASE_URL . '?action=list-tour');
+            header('Location:' . BASE_URL . '?action=list-tour');
             exit();
         }
-        require_once PATH_VIEW . 'admin/tour/update-tour.php';
     }
     public function detailTour()
     {
@@ -79,9 +108,14 @@ class TourController
     }
     public function deleteTour()
     {
-        $tour = new TourModel();
-        $tour->delete($_GET['id']);
-        header('Location: index.php?action=list-tour');
+        $tourModel = new TourModel();
+        $tour = $tourModel->getOne($_GET['id']); // Lấy thông tin tour trước khi xóa
+
+        if (isset($tour['image']) != "") {
+            unlink(PATH_ASSETS_UPLOADS . '/' . $tour['image']);
+        }
+        $tourModel->delete($_GET['id']);
+        header('Location:' . BASE_URL . '?action=list-tour');
         exit();
     }
 }

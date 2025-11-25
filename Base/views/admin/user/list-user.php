@@ -23,11 +23,12 @@
             <tbody>
                 <?php
                 // Lọc Admin trực tiếp trong View (Cách 2)
+                $index = 1;
                 foreach ($listUser as $user):
                     if ($user['role'] == 'admin'):
                 ?>
                         <tr>
-                            <td><?= $user['id'] ?></td>
+                            <td><?= $index++ ?></td>
                             <td><?= $user['name'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><?= $user['phone'] ?></td>
@@ -63,12 +64,14 @@
                 </tr>
             </thead>
             <tbody>
+                
                 <?php
+                $index = 1;
                 foreach ($listUser as $user):
                     if ($user['role'] == 'guide'):
                 ?>
                         <tr>
-                            <td><?= $user['id'] ?></td>
+                            <td><?= $index++ ?></td>
                             <td><?= $user['name'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><?= $user['hdv_experience'] ?? 'N/A' ?></td>
@@ -105,11 +108,12 @@
             </thead>
             <tbody>
                 <?php
+                $index = 1;
                 foreach ($listUser as $user):
                     if ($user['role'] == 'customer'):
                 ?>
                         <tr>
-                            <td><?= $user['id'] ?></td>
+                            <td><?= $index++ ?></td>
                             <td><?= $user['name'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><?= $user['phone'] ?></td>

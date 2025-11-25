@@ -29,7 +29,9 @@
             </div>
             <div class="user">
                <span><?= $_SESSION['user']['name'] ?? 'Admin' ?></span>
-               <div class="avatar"><i class="fa-regular fa-user"></i></div>
+               <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $_SESSION['user']['id'] ?>">
+                  <div class="avatar"><i class="fa-regular fa-user"></i></div>
+               </a>
             </div>
          </div>
          <!-- SIDEBAR -->
@@ -45,7 +47,7 @@
                   class="<?= ($action == 'dashboard') ? 'active' : '' ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
 
                <a href="<?= BASE_URL ?>?action=list-category"
-                  class="<?= ($action == 'list-category') ? 'active' : '' ?>"><i class="fas fa-tags"></i> Quản lý danh mục</a>
+                  class="<?= ($action == 'list-category') ? 'active' : '' ?>"><i class="fas fa-tags"></i> Danh mục Tour</a>
 
                <a href="<?= BASE_URL ?>?action=list-tour"
                   class="<?= ($action == 'list-tour') ? 'active' : '' ?>"><i class="fas fa-suitcase-rolling"></i> Quản lý Tour</a>

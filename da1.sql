@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th10 22, 2025 lúc 04:59 PM
+-- Thời gian đã tạo: Th10 24, 2025 lúc 01:17 PM
 -- Phiên bản máy phục vụ: 8.4.3
 -- Phiên bản PHP: 8.3.16
 
@@ -139,18 +139,18 @@ CREATE TABLE `payments` (
 -- Cấu trúc bảng cho bảng `tours`
 --
 
-CREATE TABLE `tours` (
-  `id` int NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `tour_type` enum('Nội địa','Quốc tế') NOT NULL,
-  `description` text,
-  `base_price` decimal(10,2) NOT NULL COMMENT 'Giá cơ bản trước khuyến mãi',
-  `cancellation_policy` text COMMENT 'Chính sách hủy tour',
-  `destination_id` int NOT NULL,
-  `image` varchar(255) DEFAULT NULL COMMENT 'Đường dẫn ảnh đại diện',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `category_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CREATE TABLE `tours` (
+    `id` int NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `tour_type` enum('Nội địa','Quốc tế') NOT NULL,
+    `description` text,
+    `base_price` decimal(10,2) NOT NULL COMMENT 'Giá cơ bản trước khuyến mãi',
+    `cancellation_policy` text COMMENT 'Chính sách hủy tour',
+    `destination_id` int NOT NULL,
+    `image` varchar(255) DEFAULT NULL COMMENT 'Đường dẫn ảnh đại diện',
+    `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    `category_id` int DEFAULT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tours`
@@ -396,13 +396,13 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT cho bảng `tours`
 --
 ALTER TABLE `tours`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `tour_categories`
 --
 ALTER TABLE `tour_categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `tour_departures`
