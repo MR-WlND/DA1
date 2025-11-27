@@ -55,8 +55,7 @@
                     <th>ID</th>
                     <th>Tên</th>
                     <th>Email</th>
-                    <th>Kinh nghiệm (Năm)</th>
-                    <th>Ngôn ngữ</th>
+                    <th>Số điện thoại</th>
                     <th>Vai trò</th>
                     <th>Hành động</th>
                 </tr>
@@ -72,8 +71,7 @@
                             <td><?= $index++ ?></td>
                             <td><?= $user['name'] ?></td>
                             <td><?= $user['email'] ?></td>
-                            <td><?= $user['hdv_experience'] ?? 'N/A' ?></td>
-                            <td><?= $user['hdv_languages'] ?? 'Không rõ' ?></td>
+                            <td><?= $user['phone'] ?></td>
                             <td><span style="color: blue;"><?= $user['role'] ?></span></td>
                             <td>
                                 <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $user['id'] ?>" class="btn edit">Xem</a>

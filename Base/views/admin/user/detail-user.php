@@ -1,7 +1,6 @@
         <?php include 'views/layout/header.php'; ?>
         <?php $action = $_GET['action'] ?? 'dashboard'; ?>
 
-
             <div class="main">
                 <h2>Chi tiết người dùng: <?= $user['name'] ?></h2>
 
@@ -26,16 +25,6 @@
                         <div class="detail-label">Vai trò:</div>
                         <div class="detail-value"><?= $user['role'] ?></div>
                     </div>
-                    <?php if ($user['role'] == 'guide'): ?>
-                        <div class="detail-row">
-                            <div class="detail-label">Kinh nghiệm (năm):</div>
-                            <div class="detail-value"><?= $user['hdv_experience'] ?? 'Chưa cập nhật' ?></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Ngôn ngữ:</div>
-                            <div class="detail-value"><?= $user['hdv_languages'] ?? 'Chưa cập nhật' ?></div>
-                        </div>
-                    <?php endif; ?>
                     <div class="detail-row">
                         <div class="detail-label">Ngày tạo:</div>
                             <div class="detail-value"><?= date('d/m/Y H:i:s', strtotime($user['created_at'])) ?></div>

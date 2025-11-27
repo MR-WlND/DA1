@@ -8,5 +8,4 @@ document.querySelectorAll('.drop-btn').forEach(btn => {
     });
 });
 </script>
-
 </html>

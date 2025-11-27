@@ -91,9 +91,8 @@ class GuideController
     {
         $guides = new GuideModel();
         $data = $guides->getOne($_GET['id']);
-
-        if (!empty($data['photo_url']) && file_exists(PATH_ASSETS_UPLOADS . '/avatar/' . $data['photo_url'])) {
-            unlink(PATH_ASSETS_UPLOADS . '/avatar/' . $data['photo_url']);
+        if (isset($data['photo_url']) != "") {
+            unlink(PATH_ASSETS_UPLOADS . $data['photo_url']);
         }
 
         $guides->delete($_GET['id']);
