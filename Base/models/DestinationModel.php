@@ -1,28 +1,52 @@
 <?php
-class DestinationModel
+class DestinationModel extends BaseModel
 {
-    public $db;
+    protected $table = "destinations";
 
-    public function __construct()
-    {
-        // Lấy kết nối PDO từ BaseModel
-        $baseModel = new BaseModel();
-        $this->db = $baseModel->getConnection();
-    }
-
-    // Lấy tất cả destinations
     public function getList()
     {
-        $sql = "SELECT * FROM destinations";
-        $stmt = $this->db->prepare($sql);
+        $sql = "SELECT * FROM destinations ORDER BY id ASC";
+        $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
     public function getOne($id)
     {
         $sql = "SELECT * FROM destinations WHERE id = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([':id' => $id]);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([":id" => $id]);
         return $stmt->fetch();
     }
+
+    public function insert($name, $country, $type)
+    {
+        $sql = "INSERT INTO destinations (name, country, type) VALUES (:name, :country, :type)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":name" => $name,
+            ":country" => $country,
+            ":type" => $type
+        ]);
+    }
+
+    public function update($id, $name, $country, $type)
+    {
+        $sql = "UPDATE destinations SET name = :name, country = :country, type = :type WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":id" => $id,
+            ":name" => $name,
+            ":country" => $country,
+            ":type" => $type
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $sql = "DELETE FROM destinations WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([":id" => $id]);
+    }
 }
+?>

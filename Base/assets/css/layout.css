@@ -1,8 +1,7 @@
 :root {
   --orange: linear-gradient(180deg, #4e54c8, #8f94fb);
   --orange-active: linear-gradient(180deg, #a5a9fa, #959aff);
-  
-  --orange-light: #4e54c8 ;
+  --orange-light: #4e54c8;
   --bg: #f9f9f9;
   --white: #ffffff;
   --text: #4e54c8;
@@ -11,106 +10,159 @@
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
   font-family: "Inter", sans-serif;
 }
+
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+  overflow-x: hidden;
 }
 
 /* SIDEBAR */
 .sidebar {
-  background: var(--orange);
-  padding: 10px 20px;
-  box-shadow: var(--shadow);
-  /* Cố định sidebar */
   position: fixed;
   top: 0;
   left: 0;
   width: 240px;
   height: 100vh;
-  z-index: 100; /* Đảm bảo sidebar luôn ở trên */
-  box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+  background: var(--orange);
+  padding: 20px 15px;
+  box-shadow: var(--shadow);
+  box-sizing: border-box;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .brand {
   font-size: 25px;
   font-weight: 700;
   color: var(--white);
-  margin-bottom: 15px; /* Giảm khoảng cách dưới một chút */
-  padding: 5px 0; /* Thêm khoảng đệm trên và dưới */
-  text-align: center; /* Căn giữa nội dung */
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .brand a {
-  text-decoration: none; /* Bỏ gạch chân của link */
-  color: inherit; /* Kế thừa màu cam từ class .brand */
+  text-decoration: none;
+  color: inherit;
 }
 
-.menu a {
+/* MENU */
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu a,
+.menu .drop-btn {
   display: block;
-  padding: 8px 17px;
-  margin-bottom: 8px;
+  padding: 10px 17px;
+  margin-top: 8px;
   text-decoration: none;
   border-radius: var(--radius);
   color: var(--muted);
   font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.menu a:hover {
+.menu a:hover,
+.menu .drop-btn:hover {
   background: var(--orange-light);
   color: #fff;
 }
 
-.menu .active {
+/* Active menu link */
+.menu a.active,
+.menu .dropdown.active > .drop-btn {
   background: var(--orange-active);
   color: #fff;
 }
 
+/* Dropdown container */
+.menu .dropdown {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2px;
+}
+
+.menu .drop-content {
+  display: none;
+  flex-direction: column;
+  margin-top: 2px;
+  margin-left: 18px;
+}
+
+.menu .dropdown.active .drop-content {
+  display: flex;
+}
+
+/* Submenu links */
+.drop-content a {
+  padding: 8px 17px 8px 25px; /* thụt vào */
+  font-size: 13px;
+  color: var(--muted);
+  border-radius: var(--radius);
+  transition: all 0.2s;
+}
+
+.drop-content a:hover {
+  color: #fff;
+  background: var(--orange-light);
+}
+
+.drop-content a.active-sub {
+  background: var(--orange-active);
+  color: #fff;
+  font-weight: 500;
+  border-left: 4px solid var(--white);
+}
+
 /* TOPBAR */
-.topBar { /* Giữ nguyên tên class .topBar như trong HTML của bạn */
+.topBar {
   background: var(--white);
-  padding: 11px 24px;
+  padding: 12px 24px;
   box-shadow: var(--shadow);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* Giữ topbar cố định khi cuộn */
   position: sticky;
   top: 0;
-  z-index: 99; /* Đảm bảo topbar nằm trên nội dung chính */
+  z-index: 99;
 }
 
 .main-content {
-  margin-left: 240px; /* Đẩy nội dung sang phải bằng chiều rộng của sidebar */
-  height: 100vh; /* Đảm bảo main-content có chiều cao để cuộn */
-  overflow-y: auto; /* Cho phép cuộn nội dung bên trong main-content */
+  margin-left: 240px;
+  height: 100vh;
 }
 
+/* Search input */
 .search {
-  position: relative; /* Để định vị icon bên trong */
+  position: relative;
   display: flex;
   align-items: center;
 }
 
 .search i {
-  position: absolute; /* Đặt icon lên trên input */
-  left: 12px; /* Khoảng cách từ lề trái */
-  color: #999; /* Màu xám cho icon */
+  position: absolute;
+  left: 12px;
+  color: #999;
   font-size: 14px;
 }
 
 .search input {
-  padding: 5px 14px 5px 35px; /* Tăng padding trái để không bị icon đè lên */
+  padding: 6px 14px 6px 35px;
   border-radius: var(--radius);
   border: 1px solid #dedede;
   width: 240px;
   transition: border-color 0.2s;
 }
+
 .search input:focus {
   outline: none;
   border-color: var(--orange-light);
 }
 
+/* User avatar */
 .user {
   display: flex;
   align-items: center;
@@ -125,38 +177,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #fff;
   font-weight: bold;
-  color: white;
 }
 
-/* MAIN */
+/* MAIN CONTENT */
 .main {
   padding: 26px;
-  overflow-y: auto;
 }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-}
-
-.card {
-  background: var(--white);
-  padding: 20px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.card h3 {
-  margin: 0 0 8px;
-  font-size: 15px;
-  color: var(--text);
-}
-
-.stat {
-  font-size: 26px;
-  font-weight: bold;
-  color: var(--orange);
-}
-

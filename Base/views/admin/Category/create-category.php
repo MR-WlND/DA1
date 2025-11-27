@@ -11,7 +11,6 @@
             <label for="description" class="form-label">Mô tả:</label>
             <textarea class="form-control" id="description" name="description" rows="3" placeholder="Nhập mô tả cho danh mục"></textarea>
         </div>
-        </div>
         <button type="submit" class="btn btn-nut">Thêm mới</button>
         <a href="<?= BASE_URL ?>?action=list-category" class="btn btn-danger">Quay lại</a>
     </form>

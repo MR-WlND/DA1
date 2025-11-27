@@ -27,14 +27,35 @@ match ($action) {
     'detail-tour'       => (new TourController)->detailTour(),
 
     // Categories Management
-    'list-category'         => (new CategoryController)->listCategory(),
-    'create-category'       => (new CategoryController)->createCategory(),
-    'update-category'       => (new CategoryController)->updateCategory(),
-    'delete-category'       => (new CategoryController)->deleteCategory(),
+    'list-category'   => (new CategoryController)->listCategory(),
+    'create-category' => (new CategoryController)->createCategory(),
+    'update-category' => (new CategoryController)->updateCategory(),
+    'delete-category' => (new CategoryController)->deleteCategory(),
 
-    // Customer Management
-    'list-customer'         => (new CustomerController)->listCustomer(),
-    'create-customer'       => (new CustomerController)->createCustomer(),
-    'update-customer'       => (new CustomerController)->updateCustomer(),
-    'delete-customer'       => (new CustomerController)->deleteCustomer(),
+
+    // Destination Management
+    'list-destination'         => (new DestinationController)->listDestination(),
+    'create-destination'       => (new DestinationController)->createDestination(),
+    'update-destination'       => (new DestinationController)->updateDestination(),
+    'delete-destination'       => (new DestinationController)->deleteDestination(),
+
+    // Departure Management
+    'list-departure'         =>(new DepartureController)->listDeparture(),
+    'create-departure'       => (new DepartureController)->createDeparture(),
+    'update-departure'       => (new DepartureController)->updateDeparture(),
+    'delete-departure'       => (new DepartureController)->deleteDeparture(),
+    'list-departure-tour'    => (new DepartureController)->listDepartureByTour(),
+
+    // Hotel Management
+    'list-hotel'         => (new HotelController)->listHotel(),
+    'create-hotel'       => (new HotelController)->createHotel(),
+    'update-hotel'       => (new HotelController)->updateHotel(),
+    'delete-hotel'       => (new HotelController)->deleteHotel(),
+
+    // Guide Management
+    'list-guide'         => (new GuideController)->listGuide(),
+    'create-guide'       => (new GuideController)->createGuide(),
+    'update-guide'       => (new GuideController)->updateGuide(),
+    'delete-guide'       => (new GuideController)->deleteGuide(),
+    'detail-guide'       => (new GuideController)->detailGuide(),
 };
