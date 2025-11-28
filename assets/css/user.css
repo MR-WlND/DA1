@@ -1,0 +1,250 @@
+.main h2 {
+  font-weight: 700; /* Tăng độ đậm cho tiêu đề */
+  margin-bottom: 1rem;
+  text-align: center; /* Căn giữa tiêu đề */
+}
+
+/* Bảng chính */
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: inherit;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Header */
+.table thead tr {
+    background: linear-gradient(180deg, #4e54c8, #8f94fb);
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.table thead th {
+    padding: 16px 12px;
+}
+
+/* Rows */
+.table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Cells */
+.table tbody td {
+    padding: 14px 12px;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #444;
+    text-align: center;
+}
+
+/* Avatar */
+.table tbody td img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #4e54c8;
+}
+.view,
+.edit,
+.delete {
+  margin-top: 1px;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.view {
+  background: #ede8ff;
+  color: #7a5af5;
+}
+
+.edit {
+  background: #dff1ff;
+  color: #1a73e8;
+}
+
+.delete {
+  background: #ffe3e3;
+  color: #d93025;
+}
+
+.view:hover {
+  background: #e2dbff;
+}
+.edit:hover {
+  background: #cfe7ff;
+}
+.delete:hover {
+  background: #ffd0d0;
+}
+.detail-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.detail-row {
+  display: flex;
+  align-items: center; /* Căn giữa label và input */
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+.detail-row:last-child {
+  border-bottom: none;
+}
+.detail-label {
+  font-weight: 600;
+  color: #555;
+  width: 200px;
+  flex-shrink: 0;
+}
+.detail-value {
+  flex-grow: 1; /* Cho phép input chiếm hết không gian còn lại */
+}
+.form-control {
+  /* Style cho các ô input */
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.btn-nut {
+  background: var(--orange); /* Sử dụng gradient màu của sidebar */
+  color: var(--white);
+  border: none;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  margin: 20px 0 0 0;
+}
+.btn-nut:hover {
+  opacity: 0.9; /* Hiệu ứng mờ đi một chút khi hover */
+  color: var(--white);
+}
+.btn-danger {
+  margin: 20px 0 0 0;
+}
+.btn-primary {
+  margin: 20px 0 0 0;
+}
+.btn-secondary {
+  margin: 20px 0 0 0;
+}
+
+
+.main {
+  padding: 50px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.detail-guide-card {
+  display: flex;
+  gap: 50px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  flex-wrap: wrap;
+  transition: 0.3s;
+}
+
+.avatar-section {
+  flex: 0 0 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-section img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #333;
+}
+
+.no-avatar {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #ddd;
+  color: #555;
+  font-weight: 600;
+  text-align: center;
+  padding: 15px;
+}
+
+.info-section {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.guide-name {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 40px;
+}
+
+.info-grid div {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: #333;
+}
+
+.info-grid .label {
+  font-weight: 600;
+  margin-left: 5px;
+  color: #555;
+}
+
+.info-grid .value {
+  margin-left: 5px;
+  font-weight: 500;
+}
+
+.info-grid .badge {
+  display: inline-block;
+  background: #333;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.info-grid .notes {
+  grid-column: 1 / -1;
+}
+
+.info-grid i {
+  color: #333;
+  min-width: 20px;
+  text-align: center;
+}
