@@ -19,8 +19,6 @@ class UsersController {
                 $_POST['password'],
                 $_POST['phone'],
                 $_POST['role'],
-                $_POST['hdv_experience'] ?? null,
-                $_POST['hdv_languages'] ?? null
             );
 
             header("Location: " . BASE_URL . "?action=list-user");
@@ -49,8 +47,6 @@ class UsersController {
             $_POST['password'],  // có thể rỗng
             $_POST['phone'],
             $_POST['role'],
-            $_POST['hdv_experience'] ?? null,
-            $_POST['hdv_languages'] ?? null
         );
 
         header("Location: " . BASE_URL . "?action=list-user");

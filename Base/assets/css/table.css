@@ -1,55 +1,52 @@
 .main h2 {
-  font-weight: 700; /* Tăng độ đậm cho tiêu đề */
-  margin-bottom: 1rem;
-  text-align: center; /* Căn giữa tiêu đề */
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  padding: 26px 32px;
+  border-radius: 18px;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  margin-bottom: 20px;
 }
 
-/* Bảng chính */
-.table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    font-family: inherit;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  color: white;
 }
 
-/* Header */
-.table thead tr {
-    background: linear-gradient(180deg, #4e54c8, #8f94fb);
-    color: #fff;
-    text-align: center;
-    font-weight: 600;
-    font-size: 15px;
+th,
+td {
+  padding: 14px;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  text-align: center;
 }
 
-.table thead th {
-    padding: 16px 12px;
+th {
+  text-align: left;
+  background: #f0f1ff;
+  font-weight: 600;
+  text-align: center;
 }
 
-/* Rows */
-.table tbody tr {
-    border-bottom: 1px solid #e0e0e0;
-}
-
-/* Cells */
-.table tbody td {
-    padding: 14px 12px;
-    vertical-align: middle;
-    font-size: 14px;
-    color: #444;
-    text-align: center;
+.manage-btn {
+  padding: 8px 14px;
+  background: #8f94fb;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
 }
 
 /* Avatar */
 .table tbody td img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #4e54c8;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #4e54c8;
 }
 .view,
 .edit,
@@ -127,27 +124,26 @@
   padding: 8px 16px;
   font-weight: 600;
   transition: opacity 0.2s;
-  margin: 20px 0 0 0;
+  border-radius: 8px;
 }
 .btn-nut:hover {
   opacity: 0.9; /* Hiệu ứng mờ đi một chút khi hover */
   color: var(--white);
 }
-.btn-danger {
-  margin: 20px 0 0 0;
+.btn-quanly {
+  padding: 7px 12px;
+  background: #8f94fb;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: bold;
+  transition: 0.2s;
 }
-.btn-primary {
-  margin: 20px 0 0 0;
-}
-.btn-secondary {
-  margin: 20px 0 0 0;
-}
-
-
-.main {
-  padding: 50px 20px;
-  max-width: 1000px;
-  margin: auto;
+.btn-quanly:hover {
+  background: #b9dafa;
 }
 
 .detail-guide-card {
@@ -247,4 +243,17 @@
   color: #333;
   min-width: 20px;
   text-align: center;
+}
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+.toph4 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }

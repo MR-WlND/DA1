@@ -1,30 +1,37 @@
 <?php include PATH_VIEW . 'layout/header.php'; ?>
 
 <div class="main">
-    <h2>Thêm điểm đến mới</h2>
-
-    <form action="<?= BASE_URL ?>?action=create-destination" method="post">
-        <div class="mb-3">
-            <label for="">Tên điểm đến</label>
-            <input type="text" class="form-control" name="name" required>
+    <h2>Thêm điểm đến mới :</h2>
+    <div class="card">
+        <div class="toph4">
+            <h4>Thông tin điểm đến</h4>
         </div>
 
-        <div class="mb-3">
-            <label for="">Quốc gia</label>
-            <input type="text" class="form-control" name="country" required>
-        </div>
+        <form action="<?= BASE_URL ?>?action=create-destination" method="post">
+            <div class="form-group mb-3">
+                <label for="name">Tên điểm đến:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
 
-        <div class="mb-3">
-            <label for="">Loại</label>
-            <select name="type" class="form-control" required>
-                <option value="City">City</option>
-                <option value="Country">Country</option>
-                <option value="Region">Region</option>
-            </select>
-        </div>
+            <div class="form-group mb-3">
+                <label for="country">Quốc gia:</label>
+                <input type="text" class="form-control" id="country" name="country" required>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+            <div class="form-group mb-3">
+                <label for="type">Loại:</label>
+                <select name="type" id="type" class="form-control" required>
+                    <option value="City">City</option>
+                    <option value="Country">Country</option>
+                    <option value="Region">Region</option>
+                </select>
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">Thêm mới</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <?php include PATH_VIEW . 'layout/footer.php'; ?>

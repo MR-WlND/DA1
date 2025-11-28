@@ -42,7 +42,7 @@ class GuideModel
         $stmt = $this->db->prepare($sqlUser);
         $stmt->execute([
             ':email' => $email,
-            ':password' => password_hash($password, PASSWORD_DEFAULT),
+            ':password' => md5($password),
             ':name' => $name,
             ':phone' => $phone
         ]);

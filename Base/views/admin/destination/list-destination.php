@@ -2,9 +2,11 @@
 
 <div class="main">
     <h2>Quản lý điểm đến</h2>
-    <a href="<?= BASE_URL ?>?action=create-destination" class="btn btn-nut">+ Thêm điểm đến</a>
-
-    <section class="mt-4">
+    <div class="card">
+        <div class="toph4">
+            <h4>Danh sách điểm đến</h4>
+            <a href="<?= BASE_URL ?>?action=create-destination" class="btn btn-nut">+ Thêm điểm đến</a>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -23,14 +25,13 @@
                         <td><?= $dest['country'] ?></td>
                         <td><?= $dest['type'] ?></td>
                         <td>
-                            <a href="<?= BASE_URL ?>?action=update-destination&id=<?= $dest['id'] ?>" class="btn edit">Sửa</a>
-                            <a href="<?= BASE_URL ?>?action=delete-destination&id=<?= $dest['id'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa điểm đến này không?')" class="btn view">Xóa</a>
+                            <a href="<?= BASE_URL ?>?action=update-destination&id=<?= $dest['id'] ?>" class="btn edit">Quản lý</a>
                         </td>
                     </tr>
                 <?php endforeach ?>
             </tbody>
         </table>
-    </section>
+    </div>
 </div>
 
 <?php include PATH_VIEW . 'layout/footer.php'; ?>

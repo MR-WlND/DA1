@@ -30,17 +30,17 @@ class UserModel extends BaseModel
     // LIST
     public function getList()
     {
-        $sql = "SELECT * FROM users ORDER BY id DESC";
+        $sql = "SELECT * FROM users";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
     // CREATE
-    public function insert($name, $email, $password, $phone, $role, $hdv_experience, $hdv_languages)
+    public function insert($name, $email, $password, $phone, $role)
     {
-        $sql = "INSERT INTO users (name, email, password, phone, role, hdv_experience, hdv_languages)
-                VALUES (:name, :email, :password, :phone, :role, :hdv_experience, :hdv_languages)";
+        $sql = "INSERT INTO users (name, email, password, phone, role)
+                VALUES (:name, :email, :password, :phone, :role)";
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -50,8 +50,6 @@ class UserModel extends BaseModel
             ':password' => md5($password),
             ':phone' => $phone,
             ':role' => $role,
-            ':hdv_experience' => $role === "guide" ? $hdv_experience : null,
-            ':hdv_languages' => $role === "guide" ? $hdv_languages : null,
         ]);
     }
 
@@ -64,7 +62,7 @@ class UserModel extends BaseModel
     }
 
     // UPDATE
-    public function update($id, $name, $email, $password, $phone, $role, $hdv_experience, $hdv_languages)
+    public function update($id, $name, $email, $password, $phone, $role)
     {
         // Nếu không nhập mật khẩu mới -> giữ nguyên mật khẩu cũ
         if (empty($password)) {
@@ -80,9 +78,7 @@ class UserModel extends BaseModel
                     email = :email,
                     password = :password,
                     phone = :phone,
-                    role = :role,
-                    hdv_experience = :hdv_experience,
-                    hdv_languages = :hdv_languages
+                    role = :role
                 WHERE id = :id";
 
         $stmt = $this->pdo->prepare($sql);
@@ -94,8 +90,6 @@ class UserModel extends BaseModel
             ':password' => $password,
             ':phone' => $phone,
             ':role' => $role,
-            ':hdv_experience' => $role === "guide" ? $hdv_experience : null,
-            ':hdv_languages' => $role === "guide" ? $hdv_languages : null,
         ]);
     }
 

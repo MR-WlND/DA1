@@ -27,8 +27,8 @@
         <div class="form-group">
             <label for="category">Loại:</label>
             <select name="category" id="category" class="form-control" required>
-                <option value="domestic">Domestic</option>
-                <option value="international">International</option>
+                <option value="domestic">Nội địa</option>
+                <option value="international">Quốc tế</option>
             </select>
         </div>
 
