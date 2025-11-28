@@ -1,0 +1,94 @@
+
+.main h2 {
+  font-weight: 700; /* Tăng độ đậm cho tiêu đề */
+  margin-bottom: 1rem;
+  text-align: center; /* Căn giữa tiêu đề */
+}
+
+.view,
+.edit,
+.delete {
+  padding: 5px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.view {
+  background: #ede8ff;
+  color: #7a5af5;
+}
+
+.edit {
+  background: #dff1ff;
+  color: #1a73e8;
+}
+
+.delete {
+  background: #ffe3e3;
+  color: #d93025;
+}
+
+.view:hover {
+  background: #e2dbff;
+}
+.edit:hover {
+  background: #cfe7ff;
+}
+.delete:hover {
+  background: #ffd0d0;
+}
+.detail-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.detail-row {
+  display: flex;
+  align-items: center; /* Căn giữa label và input */
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+.detail-row:last-child {
+  border-bottom: none;
+}
+.detail-label {
+  font-weight: 600;
+  color: #555;
+  width: 200px;
+  flex-shrink: 0;
+}
+.detail-value {
+  flex-grow: 1; /* Cho phép input chiếm hết không gian còn lại */
+}
+.form-control {
+  /* Style cho các ô input */
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.btn-nut {
+  background: var(--orange); /* Sử dụng gradient màu của sidebar */
+  color: var(--white);
+  border: none;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  margin: 20px 0 0 0;
+}
+.btn-nut:hover {
+  opacity: 0.9; /* Hiệu ứng mờ đi một chút khi hover */
+  color: var(--white);
+}
+.btn-danger {
+  margin: 20px 0 0 0;
+}
+.btn-primary {
+  margin: 20px 0 0 0;
+}
