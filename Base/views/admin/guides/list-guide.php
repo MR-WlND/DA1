@@ -33,13 +33,13 @@
                                              alt="avatar" style="width:60px; height:60px; object-fit:cover; border-radius:50%; border:1px solid #000;">
                                     <?php endif; ?>
                                 </td>
-                                <td><?= htmlspecialchars($g['name']) ?></td>
-                                <td><?= htmlspecialchars($g['email']) ?></td>
-                                <td><?= htmlspecialchars($g['phone']) ?></td>
-                                <td><?= htmlspecialchars(ucfirst($g['category'])) ?></td>
-                                <td><?= htmlspecialchars($g['certification']) ?></td>
-                                <td><?= htmlspecialchars($g['experience_years']) ?></td>
-                                <td><?= !empty($g['languages']) ? htmlspecialchars($g['languages']) : 'Không có' ?></td>
+                                <td><?= $g['name'] ?></td>
+                                <td><?= $g['email'] ?></td>
+                                <td><?= $g['phone'] ?></td>
+                                <td><?= ucfirst($g['category']) ?></td>
+                                <td><?= $g['certification'] ?></td>
+                                <td><?= $g['experience_years'] ?></td>
+                                <td><?= !empty($g['languages']) ? $g['languages'] : 'Không có' ?></td>
                                 <td>
                                     <a href="<?= BASE_URL ?>?action=detail-guide&id=<?= $g['id'] ?>" class="btn view">Xem</a>
                                     <a href="<?= BASE_URL ?>?action=update-guide&id=<?= $g['id'] ?>" class="btn edit">Quản lý</a>

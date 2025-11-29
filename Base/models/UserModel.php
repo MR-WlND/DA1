@@ -18,12 +18,10 @@ class UserModel extends BaseModel
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch();
-
         if ($user && md5($password) === $user['password']) {
             unset($user['password']);
             return $user;
         }
-
         return null;
     }
 
@@ -41,9 +39,7 @@ class UserModel extends BaseModel
     {
         $sql = "INSERT INTO users (name, email, password, phone, role)
                 VALUES (:name, :email, :password, :phone, :role)";
-
         $stmt = $this->pdo->prepare($sql);
-
         $stmt->execute([
             ':name' => $name,
             ':email' => $email,

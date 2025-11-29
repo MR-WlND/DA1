@@ -29,7 +29,6 @@
                     <td><?= number_format($value['current_price']) ?></td>
                     <td><?= $value['max_slots'] ?></td>
                     <td>
-                        <a href="<?= BASE_URL ?>?action=list-departure-by-tour&id=<?= $value['departure_id'] ?>" class="btn view">Xem</a>
                         <a href="<?= BASE_URL ?>?action=update-departure&id=<?= $value['departure_id'] ?>" class="btn edit">Quản lý</a>
                     </td>
                 </tr>

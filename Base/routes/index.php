@@ -44,7 +44,6 @@ match ($action) {
     'create-departure'       => (new DepartureController)->createDeparture(),
     'update-departure'       => (new DepartureController)->updateDeparture(),
     'delete-departure'       => (new DepartureController)->deleteDeparture(),
-    'list-departure-tour'    => (new DepartureController)->listDepartureByTour(),
 
     // Hotel Management
     'list-hotel'         => (new HotelController)->listHotel(),
@@ -58,4 +57,10 @@ match ($action) {
     'update-guide'       => (new GuideController)->updateGuide(),
     'delete-guide'       => (new GuideController)->deleteGuide(),
     'detail-guide'       => (new GuideController)->detailGuide(),
+
+    // Cancellation Policy Management
+    'list-policies'   => (new CancellationPolicyController)->listPolicies(),
+    'create-policy'  => (new CancellationPolicyController)->createPolicy(),
+    'update-policy'  => (new CancellationPolicyController)->updatePolicy(),
+    'delete-policy'  => (new CancellationPolicyController)->deletePolicy(),
 };

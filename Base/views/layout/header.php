@@ -50,7 +50,7 @@
 
                     <!-- Quản lý Tour -->
                     <?php
-                    $tour_actions = ['list-tour', 'list-departure', 'list-destination', 'list-category', 'list-custom-requests'];
+                    $tour_actions = ['list-tour', 'list-departure', 'list-destination', 'list-category', 'list-custom-requests','list-policies'];
                     $is_tour_group_active = in_array($action, $tour_actions);
                     ?>
                     <div class="dropdown <?= $is_tour_group_active ? 'active' : '' ?>">
@@ -61,6 +61,7 @@
                             <a href="<?= BASE_URL ?>?action=list-destination" class="<?= ($action == 'list-destination') ? 'active-sub' : '' ?>">• Điểm Đến</a>
                             <a href="<?= BASE_URL ?>?action=list-category" class="<?= ($action == 'list-category') ? 'active-sub' : '' ?>">• Danh Mục Tour</a>
                             <a href="<?= BASE_URL ?>?action=list-custom-requests" class="<?= ($action == 'list-custom-requests') ? 'active-sub' : '' ?>">• Tour Theo Yêu Cầu</a>
+                            <a href="<?= BASE_URL ?>?action=list-policies" class="<?= ($action == 'list-policies') ? 'active-sub' : '' ?>">• Chính sách hủy</a>
                         </div>
                     </div>
 

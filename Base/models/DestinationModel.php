@@ -18,7 +18,13 @@ class DestinationModel extends BaseModel
         $stmt->execute([":id" => $id]);
         return $stmt->fetch();
     }
-
+    public function getOneByName($name)
+    {
+        $sql = "SELECT * FROM destinations WHERE name = :name";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([":name" => $name]);
+        return $stmt->fetch();
+    }
     public function insert($name, $country, $type)
     {
         $sql = "INSERT INTO destinations (name, country, type) VALUES (:name, :country, :type)";
@@ -49,4 +55,3 @@ class DestinationModel extends BaseModel
         $stmt->execute([":id" => $id]);
     }
 }
-?>

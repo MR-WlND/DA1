@@ -60,18 +60,4 @@ class DepartureController
         $departure->delete($_GET['id']);
         header('Location:' . BASE_URL . '?action=list-departure');
     }
-    public function listDepartureByTour() {
-        $tour_id = $_GET['tour_id'] ?? null;
-        if (!$tour_id) {
-            header('Location: ' . BASE_URL . '?action=list-tour');
-            exit;
-        }
-
-        $departureModel = new DepartureModel();
-        $listDepartures = $departureModel->getListByTour($tour_id);
-
-        $title = "Lịch khởi hành Tour";
-        $view = "list-departure-by-tour"; // file view
-        require_once PATH_VIEW . 'main.php';
-    }
 }
