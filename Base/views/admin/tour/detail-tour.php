@@ -1,7 +1,7 @@
 <?php include PATH_VIEW . 'layout/header.php'; ?>
 
 <div class="main">
-    <h2>Chi tiết Tour: <?= htmlspecialchars($tour['name']) ?></h2>
+    <h2>Chi tiết Tour: <?= $tour['name'] ?></h2>
 
     <div class="detail-container">
         <div class="detail-row">
@@ -10,27 +10,46 @@
         </div>
         <div class="detail-row">
             <div class="detail-label">Tên Tour:</div>
-            <div class="detail-value"><?= htmlspecialchars($tour['name']) ?></div>
+            <div class="detail-value"><?= $tour['name'] ?></div>
         </div>
         <div class="detail-row">
             <div class="detail-label">Loại Tour:</div>
-            <div class="detail-value"><?= htmlspecialchars($tour['tour_type']) ?></div>
+            <div class="detail-value"><?= $tour['tour_type'] ?></div>
         </div>
         <div class="detail-row">
             <div class="detail-label">Giá cơ bản:</div>
             <div class="detail-value"><?= number_format($tour['base_price'], 0, ',', '.') ?> ₫</div>
         </div>
         <div class="detail-row">
-            <div class="detail-label">ID Điểm đến:</div>
-            <div class="detail-value"><?= $tour['destination_id'] ?></div>
+            <div class="detail-label">Điểm đến:</div>
+            <div class="detail-value"><?= $tour['destination_name'] ?></div>
         </div>
         <div class="detail-row">
+            <div class="detail-label">Quốc gia:</div>
+            <div class="detail-value"><?= $tour['destination_country'] ?></div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Danh mục:</div>
+            <div class="detail-value"><?= $tour['category_name'] ?></div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Ảnh đại diện:</div>
+            <div class="detail-value">
+                <?php if (!empty($tour['image'])): ?>
+                    <img src="<?= BASE_ASSETS_UPLOADS . $tour['image'] ?>" alt="Tour Image" style="max-width: 100px;">
+                <?php else: ?>
+                    Chưa có ảnh.
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="detail-row">
             <div class="detail-label">Mô tả:</div>
-            <div class="detail-value"><?= nl2br(htmlspecialchars($tour['description'] ?? 'Chưa có mô tả.')) ?></div>
+            <div class="detail-value"><?= $tour['description'] ?? 'Chưa có mô tả.' ?></div>
         </div>
         <div class="detail-row">
             <div class="detail-label">Chính sách hủy:</div>
-            <div class="detail-value"><?= nl2br(htmlspecialchars($tour['cancellation_policy'] ?? 'Chưa có chính sách.')) ?></div>
+            <div class="detail-value"><?= $tour['cancellation_policy'] ?? 'Chưa có chính sách.' ?></div>
         </div>
         <div class="detail-row">
             <div class="detail-label">Ngày tạo:</div>

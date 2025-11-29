@@ -28,8 +28,10 @@
                <input type="text" placeholder="Tìm kiếm..." />
             </div>
             <div class="user">
-               <span>Admin Long</span>
-               <div class="avatar">AL</div>
+               <span><?= $_SESSION['user']['name'] ?? 'Admin' ?></span>
+               <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $_SESSION['user']['id'] ?>">
+                  <div class="avatar"><i class="fa-regular fa-user"></i></div>
+               </a>
             </div>
          </div>
          <!-- SIDEBAR -->
@@ -43,8 +45,12 @@
 
                <a href="<?= BASE_URL ?>?action=dashboard"
                   class="<?= ($action == 'dashboard') ? 'active' : '' ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+
+               <a href="<?= BASE_URL ?>?action=list-category"
+                  class="<?= ($action == 'list-category') ? 'active' : '' ?>"><i class="fas fa-tags"></i> Danh mục Tour</a>
+
                <a href="<?= BASE_URL ?>?action=list-tour"
-                  class="<?= (str_contains($action, 'tour')) ? 'active' : '' ?>"><i class="fas fa-suitcase-rolling"></i> Quản lý Tour</a>
+                  class="<?= ($action == 'list-tour') ? 'active' : '' ?>"><i class="fas fa-suitcase-rolling"></i> Quản lý Tour</a>
 
                <a href="<?= BASE_URL ?>?action=list-user"
                   class="<?= ($action == 'list-user') ? 'active' : '' ?>"><i class="fas fa-users"></i> Quản lý User</a>
@@ -52,11 +58,13 @@
                <a href="<?= BASE_URL ?>?action=order"
                   class="<?= ($action == 'order') ? 'active' : '' ?>"><i class="fas fa-ticket-alt"></i> Đơn đặt Tour</a>
 
-               <a href="<?= BASE_URL ?>?action=guide"
-                  class="<?= ($action == 'guide') ? 'active' : '' ?>"><i class="fas fa-user-tie"></i> Hướng dẫn viên</a>
+               <a href="<?= BASE_URL ?>?action=list-guide"
+                  class="<?= ($action == 'list-guide') ? 'active' : '' ?>"><i class="fas fa-user-tie"></i> Hướng dẫn viên</a>
 
                <a href="<?= BASE_URL ?>?action=report"
                   class="<?= ($action == 'report') ? 'active' : '' ?>"><i class="fas fa-file-alt"></i> Báo cáo</a>
+
+               <a href="<?= BASE_URL ?>?action=logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
 
             </div>
          </div>

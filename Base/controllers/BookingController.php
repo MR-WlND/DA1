@@ -1,46 +1,80 @@
 <?php
+class BookingController
+{
+    private $bookingModel;
+    private $userModel;
+    private $roomModel;
 
-class BookingController {
-    private $model;
-
-    public function __construct() {
-        $this->model = new BookingModel();
+    public function __construct()
+    {
+        $this->bookingModel = new BookingModel();
+        $this->userModel = new UserModel();
+        $this->roomModel = new RoomModel();
     }
 
-    public function index() {
-        $bookings = $this->model->getAll();
-        require_once PATH_VIEW . 'admin/bookings.php';
+    // List booking
+    public function index()
+    {
+        $bookings = $this->bookingModel->all();
+        include_once "views/booking/index.php";
     }
 
-    public function create() {
-        $tours = $this->model->getTours();
-
-        if (!empty($_POST)) {
-            $this->model->store($_POST);
-            header("Location: ?action=bookings");
-            exit;
-        }
-
-        require_once PATH_VIEW . 'admin/booking-create.php';
+    // Form tạo
+    public function create()
+    {
+        $users = $this->userModel->all();
+        $rooms = $this->roomModel->all();
+        include_once "views/booking/create.php";
     }
 
-    public function edit() {
-        $id = $_GET['id'];
-        $booking = $this->model->find($id);
-        $tours = $this->model->getTours();
+    // Lưu booking
+    public function store()
+    {
+        $data = [
+            'user_id'     => $_POST['user_id'],
+            'room_id'     => $_POST['room_id'],
+            'start_date'  => $_POST['start_date'],
+            'end_date'    => $_POST['end_date'],
+            'total_price' => $_POST['total_price']
+        ];
 
-        if (!empty($_POST)) {
-            $this->model->update($id, $_POST);
-            header("Location: ?action=bookings");
-            exit;
-        }
-
-        require_once PATH_VIEW . 'admin/booking-edit.php';
+        $this->bookingModel->insert($data);
+        header("Location: /booking");
+        exit;
     }
 
-    public function delete() {
-        $id = $_GET['id'];
-        $this->model->delete($id);
-        header("Location: ?action=bookings");
+    // Form sửa
+    public function edit($id)
+    {
+        $booking = $this->bookingModel->find($id);
+        $users = $this->userModel->all();
+        $rooms = $this->roomModel->all();
+
+        include_once "views/booking/edit.php";
+    }
+
+    // Update booking
+    public function update($id)
+    {
+        $data = [
+            'user_id'     => $_POST['user_id'],
+            'room_id'     => $_POST['room_id'],
+            'start_date'  => $_POST['start_date'],
+            'end_date'    => $_POST['end_date'],
+            'total_price' => $_POST['total_price']
+        ];
+
+        $this->bookingModel->update($id, $data);
+
+        header("Location: /booking");
+        exit;
+    }
+
+    // Xóa
+    public function delete($id)
+    {
+        $this->bookingModel->delete($id);
+        header("Location: /booking");
+        exit;
     }
 }

@@ -10,6 +10,7 @@ match ($action) {
 
     // Dashboard theo vai trò
     'dashboard'         => (new DashboardController)->index(),
+    'guideSchedule'     => (new GuideViewController)->schedule(),
 
     // User Management 
     'list-user'         => (new UsersController)->listUser(),
@@ -18,17 +19,45 @@ match ($action) {
     'update-user'       => (new UsersController)->updateUser(),
     'detail-user'       => (new UsersController)->detailUser(),
 
-    // Bookings
-    'bookings'          => (new BookingController)->index(),
-    'booking-create'    => (new BookingController)->create(),
-    'booking-edit'      => (new BookingController)->edit(),
-    'booking-delete'    => (new BookingController)->delete(),
-
-
     // Tour Management
     'list-tour'         => (new TourController)->listTour(),
     'create-tour'       => (new TourController)->createTour(),
     'update-tour'       => (new TourController)->updateTour(),
     'delete-tour'       => (new TourController)->deleteTour(),
     'detail-tour'       => (new TourController)->detailTour(),
+
+
+    // Booking Management
+    'order' => (new BookingController)->index(),
+    'list-booking'   => (new BookingController)->index(),
+    'create-booking' => (new BookingController)->create(),
+    'store-booking'  => (new BookingController)->store(),
+    'edit-booking'   => (new BookingController)->edit($_GET['id']),
+    'update-booking' => (new BookingController)->update($_POST['id']),
+    'delete-booking' => (new BookingController)->delete($_GET['id']),
+
+
+
+    // Categories Management
+    'list-category'         => (new CategoryController)->listCategory(),
+    'create-category'       => (new CategoryController)->createCategory(),
+    'update-category'       => (new CategoryController)->updateCategory(),
+    'delete-category'       => (new CategoryController)->deleteCategory(),
+
+    // Customer Management
+    'list-customer'         => (new CustomerController)->listCustomer(),
+    'create-customer'       => (new CustomerController)->createCustomer(),
+    'update-customer'       => (new CustomerController)->updateCustomer(),
+    'delete-customer'       => (new CustomerController)->deleteCustomer(),
+
+// Guide Management
+
+'list-guide'   => (new GuideViewController)->listGuide(),
+'create-guide' => (new GuideViewController)->createGuide(),
+'update-guide' => (new GuideViewController)->updateGuide(),
+'delete-guide' => (new GuideViewController)->deleteGuide(),
+'detail-guide' => (new GuideViewController)->detailGuide(),
+
+
+
 };

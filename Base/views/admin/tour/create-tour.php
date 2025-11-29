@@ -19,12 +19,30 @@
             <input type="number" class="form-control" id="base_price" name="base_price" placeholder="Nhập giá" required>
         </div>
         <div class="form-group">
-            <label for="destination_id" class="form-label">ID Điểm đến:</label>
-            <input type="number" class="form-control" id="destination_id" name="destination_id" placeholder="Nhập ID của điểm đến" required>
+            <label for="destination_id" class="form-label">Điểm đến:</label>
+            <select class="form-control form-select" id="destination_id" name="destination_id" required>
+                <?php foreach ($listDestinations as $item): ?>
+                    <option value="<?= $item['id'] ?>">
+                        <?= $item['name'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <div class="form-group">
-            <label for="image" class="form-label">Ảnh đại diện:</label>
-            <input type="text" class="form-control" id="image" name="image" placeholder="Nhập đường dẫn ảnh">
+    <label for="category_id" class="form-label">Danh mục Tour:</label>
+    <select class="form-control" id="category_id" name="category_id">
+        <option value="">-- Chọn danh mục --</option>
+        <?php foreach ($listCategories as $category): ?>
+            <option value="<?= $category['id'] ?>" 
+                <?= (isset($tour['category_id']) && $tour['category_id'] == $category['id']) ? 'selected' : '' ?>>
+                <?= $category['name'] ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+        <div class="form-group">
+            <label for="">Ảnh đại diện</label>
+            <input type="file" class="form-control" name="image">
         </div>
         <div class="form-group">
             <label for="description" class="form-label">Mô tả:</label>

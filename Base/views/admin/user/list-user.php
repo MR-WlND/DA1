@@ -23,11 +23,12 @@
             <tbody>
                 <?php
                 // Lọc Admin trực tiếp trong View (Cách 2)
+                $index = 1;
                 foreach ($listUser as $user):
                     if ($user['role'] == 'admin'):
                 ?>
                         <tr>
-                            <td><?= $user['id'] ?></td>
+                            <td><?= $index++ ?></td>
                             <td><?= $user['name'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><?= $user['phone'] ?></td>
@@ -63,12 +64,14 @@
                 </tr>
             </thead>
             <tbody>
+                
                 <?php
+                $index = 1;
                 foreach ($listUser as $user):
                     if ($user['role'] == 'guide'):
                 ?>
                         <tr>
-                            <td><?= $user['id'] ?></td>
+                            <td><?= $index++ ?></td>
                             <td><?= $user['name'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><?= $user['hdv_experience'] ?? 'N/A' ?></td>
@@ -76,7 +79,7 @@
                             <td><span style="color: blue;"><?= $user['role'] ?></span></td>
                             <td>
                                 <a href="<?= BASE_URL ?>?action=update-user&id=<?= $user['id'] ?>" class="btn view">Sửa</a>
-                                <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>" onclick="return confirm('Xóa Admin?')" class="btn delete">Xóa</a>
+                                <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>" onclick="return confirm('Xóa Hướng dẫn viên?')" class="btn delete">Xóa</a>
                                 <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $user['id'] ?>" class="btn edit">Xem</a>
                             </td>
                         </tr>
@@ -105,18 +108,19 @@
             </thead>
             <tbody>
                 <?php
+                $index = 1;
                 foreach ($listUser as $user):
                     if ($user['role'] == 'customer'):
                 ?>
                         <tr>
-                            <td><?= $user['id'] ?></td>
+                            <td><?= $index++ ?></td>
                             <td><?= $user['name'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><?= $user['phone'] ?></td>
                             <td><?= $user['role'] ?></td>
                             <td>
                                 <a href="<?= BASE_URL ?>?action=update-user&id=<?= $user['id'] ?>" class="btn view">Sửa</a>
-                                <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>" onclick="return confirm('Xóa Admin?')" class="btn delete">Xóa</a>
+                                <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>" onclick="return confirm('Xóa khách hàng?')" class="btn delete">Xóa</a>
                                 <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $user['id'] ?>" class="btn edit">Xem</a>
                             </td>
                         </tr>

@@ -1,90 +1,107 @@
 <?php
-
-class BookingModel extends BaseModel
+require_once __DIR__ . '/../configs/database.php';
+class BookingModel
 {
-    protected $table = 'bookings';
+    private $conn;
+    private $pdo;    // 👈 thêm dòng này vào
 
-    // Lấy tất cả booking
-    public function getAll()
+    public function __construct()
     {
-        return $this->all();
+        $db = new Database();
+        $this->conn = $db->connect();
     }
 
-    // Hàm all() chung
     public function all()
     {
-        $sql = "SELECT * FROM $this->table";
-        $stmt = $this->pdo->prepare($sql);
+        $sql = "SELECT b.*, u.name AS user_name, r.name AS room_name
+                FROM bookings b
+                JOIN users u ON b.user_id = u.id
+                JOIN rooms r ON b.room_id = r.id
+                ORDER BY b.id DESC";
+
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Lấy 1 booking theo id
+   
     public function find($id)
     {
-        $sql = "SELECT * FROM bookings WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(":id", $id);
-        $stmt->execute();
+        $sql = "SELECT b.*, u.name AS user_name, r.name AS room_name
+                FROM bookings b
+                JOIN users u ON b.user_id = u.id
+                JOIN rooms r ON b.room_id = r.id
+                WHERE b.id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Thêm booking
-    public function store($data)
+   
+    public function isRoomAvailable($room_id, $start_date, $end_date, $ignore_id = null)
     {
-        $sql = "
-            INSERT INTO bookings (customer_name, tour_id, quantity, total_price)
-            VALUES (:customer_name, :tour_id, :quantity, :total_price)
-        ";
+        $sql = "SELECT COUNT(*) 
+                FROM bookings
+                WHERE room_id = :room_id
+                AND (
+                        (start_date <= :end_date AND end_date >= :start_date)
+                    )";
 
-        $stmt = $this->pdo->prepare($sql);
+        
+        if (!empty($ignore_id)) {
+            $sql .= " AND id != :ignore_id";
+        }
 
-        return $stmt->execute([
-            ':customer_name' => $data['customer_name'],
-            ':tour_id'       => $data['tour_id'],
-            ':quantity'      => $data['quantity'],
-            ':total_price'   => $data['total_price'],
-        ]);
+        $stmt = $this->conn->prepare($sql);
+
+        $params = [
+            'room_id'    => $room_id,
+            'start_date' => $start_date,
+            'end_date'   => $end_date
+        ];
+
+        if (!empty($ignore_id)) {
+            $params['ignore_id'] = $ignore_id;
+        }
+
+        $stmt->execute($params);
+
+        return $stmt->fetchColumn() == 0;
     }
 
-    // Cập nhật booking
+    public function insert($data)
+    {
+        $sql = "INSERT INTO bookings (user_id, room_id, start_date, end_date, total_price)
+                VALUES (:user_id, :room_id, :start_date, :end_date, :total_price)";
+
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
+
     public function update($id, $data)
     {
-        $sql = "
-            UPDATE bookings
-            SET customer_name = :customer_name,
-                tour_id       = :tour_id,
-                quantity      = :quantity,
-                total_price   = :total_price
-            WHERE id = :id
-        ";
+        $data['id'] = $id;
 
-        $stmt = $this->pdo->prepare($sql);
+        $sql = "UPDATE bookings 
+                SET user_id = :user_id,
+                    room_id = :room_id,
+                    start_date = :start_date,
+                    end_date = :end_date,
+                    total_price = :total_price
+                WHERE id = :id";
 
-        return $stmt->execute([
-            ':customer_name' => $data['customer_name'],
-            ':tour_id'       => $data['tour_id'],
-            ':quantity'      => $data['quantity'],
-            ':total_price'   => $data['total_price'],
-            ':id'            => $id,
-        ]);
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
     }
 
-    // Xóa booking
+    
     public function delete($id)
     {
         $sql = "DELETE FROM bookings WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(":id", $id);
-        return $stmt->execute();
-    }
 
-    // Lấy danh sách tour
-    public function getTours()
-    {
-        $sql = "SELECT id, name FROM tours";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute(['id' => $id]);
     }
 }

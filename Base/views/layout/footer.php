@@ -1,7 +1,4 @@
-</main>
-<footer>
-    <p>Copyright &copy; <?= date('Y') ?></p>
-</footer>
+ </div>
+ </div>
 </body>
-
 </html>
