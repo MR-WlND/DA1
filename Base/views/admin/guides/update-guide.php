@@ -19,6 +19,11 @@
             </div>
 
             <div class="form-group mb-3">
+                <label for="password" class="form-label">Mật khẩu mới (để trống nếu không đổi):</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu mới">
+            </div>
+
+            <div class="form-group mb-3">
                 <label for="phone">Điện thoại:</label>
                 <input type="text" name="phone" id="phone" class="form-control" value="<?= $data['phone'] ?>" required>
             </div>

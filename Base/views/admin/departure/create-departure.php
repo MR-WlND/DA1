@@ -38,7 +38,8 @@
             </div>
 
             <div class="mt-3">
-                <button type="submit" class="btn btn-primary">Tạo lịch khởi hành</button>
+                <button type="submit" class="btn btn-nut">Tạo lịch khởi hành</button>
+                <a href="<?= BASE_URL ?>?action=list-departure" class="btn btn-secondary mt-2">Quay lại</a>
             </div>
         </form>
     </div>

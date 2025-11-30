@@ -28,7 +28,8 @@
             </div>
 
             <div class="mt-3">
-                <button type="submit" class="btn btn-primary">Thêm mới</button>
+                <button type="submit" class="btn btn-nut">Thêm mới</button>
+                 <a href="<?= BASE_URL ?>?action=list-destination" class="btn btn-danger mt-2">Quay lại</a>
             </div>
         </form>
     </div>

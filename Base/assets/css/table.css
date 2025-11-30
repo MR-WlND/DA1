@@ -121,7 +121,7 @@ th {
   background: var(--orange); /* Sử dụng gradient màu của sidebar */
   color: var(--white);
   border: none;
-  padding: 8px 16px;
+  padding: 7px 16px;
   font-weight: 600;
   transition: opacity 0.2s;
   border-radius: 8px;

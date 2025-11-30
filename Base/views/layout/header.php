@@ -50,7 +50,7 @@
 
                     <!-- Quản lý Tour -->
                     <?php
-                    $tour_actions = ['list-tour', 'list-departure', 'list-destination', 'list-category', 'list-custom-requests','list-policies'];
+                    $tour_actions = ['list-tour', 'list-departure', 'list-destination', 'list-category', 'list-custom-requests', 'list-policies'];
                     $is_tour_group_active = in_array($action, $tour_actions);
                     ?>
                     <div class="dropdown <?= $is_tour_group_active ? 'active' : '' ?>">
@@ -84,8 +84,22 @@
                     <div class="dropdown <?= $is_order_group_active ? 'active' : '' ?>">
                         <a href="<?= BASE_URL ?>?action=list-user" class="<?= ($action == 'list-user') ? 'active' : '' ?>"><i class="fas fa-users"></i> Quản lý User</a>
                         <a href="<?= BASE_URL ?>?action=list-guide" class="<?= ($action == 'list-guide') ? 'active' : '' ?>"><i class="fas fa-user-tie"></i> Hướng dẫn viên</a>
-                        <a href="<?= BASE_URL ?>?action=list-hotel" class="<?= ($action == 'list-hotel') ? 'active' : '' ?>"><i class="fas fa-hotel"></i> Khách Sạn & NCC</a>
                     </div>
+
+
+                    <?php
+                    $order_actions = ['list-hotel','list-transport'];
+                    $is_order_group_active = in_array($action, $order_actions);
+                    ?>
+                    <div class="dropdown <?= $is_order_group_active ? 'active' : '' ?>">
+                        <span class="drop-btn"><i class="fas fa-hotel"></i> Khách Sạn & NCC</span>
+                        <div class="drop-content">
+                            <a href="<?= BASE_URL ?>?action=list-hotel" class="<?= ($action == 'list-hotel') ? 'active' : '' ?>">• Khách Sạn</a>
+                            <a href="<?= BASE_URL ?>?action=list-transport" class="<?= ($action == 'list-transport') ? 'active' : '' ?>">• Nhà cung cấp Vận tải</a>
+                        </div>
+                    </div>
+
+
                     <!-- Báo cáo & Đăng xuất -->
                     <a href="<?= BASE_URL ?>?action=report" class="<?= ($action == 'report') ? 'active' : '' ?>"><i class="fas fa-file-alt"></i> Báo cáo</a>
                     <a href="<?= BASE_URL ?>?action=logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
