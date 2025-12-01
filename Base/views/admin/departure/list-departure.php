@@ -29,7 +29,7 @@
                     <td><?= number_format($value['current_price']) ?></td>
                     <td><?= $value['max_slots'] ?></td>
                     <td>
-                        <a href="<?= BASE_URL ?>?action=update-departure&id=<?= $value['departure_id'] ?>" class="btn edit">Quản lý</a>
+                        <a href="<?= BASE_URL ?>?action=update-departure&id=<?= $value['departure_id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
                     </td>
                 </tr>
                 <?php endforeach ?>

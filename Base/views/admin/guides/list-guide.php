@@ -41,8 +41,8 @@
                                 <td><?= $g['experience_years'] ?></td>
                                 <td><?= !empty($g['languages']) ? $g['languages'] : 'Không có' ?></td>
                                 <td>
-                                    <a href="<?= BASE_URL ?>?action=detail-guide&id=<?= $g['id'] ?>" class="btn view">Xem</a>
-                                    <a href="<?= BASE_URL ?>?action=update-guide&id=<?= $g['id'] ?>" class="btn edit">Quản lý</a>
+                                    <a href="<?= BASE_URL ?>?action=detail-guide&id=<?= $g['id'] ?>" class="btn view"><i class="fas fa-eye"></i></a>
+                                    <a href="<?= BASE_URL ?>?action=update-guide&id=<?= $g['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

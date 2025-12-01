@@ -19,6 +19,13 @@ match ($action) {
     'update-user'       => (new UsersController)->updateUser(),
     'detail-user'       => (new UsersController)->detailUser(),
 
+    // Booking Management
+    'list-booking'     => (new BookingController)->listBooking(),
+    'create-booking'     => (new BookingController)->createBooking(),
+    'update-booking'     => (new BookingController)->updateBooking(),
+    'delete-booking'     => (new BookingController)->deleteBooking(),
+    'detail-booking'     => (new BookingController)->detailBooking(),
+
     // Tour Management
     'list-tour'         => (new TourController)->listTour(),
     'create-tour'       => (new TourController)->createTour(),
@@ -50,6 +57,12 @@ match ($action) {
     'create-hotel'       => (new HotelController)->createHotel(),
     'update-hotel'       => (new HotelController)->updateHotel(),
     'delete-hotel'       => (new HotelController)->deleteHotel(),
+
+    // Supplier Management
+    'list-supplier'      => (new TransportSupplierController)->listSupplier(),
+    'create-supplier'      => (new TransportSupplierController)->createSupplier(),
+    'update-supplier'      => (new TransportSupplierController)->updateSupplier(),
+    'delete-supplier'      => (new TransportSupplierController)->deleteSupplier(),
 
     // Guide Management
     'list-guide'         => (new GuideController)->listGuide(),

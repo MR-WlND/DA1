@@ -22,11 +22,11 @@
                         <?php foreach ($listHotel as $hotel): ?>
                             <tr>
                                 <td><?= $hotel['id'] ?></td>
-                                <td><?= htmlspecialchars($hotel['name']) ?></td>
-                                <td><?= htmlspecialchars($hotel['address']) ?></td>
-                                <td><?= htmlspecialchars($hotel['destination_name']) ?></td>
+                                <td><?= $hotel['name'] ?></td>
+                                <td><?= $hotel['address'] ?></td>
+                                <td><?= $hotel['destination_name'] ?></td>
                                 <td>
-                                    <a href="<?= BASE_URL ?>?action=update-hotel&id=<?= $hotel['id'] ?>" class="btn-quanly">Quản lý</a>
+                                    <a href="<?= BASE_URL ?>?action=update-hotel&id=<?= $hotel['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

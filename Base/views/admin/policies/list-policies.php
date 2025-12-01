@@ -29,7 +29,7 @@
                         <td><?= date('d/m/Y', strtotime($policy['created_at'])) ?></td>
 
                         <td>
-                            <a href="<?= BASE_URL ?>?action=update-policy&id=<?= $policy['id'] ?>" class="btn edit">Quản lý</a>
+                            <a href="<?= BASE_URL ?>?action=update-policy&id=<?= $policy['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>

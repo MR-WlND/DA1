@@ -25,7 +25,7 @@
                         <td><?= $category['description'] ?></td>
                         <td><?= date('d/m/Y', strtotime($category['created_at'])) ?></td>
                         <td>
-                            <a href="<?= BASE_URL ?>?action=update-category&id=<?= $category['id'] ?>" class="btn edit">Quản lý</a>
+                            <a href="<?= BASE_URL ?>?action=update-category&id=<?= $category['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>

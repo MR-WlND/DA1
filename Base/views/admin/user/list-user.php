@@ -30,7 +30,7 @@
                         <td><?= $user['phone'] ?></td>
                         <td><span class="text-danger fw-bold"><?= $user['role'] ?></span></td>
                         <td>
-                            <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $user['id'] ?>" class="btn-quanly">Quản lý</a>
+                            <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $user['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
                     </tr>
                 <?php endif; endforeach; ?>
             </tbody>
@@ -60,7 +60,7 @@
                         <td><?= htmlspecialchars($user['phone']) ?></td>
                         <td><?= $user['role'] ?></td>
                         <td>
-                            <a href="<?= BASE_URL ?>?action=update-user&id=<?= $user['id'] ?>" class="btn-quanly">Quản lý</a>
+                            <a href="<?= BASE_URL ?>?action=update-user&id=<?= $user['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                 <?php endif; endforeach; ?>

@@ -25,7 +25,7 @@
             <div class="topBar">
                 <div class="search">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Tìm kiếm..." />
+                    <input id="search" type="search" placeholder="Tìm kiếm...">
                 </div>
                 <div class="user">
                     <span><?= $_SESSION['user']['name'] ?? 'Admin' ?></span>
@@ -74,7 +74,7 @@
                         <span class="drop-btn"><i class="fas fa-ticket-alt"></i> Quản lý Đặt chỗ</span>
                         <div class="drop-content">
                             <a href="<?= BASE_URL ?>?action=order" class="<?= ($action == 'order') ? 'active-sub' : '' ?>">• Phân bổ tài nguyên</a>
-                            <a href="<?= BASE_URL ?>?action=list-order" class="<?= ($action == 'list-order') ? 'active-sub' : '' ?>">• Đơn đặt Tour</a>
+                            <a href="<?= BASE_URL ?>?action=list-booking" class="<?= ($action == 'list-booking') ? 'active-sub' : '' ?>">• Đơn đặt Tour</a>
                             <a href="<?= BASE_URL ?>?action=list-payment" class="<?= ($action == 'list-payment') ? 'active-sub' : '' ?>">• Thanh Toán</a>
                             <a href="<?= BASE_URL ?>?action=list-booking-customers" class="<?= ($action == 'list-booking-customers') ? 'active-sub' : '' ?>">• Khách Tham Gia</a>
                         </div>
@@ -88,14 +88,14 @@
 
 
                     <?php
-                    $order_actions = ['list-hotel','list-transport'];
+                    $order_actions = ['list-hotel', 'list-supplier'];
                     $is_order_group_active = in_array($action, $order_actions);
                     ?>
                     <div class="dropdown <?= $is_order_group_active ? 'active' : '' ?>">
                         <span class="drop-btn"><i class="fas fa-hotel"></i> Khách Sạn & NCC</span>
                         <div class="drop-content">
-                            <a href="<?= BASE_URL ?>?action=list-hotel" class="<?= ($action == 'list-hotel') ? 'active' : '' ?>">• Khách Sạn</a>
-                            <a href="<?= BASE_URL ?>?action=list-transport" class="<?= ($action == 'list-transport') ? 'active' : '' ?>">• Nhà cung cấp Vận tải</a>
+                            <a href="<?= BASE_URL ?>?action=list-hotel" class="<?= ($action == 'list-hotel') ? 'active-sub' : '' ?>">• Khách sạn</a>
+                            <a href="<?= BASE_URL ?>?action=list-supplier" class="<?= ($action == 'list-supplier') ? 'active-sub' : '' ?>">• NCC vận tải</a>
                         </div>
                     </div>
 

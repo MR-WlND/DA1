@@ -25,7 +25,7 @@
                         <td><?= $dest['country'] ?></td>
                         <td><?= $dest['type'] ?></td>
                         <td>
-                            <a href="<?= BASE_URL ?>?action=update-destination&id=<?= $dest['id'] ?>" class="btn edit">Quản lý</a>
+                            <a href="<?= BASE_URL ?>?action=update-destination&id=<?= $dest['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>

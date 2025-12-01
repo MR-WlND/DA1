@@ -52,9 +52,9 @@ th {
 .edit,
 .delete {
   margin-top: 1px;
-  padding: 5px 12px;
+  padding: 5px 8px;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 10px;
   font-weight: bold;
