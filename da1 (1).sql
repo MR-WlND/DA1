@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th10 27, 2025 lúc 02:37 PM
+-- Thời gian đã tạo: Th12 01, 2025 lúc 12:34 AM
 -- Phiên bản máy phục vụ: 8.4.3
 -- Phiên bản PHP: 8.3.16
 
@@ -36,6 +36,13 @@ CREATE TABLE `bookings` (
   `status` enum('Confirmed','Pending','Cancelled') NOT NULL DEFAULT 'Pending',
   `last_status_change` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `user_id`, `departure_id`, `total_price`, `booking_date`, `status`, `last_status_change`) VALUES
+(2, 12, 174, 122222.00, '2025-11-30 23:36:47', 'Confirmed', '2025-11-30 23:46:43');
 
 -- --------------------------------------------------------
 
@@ -72,7 +79,7 @@ CREATE TABLE `cancellation_policies` (
 --
 
 INSERT INTO `cancellation_policies` (`id`, `policy_name`, `details`, `created_at`) VALUES
-(1, 'Chính sách Tiêu chuẩn', '1. Hủy trước 30 ngày: Hoàn 100% tiền tour.\n2. Hủy từ 15 - 29 ngày: Phạt 10% giá trị tour.\n3. Hủy từ 7 - 14 ngày: Phạt 50% giá trị tour.\n4. Hủy dưới 7 ngày hoặc không đến: Phạt 100% giá trị tour.', '2025-11-27 13:29:35'),
+(1, 'Chính sách Tiêu chuẩn', '1. Hủy trước 30 ngày: Hoàn 100% tiền tour.\r\n2. Hủy từ 15 - 29 ngày: Phạt 10% giá trị tour.\r\n3. Hủy từ 7 - 14 ngày: Phạt 50% giá trị tour.\r\n4. Hủy dưới 7 ngày hoặc không đến: Phạt 100% giá trị tour.', '2025-11-27 13:29:35'),
 (2, 'Chính sách Nghiêm ngặt (Lễ Tết)', '1. Hủy trước 45 ngày: Hoàn 100% tiền tour (trừ phí dịch vụ).\n2. Hủy từ 30 - 44 ngày: Phạt 25% giá trị tour.\n3. Hủy dưới 30 ngày: Phạt 100% giá trị tour.\nChính sách này áp dụng cho các dịp Lễ, Tết, Mùa cao điểm.', '2025-11-27 13:29:35'),
 (3, 'Chính sách Tour Khuyến mãi (Không hoàn)', 'Tour đã đặt trong chương trình khuyến mãi/giá ưu đãi đặc biệt sẽ không được phép hoàn, hủy, hoặc thay đổi ngày khởi hành dưới mọi hình thức.', '2025-11-27 13:29:35');
 
@@ -149,8 +156,7 @@ INSERT INTO `destinations` (`id`, `name`, `country`, `type`) VALUES
 (3, 'Phú Quốc', 'Việt Nam', 'City'),
 (4, 'Seoul', 'Hàn Quốc', 'City'),
 (5, 'Tokyo', 'Nhật Bản', 'City'),
-(6, 'Sapa', 'Việt Nam', 'City'),
-(8, 'long', 'Việt Nam', 'City');
+(6, 'Sapa', 'Việt Nam', 'City');
 
 -- --------------------------------------------------------
 
@@ -192,11 +198,10 @@ CREATE TABLE `guide_profiles` (
 --
 
 INSERT INTO `guide_profiles` (`user_id`, `category`, `specialty_route`, `specialty_group`, `certification`, `health_status`, `notes`, `date_of_birth`, `photo_url`, `experience_years`, `languages`) VALUES
-(11, 'domestic', NULL, 'standard', NULL, NULL, NULL, NULL, NULL, 5, 'Anh, Pháp'),
-(12, 'domestic', NULL, 'standard', NULL, NULL, NULL, NULL, NULL, 2, 'Việt, Anh'),
-(13, 'domestic', NULL, 'standard', NULL, NULL, NULL, NULL, NULL, 10, 'Anh, Đức, Tây Ban Nha'),
-(14, 'domestic', NULL, 'standard', NULL, NULL, NULL, NULL, NULL, 7, 'Anh, Trung'),
-(15, 'domestic', NULL, 'standard', NULL, NULL, NULL, NULL, NULL, 3, 'Việt, Nhật');
+(11, 'international', 'Tuyến miền Bắc (Hà Nội, Sapa, Hạ Long)', 'vip', 'Chứng chỉ HDV Quốc tế', 'Tốt', NULL, '1985-05-20', 'avatar/1764270881-Ảnh chụp màn hình 2025-04-24 183748.png', 15, 'Tiếng Anh, Tiếng Pháp'),
+(12, 'domestic', 'Tuyến miền Trung', 'leisure', 'Chứng chỉ HDV Nội địa', 'Tốt', NULL, '1992-11-01', 'avatar/1764270873-ai-la-nguoi-dam-me-nhung-bau-troi-dem-day-sao-dep-den-nao-long-nao.jpg', 8, 'Tiếng Anh, Tiếng Nhật'),
+(13, 'domestic', 'Tuyến TP.HCM và Đồng bằng Sông Cửu Long', 'standard', 'Chứng chỉ HDV Nội địa', 'Cần theo dõi dị ứng', '<br />\r\n<b>Deprecated</b>:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in <b>D:\\laragon\\www\\DA1\\Base\\views\\admin\\guides\\update-guide.php</b> on line <b>77</b><br />\r\n', '2000-03-15', 'avatar/1764270864-ai-la-nguoi-dam-me-nhung-bau-troi-dem-day-sao-dep-den-nao-long-nao.jpg', 2, 'Tiếng Việt'),
+(30, 'international', 'ád', 'corporate', 'Chứng chỉ HDV Nội địa', 'Cần theo dõi dị ứng', 'qqqq', '2025-11-22', 'avatar/1764338792-ai-la-nguoi-dam-me-nhung-bau-troi-dem-day-sao-dep-den-nao-long-nao.jpg', 2, 'aaaa');
 
 -- --------------------------------------------------------
 
@@ -261,10 +266,9 @@ INSERT INTO `tours` (`id`, `name`, `tour_type`, `description`, `base_price`, `po
 (1, 'Tour Hà Nội - Sapa 3 ngày', 'Nội địa', 'Khám phá Sapa với núi non hùng vĩ, bản làng truyền thống.', 3500000.00, NULL, '2025-11-20 19:55:42', 1, 'Catalog'),
 (2, 'Tour Đà Nẵng - Hội An 4 ngày', 'Nội địa', 'Tham quan Đà Nẵng và phố cổ Hội An, trải nghiệm ẩm thực địa phương.', 4200000.00, NULL, '2025-11-20 19:55:42', 2, 'Catalog'),
 (3, 'Tour Phú Quốc 3 ngày', 'Nội địa', 'Thư giãn tại Phú Quốc, khám phá biển đảo và hải sản tươi ngon.', 3800000.00, NULL, '2025-11-20 19:55:42', 2, 'Catalog'),
-(17, 'long', 'Quốc tế', 'qưe', 100000.00, NULL, '2025-11-27 10:55:44', 3, NULL),
-(18, 'long', 'Quốc tế', 'qưe', 100000.00, NULL, '2025-11-27 10:58:16', 3, NULL),
 (19, 'long', 'Quốc tế', 'ádasd', 12222.00, NULL, '2025-11-27 10:58:56', 2, NULL),
-(20, '111ewqe', 'Quốc tế', 'ád', 111.00, NULL, '2025-11-27 11:01:52', 2, NULL);
+(21, 'Tour Hà Nội - Sapa 3 ngầy', 'Quốc tế', 'ádas', 12312312.00, 1, '2025-11-29 10:53:47', 2, 'Catalog'),
+(23, 'sad', 'Nội địa', 'ads', 213.00, 1, '2025-11-29 14:04:07', 1, 'Catalog');
 
 -- --------------------------------------------------------
 
@@ -308,11 +312,14 @@ CREATE TABLE `tour_departures` (
 --
 
 INSERT INTO `tour_departures` (`id`, `tour_id`, `start_date`, `end_date`, `current_price`, `available_slots`) VALUES
-(102, 1, '2026-04-30', '2026-05-05', 5500000.00, 20),
-(103, 2, '2026-03-05', '2026-03-08', 8200000.00, 45),
-(104, 3, '2026-01-20', '2026-01-22', 1900000.00, 15),
-(105, 3, '2026-03-10', '2026-03-12', 1850000.00, 10),
-(106, 1, '2025-11-20', '2025-11-30', 21312.00, 12);
+(119, 3, '2026-01-20', '2026-01-22', 1900000.00, 15),
+(120, 3, '2026-03-10', '2026-03-12', 1850000.00, 10),
+(163, 1, '2025-11-20', '2025-11-30', 212312.00, 1),
+(164, 1, '2026-04-30', '2026-05-05', 5500000.00, 20),
+(174, 2, '2026-03-05', '2026-03-08', 8200000.00, 2),
+(182, 19, '2025-11-22', '2025-11-07', 12222.00, 3),
+(184, 23, '2025-11-21', '2025-12-05', 1.00, 1),
+(185, 21, '2025-11-22', '2025-12-07', 1121.00, 2);
 
 -- --------------------------------------------------------
 
@@ -325,6 +332,22 @@ CREATE TABLE `tour_destinations` (
   `destination_id` int NOT NULL,
   `order_number` int NOT NULL COMMENT 'Thứ tự điểm đến trong Tour'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `tour_destinations`
+--
+
+INSERT INTO `tour_destinations` (`tour_id`, `destination_id`, `order_number`) VALUES
+(1, 3, 2),
+(1, 4, 1),
+(2, 4, 1),
+(3, 3, 2),
+(19, 3, 2),
+(19, 4, 1),
+(19, 5, 3),
+(21, 3, 2),
+(21, 5, 1),
+(23, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -340,6 +363,25 @@ CREATE TABLE `tour_images` (
   `order_number` int DEFAULT '0' COMMENT 'Thứ tự hiển thị trong Gallery'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `tour_images`
+--
+
+INSERT INTO `tour_images` (`id`, `tour_id`, `image_url`, `is_featured`, `order_number`) VALUES
+(19, 3, 'tours_gallery/1764422574692af3ae7c6fa.jpg', 1, 1),
+(83, 1, 'tours_gallery/1764428927692b0c7fcf073.png', 1, 1),
+(84, 1, 'tours_gallery/1764428927692b0c7fd1b90.png', 0, 2),
+(92, 2, 'tours_gallery/1764428907692b0c6b2fb5b.jpg', 1, 1),
+(106, 19, 'tours_gallery/1764422709692af43571015.jpg', 1, 1),
+(107, 19, 'tours_gallery/1764422709692af43572087.png', 0, 2),
+(108, 19, 'tours_gallery/1764422709692af43572c53.png', 0, 3),
+(112, 23, 'tours_gallery/1764502264692c2af8dbbf4.png', 1, 1),
+(113, 23, 'tours_gallery/1764502264692c2af8dc687.jpg', 0, 2),
+(114, 23, 'tours_gallery/1764502264692c2af8dd401.png', 0, 3),
+(115, 21, 'tours_gallery/1764422667692af40b1021d.jpg', 1, 1),
+(116, 21, 'tours_gallery/1764422667692af40b1116b.png', 0, 2),
+(117, 21, 'tours_gallery/1764422667692af40b11c36.png', 0, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -354,6 +396,29 @@ CREATE TABLE `tour_logs` (
   `log_content` text NOT NULL COMMENT 'Nội dung ghi chú/log',
   `log_type` enum('note','check','expense') NOT NULL DEFAULT 'note'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `transport_suppliers`
+--
+
+CREATE TABLE `transport_suppliers` (
+  `id` int NOT NULL,
+  `supplier_name` varchar(150) NOT NULL COMMENT 'Tên công ty vận tải',
+  `contact_person` varchar(100) DEFAULT NULL COMMENT 'Người liên hệ chính',
+  `phone` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `details` text COMMENT 'Ghi chú về đội xe, hợp đồng',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `transport_suppliers`
+--
+
+INSERT INTO `transport_suppliers` (`id`, `supplier_name`, `contact_person`, `phone`, `email`, `details`, `created_at`) VALUES
+(2, 'ád', 'ddddddd', 'dqew12312312', 'longadmin@gmail.com', 'sadasd', '2025-11-30 15:56:44');
 
 -- --------------------------------------------------------
 
@@ -389,8 +454,9 @@ INSERT INTO `users` (`id`, `email`, `password`, `name`, `phone`, `role`, `create
 (11, 'guide1@tour.com', '7fa8282ad93047a4d6fe6111c93b308a', 'Phan Hướng Đạo', '0981111111', 'guide', '2025-11-20 05:55:48'),
 (12, 'guide2@tour.com', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Thị Trinh', '0982222222', 'guide', '2025-11-20 05:55:48'),
 (13, 'guide3@tour.com', 'e10adc3949ba59abbe56e057f20f883e', 'Hoàng Văn Minh', '0983333333', 'guide', '2025-11-20 05:55:48'),
-(14, 'guide4@tour.com', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Quốc Tuấn', '0984444444', 'guide', '2025-11-20 05:55:48'),
-(15, 'guide5@tour.com', 'e10adc3949ba59abbe56e057f20f883e', 'Đoàn Thị Vân', '0985555555', 'guide', '2025-11-20 05:55:48');
+(20, 'a@gmail.com', '$2y$10$f.szHT0LJ1eSPHWXTPRlw.RRJreg0Ypj2Z/AFKXzgrb7qxzYuulc6', 'sad', '4234234234', 'guide', '2025-11-27 17:21:29'),
+(21, 'aw@gmail.com', '$2y$10$9tkin/a8h8gG/YR/Zx17pe7xYtCr7hQXh3aRY7La0wUTuhcCGfz0O', 'sad', '4234234234', 'guide', '2025-11-27 17:21:47'),
+(30, 'duongv@gmail.com', '1bbd886460827015e5d605ed44252251', 'Nhật Long', '0866939060', 'guide', '2025-11-28 14:06:32');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -520,6 +586,12 @@ ALTER TABLE `tour_logs`
   ADD KEY `fk_tl_staff` (`staff_id`);
 
 --
+-- Chỉ mục cho bảng `transport_suppliers`
+--
+ALTER TABLE `transport_suppliers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
@@ -534,7 +606,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `booking_customers`
@@ -546,7 +618,7 @@ ALTER TABLE `booking_customers`
 -- AUTO_INCREMENT cho bảng `cancellation_policies`
 --
 ALTER TABLE `cancellation_policies`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `custom_tour_quotes`
@@ -570,7 +642,7 @@ ALTER TABLE `departure_resources`
 -- AUTO_INCREMENT cho bảng `destinations`
 --
 ALTER TABLE `destinations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `financial_transactions`
@@ -582,7 +654,7 @@ ALTER TABLE `financial_transactions`
 -- AUTO_INCREMENT cho bảng `hotels`
 --
 ALTER TABLE `hotels`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `payments`
@@ -594,25 +666,25 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT cho bảng `tours`
 --
 ALTER TABLE `tours`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT cho bảng `tour_categories`
 --
 ALTER TABLE `tour_categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `tour_departures`
 --
 ALTER TABLE `tour_departures`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 
 --
 -- AUTO_INCREMENT cho bảng `tour_images`
 --
 ALTER TABLE `tour_images`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT cho bảng `tour_logs`
@@ -621,10 +693,16 @@ ALTER TABLE `tour_logs`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT cho bảng `transport_suppliers`
+--
+ALTER TABLE `transport_suppliers`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
