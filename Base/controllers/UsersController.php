@@ -1,11 +1,18 @@
 <?php
 class UsersController {
 
-    public function listUser() {
+    public function listAdmin() {
         $user = new UserModel();
         $listUser = $user->getList();
 
-        $view = "admin/user/list-user";
+        $view = "admin/user/list-admin";
+        require_once PATH_VIEW . "main.php";
+    }
+    public function listCustomer() {
+        $user = new UserModel();
+        $listUser = $user->getList();
+
+        $view = "admin/user/list-customer";
         require_once PATH_VIEW . "main.php";
     }
 

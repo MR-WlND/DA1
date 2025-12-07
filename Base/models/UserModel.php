@@ -95,5 +95,25 @@ class UserModel extends BaseModel
         $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
         $stmt->execute([':id' => $id]);
     }
+        public function getAllGuides()
+    {
+        $sql = "SELECT 
+                    u.id, 
+                    u.name, 
+                    u.phone, 
+                    gp.category, 
+                    gp.languages, 
+                    gp.specialty_route, 
+                    gp.specialty_group
+                FROM users u
+                JOIN guide_profiles gp ON u.id = gp.user_id
+                WHERE u.role = 'guide'
+                ORDER BY u.name ASC";
+                
+        // Giả định $this->pdo hoặc $this->db được khởi tạo và accessible
+        $stmt = $this->pdo->prepare($sql); 
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
 

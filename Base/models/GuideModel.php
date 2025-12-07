@@ -108,4 +108,27 @@ class GuideModel
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':id' => $id]);
     }
+
+    public function getAssignedDepartures($guideId)
+    {
+        // Count booked customers by joining bookings -> booking_customers
+        $sql = "
+            SELECT 
+                td.id AS departure_id,
+                t.name AS tour_name,
+                td.start_date,
+                COUNT(bc.id) AS total_booked_guests
+            FROM tour_departures td
+            JOIN tours t ON td.tour_id = t.id
+            JOIN departure_resources dr ON td.id = dr.departure_id
+            LEFT JOIN bookings b ON td.id = b.departure_id
+            LEFT JOIN booking_customers bc ON b.id = bc.booking_id
+            WHERE dr.resource_type = 'guide' AND dr.resource_id = :guide_id
+            GROUP BY td.id, t.name, td.start_date
+            ORDER BY td.start_date ASC
+        ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':guide_id' => $guideId]);
+        return $stmt->fetchAll();
+    }
 }

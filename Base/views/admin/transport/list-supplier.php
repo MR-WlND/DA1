@@ -1,7 +1,13 @@
 <?php include PATH_VIEW . 'layout/header.php'; ?>
 
 <div class="main">
-    <h2>Quản lý Nhà Cung Cấp Vận Tải</h2>
+    <div class="header-wrapper">
+        <div class="header-content">
+            <div class="breadcrumb">Quản Lý Khách Sạn & NCC / NCC Vận Tải</div>
+            <h2 class="page-title">Quản lý NCC Vận Tải</h2>
+            <p class="page-sub">Quản lý toàn bộ NCC vận tải trong hệ thống admin</p>
+        </div>
+    </div>
     <div class="card">
         <div class="toph4">
             <h4>Danh sách Nhà Cung Cấp</h4>

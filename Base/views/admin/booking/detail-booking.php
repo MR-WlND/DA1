@@ -2,7 +2,15 @@
 
 <div class="main">
     <h2 class="mb-4">Chi tiết Đơn đặt Tour: #<?= $booking['id'] ?></h2>
-    
+
+    <?php if (isset($_GET['debug']) && $_GET['debug'] == 1): ?>
+        <div class="card mb-4">
+            <pre style="white-space:pre-wrap;word-break:break-word;">
+<?= htmlspecialchars(print_r($booking, true)) ?>
+            </pre>
+        </div>
+    <?php endif; ?>
+
     <div class="card p-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="text-primary">Khách hàng: <?= $booking['customer_name'] ?? 'Khách lẻ' ?></h4>
@@ -15,7 +23,7 @@
             <legend class="fs-5 text-secondary">Thông tin chuyến đi</legend>
             <div class="row">
                 <div class="col-md-6">
-                    <p><strong>Tên Tour:</strong> <?= htmlspecialchars($booking['tour_name'] ?? 'N/A') ?></p>
+                    <p><strong>Tên Tour:</strong> <?= $booking['tour_name'] ?? 'N/A' ?></p>
                     <p><strong>Ngày Đặt:</strong> <?= date('d/m/Y H:i', strtotime($booking['booking_date'])) ?></p>
                 </div>
                 <div class="col-md-6">
@@ -29,32 +37,37 @@
 
         <section class="customer-list mb-5">
             <h3 class="fs-4 mb-3">Danh sách Khách tham gia (<?= count($booking['customers'] ?? []) ?> người)</h3>
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Họ tên</th>
-                        <th>SĐT</th>
-                        <th>Ghi chú</th>
-                        <th>Check-in</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($booking['customers'] ?? [] as $i => $customer): ?>
+
+            <?php if (empty($booking['customers'])): ?>
+                <div class="alert alert-info">Chưa có khách tham gia cho đơn này.</div>
+            <?php else: ?>
+                <table class="table table-sm table-striped">
+                    <thead>
                         <tr>
-                            <td><?= $i + 1 ?></td>
-                            <td><?= $customer['name'] ?></td>
-                            <td><?= $customer['phone'] ?? '-' ?></td>
-                            <td><?= $customer['special_note'] ?? '' ?></td>
-                            <td>
-                                <span class="badge <?= ($customer['is_checked_in'] == 1) ? 'bg-success' : 'bg-secondary' ?>">
-                                    <?= ($customer['is_checked_in'] == 1) ? 'Đã Check-in' : 'Chờ Check-in' ?>
-                                </span>
-                            </td>
+                            <th>#</th>
+                            <th>Họ tên</th>
+                            <th>SĐT</th>
+                            <th>Ghi chú</th>
+                            <th>Check-in</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($booking['customers'] as $i => $customer): ?>
+                            <tr>
+                                <td><?= $i + 1 ?></td>
+                                <td><?= htmlspecialchars($customer['name'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($customer['phone'] ?? '-') ?></td>
+                                <td><?= htmlspecialchars($customer['special_note'] ?? '') ?></td>
+                                <td>
+                                    <span class="badge <?= ($customer['is_checked_in'] == 1) ? 'bg-success' : 'bg-secondary' ?>">
+                                        <?= ($customer['is_checked_in'] == 1) ? 'Đã Check-in' : 'Chờ Check-in' ?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
         </section>
 
         <div class="mt-4 pt-3 border-top">

@@ -1,188 +1,188 @@
 <?php include PATH_VIEW . 'layout/header.php'; ?>
 
 <style>
-body {
-    font-family: 'Inter', sans-serif;
-    background: #f3f4f6;
-    color: #1f2937;
-}
-.tour-detail {
-    max-width: 1200px;
-    margin: 40px auto;
-}
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f3f4f6;
+        color: #1f2937;
+    }
+    .tour-detail {
+        max-width: 1200px;
+        margin: 40px auto;
+    }
 
-/* Hero Gallery */
-.hero-gallery {
-    position: relative;
-    border-radius: 16px;
-    overflow: hidden;
+    /* Hero Gallery */
+    .hero-gallery {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-}
-.hero-gallery img {
-    width: 100%;
-    height: 450px;
-    object-fit: cover;
-    transition: transform 0.5s;
-}
-.hero-gallery:hover img {
-    transform: scale(1.05);
-}
-.hero-overlay {
-    position: absolute;
-    bottom: 20px;
-    left: 30px;
-    color: #fff;
+    }
+    .hero-gallery img {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+    .hero-gallery:hover img {
+        transform: scale(1.05);
+    }
+    .hero-overlay {
+        position: absolute;
+        bottom: 20px;
+        left: 30px;
+        color: #fff;
     text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-}
-.hero-overlay h1 {
-    font-size: 36px;
-    font-weight: 700;
-    margin: 0;
-}
-.hero-overlay .tags {
-    margin-top: 10px;
-}
-.hero-overlay .tag {
-    display: inline-block;
+    }
+    .hero-overlay h1 {
+        font-size: 36px;
+        font-weight: 700;
+        margin: 0;
+    }
+    .hero-overlay .tags {
+        margin-top: 10px;
+    }
+    .hero-overlay .tag {
+        display: inline-block;
     background: linear-gradient(90deg,#8b5cf6,#c084fc);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-right: 6px;
-}
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        margin-right: 6px;
+    }
 
-/* Section Cards */
-.section-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    margin-top: 30px;
+    /* Section Cards */
+    .section-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        margin-top: 30px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    transition: 0.3s;
-}
-.section-card:hover {
+        transition: 0.3s;
+    }
+    .section-card:hover {
     box-shadow: 0 12px 25px rgba(0,0,0,0.12);
-}
+    }
 
-/* Timeline / Itinerary */
-.timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-.timeline-item {
-    position: relative;
-    padding-left: 50px;
-    border-left: 3px solid #6366f1;
-}
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -10px;
-    top: 5px;
-    width: 20px;
-    height: 20px;
-    background: #6366f1;
-    border-radius: 50%;
+    /* Timeline / Itinerary */
+    .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .timeline-item {
+        position: relative;
+        padding-left: 50px;
+        border-left: 3px solid #6366f1;
+    }
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: 5px;
+        width: 20px;
+        height: 20px;
+        background: #6366f1;
+        border-radius: 50%;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-.timeline-item h4 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-}
-.timeline-item p {
-    margin: 4px 0 0 0;
-    color: #4b5563;
-    font-size: 14px;
-}
+    }
+    .timeline-item h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .timeline-item p {
+        margin: 4px 0 0 0;
+        color: #4b5563;
+        font-size: 14px;
+    }
 
-/* Departure cards */
-.departure-grid {
-    display: grid;
+    /* Departure cards */
+    .departure-grid {
+        display: grid;
     grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-    gap: 20px;
-}
-.departure-card {
+        gap: 20px;
+    }
+    .departure-card {
     background: linear-gradient(145deg,#ffffff,#f1f1f1);
-    border-radius: 16px;
-    padding: 16px;
+        border-radius: 16px;
+        padding: 16px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    transition: 0.3s;
-}
-.departure-card:hover {
+        transition: 0.3s;
+    }
+    .departure-card:hover {
     box-shadow: 0 12px 25px rgba(0,0,0,0.12);
-    transform: translateY(-4px);
-}
-.departure-card h5 {
-    margin: 0 0 8px 0;
-    font-weight: 600;
-}
-.departure-card .price-slot {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    font-weight: 600;
-    font-size: 14px;
-}
-.departure-card .btn-book {
-    display: block;
-    margin-top: 12px;
-    text-align: center;
-    background: #10b981;
-    color: #fff;
-    padding: 6px 0;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 600;
-}
-.departure-card .btn-book:hover {
-    background: #059669;
-}
+        transform: translateY(-4px);
+    }
+    .departure-card h5 {
+        margin: 0 0 8px 0;
+        font-weight: 600;
+    }
+    .departure-card .price-slot {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    .departure-card .btn-book {
+        display: block;
+        margin-top: 12px;
+        text-align: center;
+        background: #10b981;
+        color: #fff;
+        padding: 6px 0;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .departure-card .btn-book:hover {
+        background: #059669;
+    }
 
-/* Policy & Description */
-.collapsible {
-    background: #6366f1;
-    color: #fff;
-    cursor: pointer;
-    padding: 12px 16px;
-    width: 100%;
-    border: none;
-    border-radius: 12px;
-    text-align: left;
-    font-size: 16px;
-    font-weight: 600;
-    outline: none;
-    margin-top: 10px;
-    transition: 0.25s;
-}
-.collapsible:hover {
-    background: #4f46e5;
-}
-.content-collapsible {
-    padding: 0 16px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-    background: #f9fafb;
-    border-radius: 0 0 12px 12px;
-}
+    /* Policy & Description */
+    .collapsible {
+        background: #6366f1;
+        color: #fff;
+        cursor: pointer;
+        padding: 12px 16px;
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        text-align: left;
+        font-size: 16px;
+        font-weight: 600;
+        outline: none;
+        margin-top: 10px;
+        transition: 0.25s;
+    }
+    .collapsible:hover {
+        background: #4f46e5;
+    }
+    .content-collapsible {
+        padding: 0 16px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        background: #f9fafb;
+        border-radius: 0 0 12px 12px;
+    }
 
-/* Back Button */
-.btn-back {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #ef4444;
-    color: #fff;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: 0.25s;
-}
-.btn-back:hover {
-    background: #b91c1c;
-}
+    /* Back Button */
+    .btn-back {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #ef4444;
+        color: #fff;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: 0.25s;
+    }
+    .btn-back:hover {
+        background: #b91c1c;
+    }
 </style>
 
 <div class="tour-detail">
@@ -213,7 +213,7 @@ body {
 
     <!-- Lộ trình -->
     <div class="section-card">
-        <h2>Lộ trình chi tiết</h2>
+        <h2>Lộ trình</h2>
         <div class="timeline">
             <?php foreach($tour['destinations']??[] as $d): ?>
                 <div class="timeline-item">
@@ -223,6 +223,58 @@ body {
             <?php endforeach; ?>
         </div>
     </div>
+
+
+    <section class="general-description mt-4">
+    <h2>Mô tả chung & Ghi chú</h2>
+    <?php if (!empty($tour['description'])): ?>
+        <div class="card card-body bg-light">
+            <p><?= nl2br(htmlspecialchars($tour['description'])) ?></p>
+        </div>
+    <?php else: ?>
+        <p class="text-muted">Tour này chưa có mô tả chung.</p>
+    <?php endif; ?>
+</section>
+
+<hr>
+
+<section class="itinerary-details mt-5">
+    <h2>🗓️ Lịch trình Chi tiết (Ngày/Giờ/Hoạt động)</h2>
+    
+    <?php $itineraryDetails = $tour['itinerary_details'] ?? []; // Lấy dữ liệu từ Model ?>
+
+    <?php if (empty($itineraryDetails)): ?>
+        <p class="alert alert-warning">Tour này chưa có lịch trình chi tiết theo ngày/giờ được thiết lập.</p>
+    <?php else: ?>
+        <table class="table table-bordered table-striped table-sm table-responsive">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Ngày</th>
+                    <th style="width: 15%;">Thời gian</th>
+                    <th style="width: 75%;">Hoạt động chi tiết</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $currentDay = 0;
+                foreach ($itineraryDetails as $item): 
+                    // Logic nhóm theo Ngày: chỉ hiển thị số ngày ở dòng đầu tiên của ngày đó
+                    $displayDay = ($item['day_number'] != $currentDay) ? 'Ngày ' . $item['day_number'] : '';
+                    $currentDay = $item['day_number'];
+                ?>
+                    <tr>
+                        <td class="align-top fw-bold <?= !empty($displayDay) ? 'bg-light' : '' ?>">
+                            <?= !empty($displayDay) ? $displayDay : '' ?>
+                        </td>
+                        <td><?= htmlspecialchars($item['time_slot'] ?? 'Cả ngày') ?></td>
+                        <td><?= htmlspecialchars($item['activity']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</section>
+
 
     <!-- Lịch khởi hành -->
     <div class="section-card">
@@ -241,27 +293,37 @@ body {
         </div>
     </div>
 
-    <!-- Chính sách & mô tả -->
-    <div class="section-card">
-        <?php if(!empty($tour['policy_details'])): ?>
-            <button class="collapsible">Chính sách hủy</button>
-            <div class="content-collapsible"><p><?= nl2br(htmlspecialchars($tour['policy_details'])) ?></p></div>
-        <?php endif; ?>
-        <button class="collapsible">Mô tả chi tiết</button>
-        <div class="content-collapsible"><p><?= nl2br(htmlspecialchars($tour['description']??'')) ?></p></div>
+<div class="section-card">
+    <?php 
+        // 🟢 LẤY NỘI DUNG CHÍNH SÁCH TỪ CỘT TEXT MỚI
+        $policyContent = $tour['cancellation_policy_text'] ?? null;
+    ?>
+
+    <?php if(!empty($policyContent)): ?>
+        <button class="collapsible">Chính sách hủy</button>
+        <div class="content-collapsible">
+            <p><?= nl2br(htmlspecialchars($policyContent)) ?></p>
+        </div>
+    <?php endif; ?>
+    
+    <button class="collapsible">Mô tả chi tiết</button>
+    <div class="content-collapsible">
+        <p><?= nl2br(htmlspecialchars($tour['description']??'')) ?></p>
     </div>
+</div>
+
 
     <a href="<?= BASE_URL ?>?action=list-tour" class="btn-back">Quay lại</a>
 </div>
 
 <script>
-const coll = document.querySelectorAll(".collapsible");
+    const coll = document.querySelectorAll(".collapsible");
 coll.forEach(c=>{
     c.addEventListener("click", function(){
-        this.classList.toggle("active");
+            this.classList.toggle("active");
         const content=this.nextElementSibling;
         if(content.style.maxHeight){ content.style.maxHeight=null;}
         else{ content.style.maxHeight=content.scrollHeight+"px";}
+        });
     });
-});
 </script>

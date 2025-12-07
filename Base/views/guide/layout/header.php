@@ -151,6 +151,222 @@
             cursor: pointer
         }
 
+
+        input[type="search"] {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #e6e9ef;
+            border-radius: 10px;
+            font-size: 14px
+        }
+
+        .btn {
+            background: #f3f4f6;
+            border: 0;
+            padding: 8px 10px;
+            border-radius: 10px;
+            cursor: pointer
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px
+        }
+
+        .chip {
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 13px;
+            background: #f3f4f6;
+            border: 1px solid #eef2ff;
+            cursor: pointer
+        }
+
+        .chip.active {
+            background: #4e54c8;
+            color: white;
+            border-color: transparent
+        }
+
+        .list {
+            margin-top: 14px;
+            max-height: 56vh;
+            overflow: auto;
+            padding-right: 6px
+        }
+
+        .item {
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #eef2ff;
+            margin-bottom: 10px;
+            cursor: pointer
+        }
+
+        .item.selected {
+            box-shadow: 0 6px 18px rgba(78, 84, 200, 0.12);
+            border-color: transparent
+        }
+
+        .item .meta {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 6px
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            color: white;
+            font-size: 12px
+        }
+
+        /* Right panel */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px
+        }
+
+        .stat {
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow)
+        }
+
+        .itinerary {
+            background: var(--card-bg);
+            padding: 14px;
+            border-radius: 12px;
+            box-shadow: var(--shadow)
+        }
+
+        .stops {
+            margin-top: 10px
+        }
+
+        .stop {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eef2ff
+        }
+
+        .time {
+            width: 64px;
+            height: 36px;
+            border-radius: 8px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600
+        }
+
+        .primary {
+            background: #4e54c8;
+            color: white;
+            border: 0;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer
+        }
+
+        .ghost {
+            background: white;
+            border: 1px solid #e6e9ef;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer
+        }
+
+        .danger {
+            background: white;
+            border: 1px solid #fee2e2;
+            color: var(--danger);
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer
+        }
+
+        /* Guest list */
+        .guest-list {
+            margin-top: 14px;
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid #eef2ff
+        }
+
+        .guest {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px;
+            border-radius: 8px
+        }
+
+        .guest+.guest {
+            margin-top: 8px
+        }
+
+        .guest .left {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .avatar-sm {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer
+        }
+
+        .checkbox.checked {
+            background: var(--success);
+            border-color: var(--success);
+            color: white
+        }
+
+        .checked-time {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .guest-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px
+        }
+
+        footer {
+            max-width: var(--max-w);
+            margin: 18px auto 60px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px
+        }
     </style>
 </head>
 

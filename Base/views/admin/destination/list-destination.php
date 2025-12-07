@@ -1,7 +1,13 @@
 <?php include PATH_VIEW . 'layout/header.php'; ?>
 
 <div class="main">
-    <h2>Quản lý điểm đến</h2>
+    <div class="header-wrapper">
+        <div class="header-content">
+            <div class="breadcrumb">Quản Lý Tour / Quản Lý Điểm Đến</div>
+            <h2 class="page-title">Quản Lý Điểm Đến</h2>
+            <p class="page-sub">Quản lý toàn bộ điểm đến trong hệ thống admin</p>
+        </div>
+    </div>
     <div class="card">
         <div class="toph4">
             <h4>Danh sách điểm đến</h4>

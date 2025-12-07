@@ -96,7 +96,7 @@ public function getList($tour_id = null) {
         $stmt->execute([':id'=>$id]);
     }
 
-    public function saveDeparturesForTour($tour_id, $departures = []) {
+public function saveDeparturesForTour($tour_id, $departures = []) {
     // 1. XÓA TẤT CẢ LỊCH KHỞI HÀNH CŨ (Bắt buộc khi UPDATE Tour)
     $this->db->prepare("DELETE FROM tour_departures WHERE tour_id = :tour_id")
              ->execute([':tour_id' => $tour_id]);
@@ -106,8 +106,8 @@ public function getList($tour_id = null) {
                 (tour_id, start_date, end_date, current_price, available_slots) 
                 VALUES (:tour_id, :start_date, :end_date, :current_price, :available_slots)";
         $stmt = $this->db->prepare($sql);
-        
-        foreach ($departures as $dep) {
+    
+    foreach ($departures as $dep) {
             $stmt->execute([
                 ':tour_id' => $tour_id,
                 ':start_date' => $dep['start_date'],

@@ -74,8 +74,11 @@ class BookingModel extends BaseModel
         return $stmt->fetchAll();
     }
 
+    // Trong BookingModel.php
+
     public function getOne($id)
     {
+        // 1. Truy vấn Booking chính (Đã bao gồm JOIN Tour/Departure)
         $sql = "SELECT 
                 b.*, 
                 td.start_date, 
@@ -83,25 +86,36 @@ class BookingModel extends BaseModel
                 t.name AS tour_name, 
                 u.name AS customer_name
             FROM bookings b
-            -- Nối để lấy ngày khởi hành và thông tin Tour
             JOIN tour_departures td ON b.departure_id = td.id
             JOIN tours t ON td.tour_id = t.id
-            -- Lấy tên khách hàng đặt
             LEFT JOIN users u ON b.user_id = u.id
             WHERE b.id = :id";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([":id" => $id]);
-
-        // Ngoài ra, bạn cần lấy chi tiết khách tham gia (booking_customers)
-        $booking = $stmt->fetch();
+        $booking = $stmt->fetch(); // Lấy bản ghi chính
 
         if ($booking) {
-            // Lấy chi tiết từng khách tham gia
+            // 2. Lấy danh sách khách tham gia (MANIFEST) và chuẩn hóa dữ liệu
             $sqlCustomers = "SELECT * FROM booking_customers WHERE booking_id = :booking_id";
             $stmtCustomers = $this->pdo->prepare($sqlCustomers);
             $stmtCustomers->execute([':booking_id' => $id]);
-            $booking['customers'] = $stmtCustomers->fetchAll();
+            $customers = $stmtCustomers->fetchAll();
+
+            // Đảm bảo luôn có mảng 'customers' và chuẩn hóa các trường được view sử dụng
+            $normalized = [];
+            foreach ($customers as $c) {
+                $normalized[] = [
+                    'id' => $c['id'] ?? null,
+                    'name' => $c['name'] ?? ($c['full_name'] ?? 'Khách'),
+                    'phone' => $c['phone'] ?? null,
+                    'special_note' => $c['special_note'] ?? $c['note'] ?? null,
+                    // Một số schema cũ có thể thiếu cột is_checked_in; mặc định là 0
+                    'is_checked_in' => isset($c['is_checked_in']) ? (int) $c['is_checked_in'] : 0,
+                ];
+            }
+
+            $booking['customers'] = $normalized;
         }
 
         return $booking;

@@ -10,10 +10,11 @@ match ($action) {
 
     // Dashboard theo vai trò
     'dashboard'         => (new DashboardController)->index(),
-    'guideSchedule'     => (new GuideViewController)->schedule(),
+    'schedule'     => (new GuideViewController)->schedule(),
 
     // User Management 
-    'list-user'         => (new UsersController)->listUser(),
+    'list-admin'         => (new UsersController)->listAdmin(),
+    'list-customer'         => (new UsersController)->listCustomer(),
     'delete-user'       => (new UsersController)->deleteUser(),
     'create-user'       => (new UsersController)->createUser(),
     'update-user'       => (new UsersController)->updateUser(),
@@ -47,7 +48,7 @@ match ($action) {
     'delete-destination'       => (new DestinationController)->deleteDestination(),
 
     // Departure Management
-    'list-departure'         =>(new DepartureController)->listDeparture(),
+    'list-departure'         => (new DepartureController)->listDeparture(),
     'create-departure'       => (new DepartureController)->createDeparture(),
     'update-departure'       => (new DepartureController)->updateDeparture(),
     'delete-departure'       => (new DepartureController)->deleteDeparture(),
@@ -76,4 +77,17 @@ match ($action) {
     'create-policy'  => (new CancellationPolicyController)->createPolicy(),
     'update-policy'  => (new CancellationPolicyController)->updatePolicy(),
     'delete-policy'  => (new CancellationPolicyController)->deletePolicy(),
+
+    // Phân bổ tài nguyên
+    'list-resource' => (new DepartureResourceController)->listResource(),
+    'create-resource' => (new DepartureResourceController)->createResource(),
+    'update-resource' => (new DepartureResourceController)->updateResource(),
+    'delete-resource' => (new DepartureResourceController)->deleteResource(),
+
+    //Báo cáo lãi lỗ 
+    'list-profit-loss' => (new ReportController)->listProfitLoss(),
+
+    //checkin
+    'list-customers'       => (new BookingCustomerController)->listCustomers(),
+    'update-checkin-status' => (new BookingCustomerController)->updateCheckInStatus(),
 };

@@ -5,7 +5,7 @@ class TourController
     public $tourModel;
     public $categoryModel;
     public $destinationModel;
-    public $policyModel;
+
 
     public function __construct()
     {
@@ -13,7 +13,6 @@ class TourController
         $this->tourModel = new TourModel();
         $this->categoryModel = new CategoryModel();
         $this->destinationModel = new DestinationModel();
-        $this->policyModel = new CancellationPolicyModel();
     }
 
     // 1. Hiển thị danh sách Tour (Read)
@@ -25,199 +24,196 @@ class TourController
         require_once PATH_VIEW . 'main.php';
     }
 
+    // Trong TourController.php
+
     public function createTour()
     {
+        // Loại bỏ khai báo biến cục bộ thừa, sử dụng trực tiếp $this->Model
         $tourModel = $this->tourModel;
         $categoryModel = $this->categoryModel;
         $destinationModel = $this->destinationModel;
-        $policyModel = $this->policyModel;
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            // TẢI FORM: Lấy dữ liệu nền tảng
             $listCategories = $categoryModel->getList();
             $listDestinations = $destinationModel->getList();
-            $listPolicies = $policyModel->getList();
+            
 
             $title = "Thêm Tour mới";
             $view = "admin/tours/create-tour";
             require_once PATH_VIEW . 'main.php';
         } else {
-            // 1. Xử lý Upload Ảnh Gallery (Lưu ý: Không cần xóa file cũ ở đây)
+            // --- XỬ LÝ POST: CHUẨN BỊ VÀ GỌI MODEL ---
+
+            // 1. Xử lý Upload Ảnh Gallery
             $uploaded_images = [];
             if (!empty($_FILES['gallery_images']['name'][0])) {
-                // Hàm helper phải xử lý mảng tệp và trả về mảng đường dẫn
                 $uploaded_images = upload_multiple_files('tours_gallery', $_FILES['gallery_images']);
             }
-            // 2. Chuẩn bị Dữ liệu chính và mảng phụ thuộc
-            $data = $_POST;
-            $destinations = $data['destinations'] ?? []; // Array Lộ trình N:M (order_number)
-            $departures = $data['departures'] ?? [];     // Array Lịch khởi hành 1:N
 
-            // 3. Xử lý các giá trị mặc định cho ENUMs và FK
+            // 2. Chuẩn bị Dữ liệu chính và các mảng phụ thuộc
+            $data = $_POST;
+            $destinations = $data['destinations'] ?? [];
+            $departures = $data['departures'] ?? [];
+            $itineraryDetails = $data['itinerary_details'] ?? []; // <<< THU THẬP MẢNG MỚI
+
+            // 3. Xử lý các giá trị mặc định cho ENUMs
             $data['tour_origin'] = $data['tour_origin'] ?? 'Catalog';
             $data['policy_id'] = $data['policy_id'] ?? null;
             $data['category_id'] = $data['category_id'] ?? null;
 
             try {
-                $this->tourModel->insert(
+                $tourModel->insert(
                     $data,
                     $destinations,
                     $departures,
-                    $uploaded_images
+                    $uploaded_images,
+                    $itineraryDetails // <<< TRUYỀN THAM SỐ CUỐI CÙNG
                 );
+
+                // THÀNH CÔNG
                 header('Location: ' . BASE_URL . '?action=list-tour');
                 exit;
             } catch (Exception $e) {
+                // 4. XỬ LÝ LỖI NGHIÊM TRỌNG (Transaction Rollback)
+
+                // Xóa các tệp vật lý vừa upload (vì DB đã Rollback)
+                if (!empty($uploaded_images)) {
+                    // Giả định hàm helper delete_files_by_path đã được định nghĩa
+                    // (Chức năng này cần được xử lý cẩn thận trong môi trường không dùng Transaction)
+                    // delete_uploaded_files($uploaded_images); 
+                }
+
                 echo "Lỗi tạo Tour: " . $e->getMessage();
             }
         }
     }
+
+    // Trong TourController.php
+
     public function updateTour()
-{
-    $tour_id = $_GET['id'] ?? null;
-    if (!$tour_id) {
-        header('Location: ' . BASE_URL . '?action=list-tour');
-        exit;
-    }
-
-    // Lấy dữ liệu cũ (tour + gallery + destinations + departures)
-    $data = $this->tourModel->getOne($tour_id);
-    if (!$data) {
-        header('Location: ' . BASE_URL . '?action=list-tour');
-        exit;
-    }
-
-    // Danh sách phụ trợ cho view
-    $listCategories = $this->categoryModel->getList();
-    $listDestinations = $this->destinationModel->getList();
-    $listPolicies = $this->policyModel->getList();
-
-    // Mặc định mảng nếu null
-    $origDestinations = is_array($data['destinations'] ?? null) ? $data['destinations'] : [];
-    $origDepartures = is_array($data['departures'] ?? null) ? $data['departures'] : [];
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Lấy mảng từ POST (nếu không tồn tại thì gán mảng rỗng)
-        $postDest = $_POST['destinations'] ?? [];
-        $postDep = $_POST['departures'] ?? [];
-
-        // --- XỬ LÝ NÚT REMOVE (X) ---
-        if (isset($_POST['remove_destination'])) {
-            $idx = (int) $_POST['remove_destination'];
-            if (isset($postDest[$idx])) {
-                unset($postDest[$idx]);
-                $postDest = array_values($postDest); // reindex
-            }
-            // giữ dữ liệu để render lại form
-            $data = array_merge($data, $_POST);
-            $data['destinations'] = $postDest;
-            $data['departures'] = $postDep;
-            $view = "admin/tours/update-tour";
-            require_once PATH_VIEW . 'main.php';
-            return;
-        }
-
-        if (isset($_POST['remove_departure'])) {
-            $idx = (int) $_POST['remove_departure'];
-            if (isset($postDep[$idx])) {
-                unset($postDep[$idx]);
-                $postDep = array_values($postDep);
-            }
-            $data = array_merge($data, $_POST);
-            $data['destinations'] = $postDest;
-            $data['departures'] = $postDep;
-            $view = "admin/tours/update-tour";
-            require_once PATH_VIEW . 'main.php';
-            return;
-        }
-
-        // --- XỬ LÝ NÚT ADD (thêm dòng mới) ---
-        if (isset($_POST['add_destination'])) {
-            $postDest[] = ['destination_id' => '', 'order_number' => ''];
-            $data = array_merge($data, $_POST);
-            $data['destinations'] = $postDest;
-            $data['departures'] = $postDep;
-            $view = "admin/tours/update-tour";
-            require_once PATH_VIEW . 'main.php';
-            return;
-        }
-
-        if (isset($_POST['add_departure'])) {
-            $postDep[] = ['start_date' => '', 'end_date' => '', 'current_price' => '', 'available_slots' => ''];
-            $data = array_merge($data, $_POST);
-            $data['destinations'] = $postDest;
-            $data['departures'] = $postDep;
-            $view = "admin/tours/update-tour";
-            require_once PATH_VIEW . 'main.php';
-            return;
-        }
-
-        // --- Nếu tới đây nghĩa là bấm "Cập nhật Tour" (lưu vào DB) ---
-        // Chuẩn bị uploaded images
-        $old_images = is_array($data['gallery'] ?? null) ? $data['gallery'] : [];
-        $uploaded_images = [];
-
-        if (!empty($_FILES['gallery_images']['name'][0])) {
-            // Xóa file vật lý cũ (nếu bạn muốn xóa tất cả ảnh cũ khi upload ảnh mới)
-            foreach ($old_images as $img) {
-                $filePath = PATH_ASSETS_UPLOADS . 'tours_gallery/' . ($img['image_url'] ?? '');
-                if (!empty($img['image_url']) && file_exists($filePath)) {
-                    @unlink($filePath);
-                }
-            }
-            // Upload mới (bạn có hàm helper upload_multiple_files)
-            $uploaded_images = upload_multiple_files('tours_gallery', $_FILES['gallery_images']);
-        } else {
-            // Nếu không upload ảnh mới: giữ lại tên ảnh cũ nếu có input hidden gửi về
-            if (!empty($_POST['gallery_images_old']) && is_array($_POST['gallery_images_old'])) {
-                $uploaded_images = array_values($_POST['gallery_images_old']);
-            } else {
-                // fallback: dùng dữ liệu gốc từ DB (nếu có)
-                $uploaded_images = is_array($old_images) ? array_column($old_images, 'image_url') : [];
-            }
-        }
-
-        // Chuẩn bị data để update: lấy các trường cần thiết từ POST (hoặc gộp)
-        $updateData = [
-            'name' => $_POST['name'] ?? $data['name'] ?? '',
-            'tour_type' => $_POST['tour_type'] ?? $data['tour_type'] ?? '',
-            'description' => $_POST['description'] ?? $data['description'] ?? null,
-            'base_price' => $_POST['base_price'] ?? $data['base_price'] ?? 0,
-            'policy_id' => $_POST['policy_id'] ?? $data['policy_id'] ?? null,
-            'category_id' => $_POST['category_id'] ?? $data['category_id'] ?? null,
-            'tour_origin' => $_POST['tour_origin'] ?? $data['tour_origin'] ?? 'Catalog',
-            // add other fields if needed
-        ];
-
-        // Destinations & departures lấy từ POST (đã xử lý ở trên)
-        $destinations = $postDest;
-        $departures = $postDep;
-
-        try {
-            $this->tourModel->update(
-                $tour_id,
-                $updateData,
-                $destinations,
-                $departures,
-                $uploaded_images
-            );
-            header('Location:' . BASE_URL . '?action=list-tour');
+    {
+        // 1. Kiểm tra ID và Lấy Dữ liệu cũ
+        $tour_id = $_GET['id'] ?? null;
+        if (!$tour_id || !is_numeric($tour_id)) {
+            header('Location: ' . BASE_URL . '?action=list-tour');
             exit;
-        } catch (Exception $e) {
-            // Nếu lỗi, render lại view kèm thông báo lỗi
-            $error = "Lỗi cập nhật: " . $e->getMessage();
-            $data = array_merge($data, $_POST);
-            $data['destinations'] = $destinations;
-            $data['departures'] = $departures;
+        }
+
+        $tourModel = $this->tourModel;
+
+        // Lấy dữ liệu cũ từ DB (Dùng cho cả View và Xóa file)
+        $data = $tourModel->getOne($tour_id);
+        if (!$data) {
+            header('Location: ' . BASE_URL . '?action=list-tour');
+            exit;
+        }
+
+        // Load static lists (cần cho form)
+        $listCategories = $this->categoryModel->getList();
+        $listDestinations = $this->destinationModel->getList();
+        
+
+        // ------------------------------------------------------------------
+        // PHẦN 1: TẢI FORM & XỬ LÝ THAO TÁC (GET / POST Modify)
+        // ------------------------------------------------------------------
+
+        $postData = $_POST;
+        $origGallery = $data['gallery'] ?? [];
+
+        // Lấy các mảng phức tạp từ POST
+        $postDest = $postData['destinations'] ?? [];
+        $postDep = $postData['departures'] ?? [];
+        $postItinerary = $postData['itinerary_details'] ?? [];
+
+        // --- KIỂM TRA ACTION (ADD/REMOVE) ---
+        // Nếu bất kỳ nút ADD/REMOVE nào được bấm, render lại form và DỪNG THỰC THI DB
+        if (
+            isset($postData['remove_destination']) || isset($postData['add_destination']) ||
+            isset($postData['remove_departure']) || isset($postData['add_departure']) ||
+            isset($postData['remove_itinerary_item']) || isset($postData['add_itinerary_item'])
+        ) {
+
+            // Hợp nhất dữ liệu POST (đã xử lý) vào $data để render lại View (Sticky Form)
+            $data = array_merge($data, $postData);
+            $data['destinations'] = $postDest;
+            $data['departures'] = $postDep;
+            $data['itinerary_details'] = $postItinerary;
+
             $view = "admin/tours/update-tour";
             require_once PATH_VIEW . 'main.php';
-            return;
+            return; // DỪNG LẠI sau khi render lại form
         }
+
+        // ------------------------------------------------------------------
+        // PHẦN 2: FINAL SUBMISSION (LƯU VÀO DB)
+        // ------------------------------------------------------------------
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            // A. XỬ LÝ ẢNH GALLERY VÀ FILE CLEANUP
+            $uploaded_images = [];
+            if (!empty($_FILES['gallery_images']['name'][0])) {
+                // Xóa tệp vật lý cũ và Upload mới
+                foreach ($origGallery as $img) {
+                    $filePath = PATH_ASSETS_UPLOADS . 'tours_gallery/' . ($img['image_url'] ?? '');
+                    if (!empty($img['image_url']) && file_exists($filePath)) {
+                        @unlink($filePath);
+                    }
+                }
+                $uploaded_images = upload_multiple_files('tours_gallery', $_FILES['gallery_images']);
+            } else {
+                // Giữ lại đường dẫn ảnh cũ từ DB/Form (Nếu không upload mới)
+                $uploaded_images = $_POST['gallery_images_old'] ?? array_column($origGallery, 'image_url');
+            }
+
+            // B. CHUẨN BỊ DATA CHÍNH VÀ GỌI MODEL
+            $updateData = [
+                'name' => $_POST['name'] ?? $data['name'] ?? '',
+                'tour_type' => $_POST['tour_type'] ?? $data['tour_type'] ?? '',
+                'description' => $_POST['description'] ?? $data['description'] ?? null,
+                'base_price' => $_POST['base_price'] ?? $data['base_price'] ?? 0,
+
+                // SỬA LỖI: Kiểm tra an toàn cho các FK
+                'cancellation_policy_text' => $_POST['cancellation_policy_text'] ?? $data['cancellation_policy_text'] ?? null,
+                'category_id' => $_POST['category_id'] ?? $data['category_id'] ?? null,
+
+                'tour_origin' => $_POST['tour_origin'] ?? $data['tour_origin'] ?? 'Catalog',
+            ];
+
+            try {
+                $this->tourModel->update(
+                    $tour_id, // 1. ID
+                    $updateData, // 2. Mảng Data chính (chứa name, base_price, v.v.)
+                    $postDest, // 3. Destinations
+                    $postDep,  // 4. Departures
+                    $uploaded_images, // 5. Images
+                    $postItinerary, // 6. Itinerary Details
+                    // ... Cần đảm bảo tất cả tham số được truyền đúng vị trí và số lượng
+                );
+                header('Location:' . BASE_URL . '?action=list-tour');
+                exit;
+            } catch (Exception $e) {
+                // D. XỬ LÝ LỖI (Sticky Form Logic)
+                $error = "Lỗi cập nhật: " . $e->getMessage();
+
+                // Hợp nhất dữ liệu POST vào $data để form không bị mất input khi tải lại
+                $data = array_merge($data, $postData);
+                $data['destinations'] = $postDest;
+                $data['departures'] = $postDep;
+                $data['itinerary_details'] = $postItinerary;
+
+                $view = "admin/tours/update-tour";
+                require_once PATH_VIEW . 'main.php';
+                return;
+            }
+        }
+
+        // PHẦN 3: GET REQUEST (Render form khi không phải POST)
+        $view = "admin/tours/update-tour";
+        require_once PATH_VIEW . 'main.php';
     }
 
-    // GET request: render form với dữ liệu lấy từ DB
-    $view = "admin/tours/update-tour";
-    require_once PATH_VIEW . 'main.php';
-}
 
     // Trong TourController.php
 
@@ -231,10 +227,10 @@ class TourController
 
     // 5. Xóa Tour (Delete)
     public function deleteTour()
-{
-    $id = $_GET['id'];
-    $this->tourModel->delete($id); 
-    header('Location:' . BASE_URL . '?action=list-tour');
-    exit;
-}
+    {
+        $id = $_GET['id'];
+        $this->tourModel->delete($id);
+        header('Location: ' . BASE_URL . '?action=list-tour');
+        exit;
+    }
 }

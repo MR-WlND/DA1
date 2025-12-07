@@ -1,13 +1,13 @@
 :root {
-  --orange: linear-gradient(180deg, #4e54c8, #8f94fb);
-  --orange-active: linear-gradient(180deg, #a5a9fa, #959aff);
-  --orange-light: #4e54c8;
-  --bg: #f9f9f9;
+  --orange: rgba(186, 207, 255, 0.142);
+  --orange-active: rgba(200, 222, 255, 0.525);
+  --orange-light: #bacfffff;
+  --bg: #f8fbff;
   --white: #ffffff;
-  --text: #4e54c8;
-  --muted: #d4d4d4;
-  --radius: 8px;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  --text: #4351e5;
+  --muted: #2e4e94dd;
+  --radius: 7px;
+  --shadow: 0 2px 10px rgba(45, 45, 45, 0.07);
   font-family: "Inter", sans-serif;
 }
 
@@ -23,7 +23,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 240px;
+  width: 230px;
   height: 100vh;
   background: var(--orange);
   padding: 20px 15px;
@@ -43,7 +43,7 @@ body {
 
 .brand a {
   text-decoration: none;
-  color: inherit;
+  color: var(--text);
 }
 
 /* MENU */
@@ -63,19 +63,20 @@ body {
   font-size: 15px;
   cursor: pointer;
   transition: all 0.2s;
+  font-weight: 500;
 }
 
 .menu a:hover,
 .menu .drop-btn:hover {
   background: var(--orange-light);
-  color: #fff;
+  color: var(--muted);
 }
 
 /* Active menu link */
 .menu a.active,
 .menu .dropdown.active > .drop-btn {
   background: var(--orange-active);
-  color: #fff;
+  color: var(--muted);
 }
 
 /* Dropdown container */
@@ -106,21 +107,21 @@ body {
 }
 
 .drop-content a:hover {
-  color: #fff;
+  color: #1a3d8ac0;
   background: var(--orange-light);
 }
 
 .drop-content a.active-sub {
   background: var(--orange-active);
-  color: #fff;
+  color: #1a3e8a;
   font-weight: 500;
-  border-left: 4px solid var(--white);
+  border-left: 4px solid rgb(168, 194, 255);
 }
 
 /* TOPBAR */
 .topBar {
   background: var(--white);
-  padding: 12px 24px;
+  padding: 8px 24px;
   box-shadow: var(--shadow);
   display: flex;
   justify-content: space-between;
@@ -131,7 +132,7 @@ body {
 }
 
 .main-content {
-  margin-left: 240px;
+  margin-left: 230px;
   height: 100vh;
 }
 
@@ -172,7 +173,7 @@ body {
 .avatar {
   width: 42px;
   height: 42px;
-  background: var(--orange);
+  background: var(--text);
   border-radius: 50%;
   display: flex;
   justify-content: center;

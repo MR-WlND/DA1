@@ -1,274 +1,299 @@
 <?php include PATH_VIEW . 'layout/header.php'; ?>
 
 <style>
-/* ---------- Form lọc ---------- */
-.tour-filter-form {
-    margin-bottom: 25px;
-    padding: 15px;
-    border: 1px solid #c5c5c5ff;
-    border-radius: 12px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
 
-.tour-filter-form input,
-.tour-filter-form select {
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    outline: none;
-}
+    h2 {
+        margin: 0 0 24px;
+        font-size: 26px;
+        font-weight: 700;
+    }
 
-.tour-filter-form input:focus,
-.tour-filter-form select:focus {
-    border-color: #7c3aed;
-    box-shadow: 0 0 5px rgba(124,58,237,0.5);
-}
+    /* FILTER BAR */
+    .filter-bar {
+        background: #fff;
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid #e5e5e5;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 26px;
+    }
 
-.btn-filter {
-    background: linear-gradient(180deg, #4e54c8, #8f94fb);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: 0.25s;
-    text-decoration: none;
-}
+    .filter-bar input,
+    .filter-bar select {
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid #d0d0d0;
+        background: #fafafa;
+        font-size: 14px;
+    }
 
-.btn-filter:hover {
-    background: #7745ffff;
-}
+    .btn-add {
+        margin-left: auto;
+        padding: 10px 18px;
+        background: #111;
+        color: #fff;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+    }
 
-/* ---------- Grid card ---------- */
-.tour-grid-premium {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-}
+    /* CARD GRID */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+    }
 
-/* ---------- Card ---------- */
-.tour-card-premium {
-    background: linear-gradient(145deg, #ffffff, #f1f1f1);
-    border-radius: 18px;
-    overflow: hidden;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-    position: relative;
-    padding-bottom: 10px;
-    transition: 0.35s;
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.12),
-        inset 0 0 20px rgba(255,255,255,0.4);
-}
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e6e6e6;
+        overflow: hidden;
+        transition: 0.2s ease;
+        padding: 0%;
+    }
 
-.tour-card-premium:hover {
-    transform: translateY(-6px);
-    box-shadow:
-        0 18px 40px rgba(0,0,0,0.2),
-        inset 0 0 25px rgba(255,255,255,0.6);
-    border: 2px solid #c7afffff;
-}
 
-.tour-img-wrap {
-    position: relative;
-}
+    .card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
 
-.tour-img-wrap img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-}
+    .card-body {
+        padding: 16px;
+    }
 
-.no-img-premium {
-    height: 150px;
-    background: #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    .card-title {
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
 
-.tour-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: linear-gradient(180deg, #4e54c8, #8f94fb);
-    padding: 5px 10px;
-    border-radius: 25px;
-    color: white;
-    font-size: 12px;
-    font-weight: 600;
-    box-shadow: 0 4px 10px rgba(124,58,237,0.4);
-}
+    .card-info {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 4px;
+    }
 
-.tour-body {
-    padding: 12px 15px;
-}
+    .actions {
+        display: flex;
+        margin-top: 10px;
+        gap: 10px;
+    }
 
-.tour-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #333;
-}
+    .btn {
+        flex: 1;
+        padding: 10px 0;
+        font-size: 13px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #f9f9f9;
+        cursor: pointer;
+        transition: 0.15s;
+    }
 
-.tour-info p {
-    font-size: 13px;
-    color: #555;
-    margin: 4px 0;
-}
+    .btn a {
+        text-decoration: none;
+    }
 
-.tour-info i {
-    color: #7d66fdff;
-    margin-right: 4px;
-}
+    .btn:hover {
+        background: #cae2ffff;
+    }
 
-.price-row {
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .view {
+        border-color: #49ff80ff;
+    }
 
-.price {
-    font-size: 17px;
-    font-weight: 700;
-    color: #10b981;
-}
+    .edit {
+        border-color: #6f83ffff;
+    }
 
-.btn-schedule {
-    background: #6366f1;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 12px;
-    text-decoration: none;
-}
+    .delete {
+        border-color: #b70000;
+        color: #b70000;
+    }
 
-.btn-schedule:hover {
-    background: #4f46e5;
-}
+    .page-header {
+        margin-bottom: 24px;
+    }
 
-.tour-actions-premium {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-}
+    .page-header .breadcrumb {
+        font-size: 14px;
+        color: #1e3a8a;
+        font-weight: 500;
+        margin-bottom: 6px;
+    }
 
-.btn-action {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    color: white;
-    cursor: pointer;
-    text-decoration: none;
-}
+    h2 {
+        color: #0f3d8f;
+        border-left: 4px solid #0f3d8f;
+        padding-left: 10px;
+    }
 
-.btn-action.edit {
-    background: #f59e0b;
-}
+    .filter-bar,
+    .card {
+        border: 1px solid #d0e2ff;
+    }
 
-.btn-action.edit:hover {
-    background: #d97706;
-}
+    .btn-nut {
+        background: #1e40af;
+        margin-left: 250px;
+    }
 
-.btn-action.view {
-    background: #3b82f6;
-}
+    .subtitle {
+        font-size: 14px;
+        color: #3b5998;
+        margin-top: 4px;
+        margin-left: 14px;
+        opacity: 0.9;
+    }
 
-.btn-action.view:hover {
-    background: #2563eb;
-}
+    .page-header {
+        margin-bottom: 28px;
+    }
+
+    .redesigned.filter-bar {
+        background: #fff;
+        border: 1px solid #ccd8ff;
+        padding: 18px;
+        border-radius: 12px;
+        display: flex;
+        gap: 14px;
+        margin-bottom: 28px;
+    }
+
+    .redesigned-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 26px;
+    }
+
+    .newcard {
+        border: none;
+        box-shadow: 0 3px 10px rgba(0, 35, 85, 0.08);
+        border-radius: 14px;
+        overflow: hidden;
+        background: #ffffff;
+        transition: 0.25s ease;
+    }
+
+
+    .newactions button {
+        border-radius: 8px !important;
+        background: #f5f8ff !important;
+        border: 1px solid #b5c8ff !important;
+        transition: 0.2s;
+    }
+
+    .newactions button:hover {
+        background: #e5edff !important;
+    }
+
+    .card-category {
+        font-size: 13px;
+        color: #1e40af;
+        background: #e8f0ff;
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .card-price {
+        font-size: 17px;
+        font-weight: 600;
+        color: #0f3d8f;
+        margin: 8px 0;
+    }
+
+    .card-desc {
+        font-size: 13px;
+        color: #444;
+        line-height: 1.5;
+        margin: 8px 0 12px 0;
+        opacity: 1;
+        display: block;
+        word-wrap: break-word;
+    }
 </style>
 
 <div class="main">
 
-    <h2>Quản lý Tour</h2>
+    <div class="header-wrapper">
+        <div class="header-content">
+            <div class="breadcrumb">Quản lý Tour / Danh sách tour</div>
+            <h2 class="page-title">Danh sách Tour</h2>
+            <p class="page-sub">Quản lý toàn bộ tour du lịch trong hệ thống admin</p>
+        </div>
+    </div>
 
-    <!-- ---------- Form lọc ---------- -->
-    <div class="tour-filter-form">
-        <form method="get" action="">
-            <input type="text" name="keyword" placeholder="Tìm kiếm tour..." value="<?= $_GET['keyword'] ?? '' ?>">
-
-            <select name="category">
-                <option value="">Tất cả danh mục</option>
-                <?php foreach($listCategories as $cat): ?>
-                    <option value="<?= $cat['id'] ?>" <?= (($_GET['category'] ?? '') == $cat['id']) ? 'selected' : '' ?>>
-                        <?= $cat['name'] ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-
-            <select name="status">
-                <option value="">Tất cả trạng thái</option>
-                <option value="open" <?= (($_GET['status'] ?? '') == 'open') ? 'selected' : '' ?>>Đang mở</option>
-                <option value="close" <?= (($_GET['status'] ?? '') == 'close') ? 'selected' : '' ?>>Tạm ngưng</option>
-            </select>
-
-            <input type="number" name="price_max" placeholder="Giá tối đa" value="<?= $_GET['price_max'] ?? '' ?>">
-
-            <button type="submit" class="btn btn-nut">Lọc</button>
-            <a href="<?= BASE_URL ?>?action=create-tour" class="btn btn-nut">+ Thêm Tour</a>
-        </form>
+    <!-- FILTER BAR -->
+    <div class="filter-bar redesigned">
+        <input type="text" placeholder="Tìm kiếm tour..." />
+        <select>
+            <option>Danh mục</option>
+            <option>Trong nước</option>
+            <option>Nước ngoài</option>
+        </select>
+        <select>
+            <option>Sắp xếp</option>
+            <option>Giá tăng dần</option>
+            <option>Giá giảm dần</option>
+        </select>
+        <a href="<?= BASE_URL ?>?action=create-tour" class="btn btn-nut">+ Thêm Tour</a>
     </div>
 
     <!-- ---------- Grid card tour ---------- -->
-    <div class="tour-grid-premium">
+    <div class="redesigned-grid">
         <?php foreach ($listTours as $tour): ?>
-            <div class="tour-card-premium">
+            <div class="card newcard">
 
-                <div class="tour-img-wrap">
-                    <?php if (!empty($tour['main_image_path'])): ?>
-                        <img src="<?= BASE_ASSETS_UPLOADS . $tour['main_image_path'] ?>" alt="">
-                    <?php else: ?>
-                        <div class="no-img-premium">Không có ảnh</div>
-                    <?php endif; ?>
 
-                    <span class="tour-badge">
-                        <?= $tour['category_name'] ?? 'Danh mục' ?>
-                    </span>
-                </div>
+                <?php if (!empty($tour['main_image_path'])): ?>
+                    <img src="<?= BASE_ASSETS_UPLOADS . $tour['main_image_path'] ?>" alt="">
+                <?php endif; ?>
 
-                <div class="tour-body">
-                    <h3 class="tour-title"><?= $tour['name'] ?></h3>
 
-                    <div class="tour-info">
-                        <p><i class="fas fa-tag"></i> <strong>Loại tour:</strong> <?= $tour['tour_type'] ?></p>
-                        <p><i class="fas fa-store"></i> <strong>Loại hình bán:</strong> <?= $tour['tour_origin'] ?></p>
-                        <p><i class="fas fa-route"></i> <strong>Lộ trình:</strong>
-                            <?= !empty($tour['destination_route_summary']) ? $tour['destination_route_summary'] : '<i>Chưa có</i>' ?>
-                        </p>
+
+                <div class="card-body">
+                    <div class="card-title"><?= $tour['name'] ?></div>
+
+                    <div class="card-category"><?= !empty($tour['category_name']) ? $tour['category_name'] : $tour['tour_type'] ?></div>
+
+                    <div class="card-desc">
+                        <?= !empty($tour['description']) ? substr($tour['description'], 0, 53) . (strlen($tour['description']) > 53 ? '...' : '') : '<i>Chưa có mô tả</i>' ?>
+                    </div>
+                    <div class="card-info"><strong>Lộ trình:</strong>
+                        <?= !empty($tour['destination_route_summary']) ? $tour['destination_route_summary'] : '<i>Chưa có</i>' ?>
                     </div>
 
-                    <div class="price-row">
+                    <div class="card-price">Giá:
                         <span class="price"><?= number_format($tour['base_price']) ?> đ</span>
-
-                        <?php if ($tour['total_departures_count'] > 0): ?>
-                            <a href="<?= BASE_URL ?>?action=list-departure&tour_id=<?= $tour['id'] ?>"
-                               class="btn-schedule">Lịch (<?= $tour['total_departures_count'] ?>)</a>
-                        <?php endif; ?>
                     </div>
 
-                    <div class="tour-actions-premium">
-                        <a href="<?= BASE_URL ?>?action=update-tour&id=<?= $tour['id'] ?>" class="btn-action edit">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="<?= BASE_URL ?>?action=detail-tour&id=<?= $tour['id'] ?>" class="btn-action view">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                    </div>
 
+                    <div class="actions newactions">
+                        <a href="<?= BASE_URL ?>?action=detail-tour&id=<?= $tour['id'] ?>" class="btn btn-action view">
+                            Xem</a>
+                        <a href="<?= BASE_URL ?>?action=update-tour&id=<?= $tour['id'] ?>" class="btn btn-action edit">
+                            Sửa
+                        </a>
+                        <a class="btn btn-action delete" href="<?= BASE_URL ?>?action=delete-tour&id=<?= $tour['id'] ?>"
+                            onclick="return confirm('Bạn có chắc muốn xóa tour này không?')">Xóa</a>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
-</div>
 
-<?php include PATH_VIEW . 'layout/footer.php'; ?>
+    <?php include PATH_VIEW . 'layout/footer.php'; ?>

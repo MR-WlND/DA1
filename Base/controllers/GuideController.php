@@ -107,4 +107,19 @@ class GuideController
         $view = "admin/guides/detail-guide";
         require_once PATH_VIEW . 'main.php';
     }
+
+    public function viewDashboard()
+    {
+        // Kiểm tra session để lấy ID HDV đang đăng nhập (Bắt buộc)
+        $guideId = $_SESSION['user']['id'];
+        
+        $guideModel = new GuideModel();
+        
+        // Lấy danh sách các chuyến đi được giao cho HDV này
+        $assignedDepartures = $guideModel->getAssignedDepartures($guideId);
+        
+        $title = "Dashboard Hướng dẫn viên";
+        $view = "guide/dashboard"; // View dành riêng cho HDV
+        require_once PATH_VIEW . 'main.php'; 
+    }
 }

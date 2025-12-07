@@ -1,7 +1,13 @@
 <?php include PATH_VIEW . 'layout/header.php'; ?>
 
 <div class="main">
-    <h2>Quản lý Đơn đặt Tour</h2>
+    <div class="header-wrapper">
+        <div class="header-content">
+            <div class="breadcrumb">Quản lý đặt chỗ / Đơn Đặt Tour</div>
+            <h2 class="page-title">Quản lý Đơn đặt Tour</h2>
+            <p class="page-sub">Quản lý toàn bộ tour du lịch trong hệ thống admin</p>
+        </div>
+    </div>
     <div class="card">
         <div class="toph4">
             <h4>Danh sách Đơn đặt</h4>
@@ -30,10 +36,10 @@
                     ?>
                         <tr>
                             <td><?= $booking['id'] ?></td>
-                            <td><?= htmlspecialchars($booking['tour_name'] ?? 'N/A') ?></td>
-                            <td><?= htmlspecialchars($startDate) ?></td>
-                            <td><?= htmlspecialchars($booking['customer_name'] ?? 'Khách lẻ') ?></td>
-                            <td><?= htmlspecialchars($totalPrice) ?></td>
+                            <td><?= $booking['tour_name'] ?? 'N/A' ?></td>
+                            <td><?= $startDate ?></td>
+                            <td><?=$booking['customer_name'] ?? 'Khách lẻ' ?></td>
+                            <td><?= $totalPrice ?></td>
                             
                             <td>
                                 <span class="badge 
@@ -48,10 +54,10 @@
                                         }
                                     ?>
                                 ">
-                                    <?= htmlspecialchars($booking['status']) ?>
+                                    <?= $booking['status'] ?>
                                 </span>
                             </td>
-                            <td><?= htmlspecialchars($bookingDate) ?></td>
+                            <td><?= $bookingDate ?></td>
                             <td>
                                 <a href="<?= BASE_URL ?>?action=detail-booking&id=<?= $booking['id'] ?>" class="btn view"><i class="fas fa-eye"></i></a>
                                 

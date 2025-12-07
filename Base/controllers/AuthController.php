@@ -23,7 +23,7 @@ class AuthController
                     header("Location: index.php?action=dashboard");
                     break;
                 default:
-                    header("Location: index.php?action=guideSchedule");
+                    header("Location: index.php?action=schedule");
                     break;
             }
             exit;
