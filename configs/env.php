@@ -1,6 +1,6 @@
 <?php
 
-define('BASE_URL',          'http://localhost/DA1-base1/Base/');
+define('BASE_URL',          'http://localhost/DA1/Base');
 
 define('PATH_ROOT',         __DIR__ . '/../');
 
