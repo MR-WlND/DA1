@@ -33,7 +33,7 @@
                         <tr>
                             <td><code><?= $resource['id'] ?></code></td>
                             <td>
-                                <strong><?= htmlspecialchars($resource['tour_name'] ?? 'N/A') ?></strong>
+                                <strong><?= $resource['tour_name'] ?? 'N/A' ?></strong>
                             </td>
                             <td><small><?= date('d/m/Y', strtotime($resource['start_date'])) ?></small></td>
                             <td>
@@ -58,9 +58,9 @@
                                 </span>
                             </td>
                             <td>
-                                <?= htmlspecialchars($resource['resource_name'] ?? 'Không xác định') ?>
+                                <?= $resource['resource_name'] ?? 'Không xác định' ?>
                                 <?php if (!empty($resource['details'])): ?>
-                                    <br><small class="text-muted">Ghi chú: <?= htmlspecialchars(substr($resource['details'], 0, 30)) ?>...</small>
+                                    <br><small class="text-muted">Ghi chú: <?= substr($resource['details'], 0, 30) ?>...</small>
                                 <?php endif; ?>
                             </td>
                             <td>
@@ -68,8 +68,8 @@
                             </td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <a href="<?= BASE_URL ?>?action=update-resource&id=<?= $resource['id'] ?>" class="btn btn-outline-primary" title="Chỉnh sửa"><i class="fas fa-edit"></i></a>
-                                    <a href="<?= BASE_URL ?>?action=delete-resource&id=<?= $resource['id'] ?>" onclick="return confirm('Xác nhận xóa?')" class="btn btn-outline-danger" title="Xóa"><i class="fas fa-trash"></i></a>
+                                    <a href="<?= BASE_URL ?>?action=update-resource&id=<?= $resource['id'] ?>" class="btn edit" title="Chỉnh sửa"><i class="fas fa-edit"></i></a>
+                                    <a href="<?= BASE_URL ?>?action=delete-resource&id=<?= $resource['id'] ?>" onclick="return confirm('Xác nhận xóa?')" class="btn delete" title="Xóa"><i class="fas fa-trash"></i></a>
                                 </div>
                             </td>
                         </tr>

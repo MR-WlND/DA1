@@ -1,5 +1,4 @@
 <?php
-// File: models/ReportModel.php
 
 class ReportModel extends BaseModel
 {
@@ -12,8 +11,7 @@ class ReportModel extends BaseModel
     }
 
     /**
-     * Lấy báo cáo Lãi/Lỗ cho TẤT CẢ các chuyến khởi hành.
-     * Hàm này thực hiện việc tính toán Tổng Thu và Tổng Chi gán cho mỗi chuyến đi.
+     * Lấy báo cáo Lãi/Lỗ tổng hợp từ Bookings, Resources và Transactions.
      */
     public function getProfitLossReport()
     {
@@ -23,29 +21,35 @@ class ReportModel extends BaseModel
                 t.name AS tour_name,
                 td.start_date,
                 
-                -- Tính TỔNG THU (REVENUE) từ bảng financial_transactions
-                COALESCE(SUM(CASE WHEN ft.transaction_type = 'Revenue' THEN ft.amount ELSE 0 END), 0) AS total_revenue,
+                -- 1. TÍNH DOANH THU (REVENUE)
+                (
+                    -- Tiền từ Booking (Chỉ tính đã thanh toán 'Paid')
+                    COALESCE((SELECT SUM(total_price) FROM bookings b WHERE b.departure_id = td.id AND b.payment_status = 'Paid'), 0)
+                    +
+                    -- Cộng thêm thu nhập khác từ sổ cái
+                    COALESCE((SELECT SUM(amount) FROM financial_transactions ft WHERE ft.departure_id = td.id AND ft.transaction_type = 'Revenue'), 0)
+                ) AS total_revenue,
                 
-                -- Tính TỔNG CHI (EXPENSE) từ bảng financial_transactions
-                COALESCE(SUM(CASE WHEN ft.transaction_type = 'Expense' THEN ft.amount ELSE 0 END), 0) AS total_expense
+                -- 2. TÍNH CHI PHÍ (EXPENSE)
+                (
+                    -- Chi phí hậu cần (Khách sạn, Xe, HDV)
+                    COALESCE((SELECT SUM(cost) FROM departure_resources dr WHERE dr.departure_id = td.id), 0)
+                    +
+                    -- Cộng thêm chi phí khác từ sổ cái
+                    COALESCE((SELECT SUM(amount) FROM financial_transactions ft WHERE ft.departure_id = td.id AND ft.transaction_type = 'Expense'), 0)
+                ) AS total_expense
                 
             FROM tour_departures td
-            
-            -- Nối với bảng Tour để lấy tên Tour
             JOIN tours t ON td.tour_id = t.id
             
-            -- Nối với bảng Giao dịch Tài chính
-            LEFT JOIN financial_transactions ft ON td.id = ft.departure_id
-            
-            -- Nhóm kết quả theo chuyến đi để tổng hợp Thu và Chi
-            GROUP BY td.id, t.name, td.start_date
+            -- Chỉ hiện các chuyến đi đã có doanh thu hoặc chi phí
+            HAVING total_revenue > 0 OR total_expense > 0
             
             ORDER BY td.start_date DESC;
         ";
+        
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-    // Bạn có thể thêm các hàm báo cáo khác tại đây (ví dụ: getSummaryByMonth)
 }

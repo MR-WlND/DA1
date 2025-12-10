@@ -5,14 +5,14 @@ class TourController
     public $tourModel;
     public $categoryModel;
     public $destinationModel;
-
-
+    public $customRequestModel;
     public function __construct()
     {
         // Khởi tạo tất cả các Model cần thiết
         $this->tourModel = new TourModel();
         $this->categoryModel = new CategoryModel();
         $this->destinationModel = new DestinationModel();
+        $this->customRequestModel = new CustomTourRequestModel();
     }
 
     // 1. Hiển thị danh sách Tour (Read)
@@ -37,7 +37,7 @@ class TourController
             // TẢI FORM: Lấy dữ liệu nền tảng
             $listCategories = $categoryModel->getList();
             $listDestinations = $destinationModel->getList();
-            
+
 
             $title = "Thêm Tour mới";
             $view = "admin/tours/create-tour";
@@ -112,7 +112,7 @@ class TourController
         // Load static lists (cần cho form)
         $listCategories = $this->categoryModel->getList();
         $listDestinations = $this->destinationModel->getList();
-        
+
 
         // ------------------------------------------------------------------
         // PHẦN 1: TẢI FORM & XỬ LÝ THAO TÁC (GET / POST Modify)
@@ -233,4 +233,143 @@ class TourController
         header('Location: ' . BASE_URL . '?action=list-tour');
         exit;
     }
+    public function requestTour()
+{
+    $model = $this->customRequestModel;
+    $message = null;
+    $postData = []; // Khởi tạo để giữ dữ liệu dính (sticky data)
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $postData = $_POST;
+        
+        // 1. Kiểm tra Dữ liệu Bắt buộc
+        if (empty($postData['customer_name']) || empty($postData['customer_phone']) || empty($postData['num_people'])) {
+            $message = "Vui lòng điền đầy đủ Tên, Số điện thoại và Số lượng người.";
+        } else {
+            try {
+                $isSuccess = $model->insertRequest($postData);
+
+                if ($isSuccess) {
+                    $message = "Yêu cầu của bạn đã được gửi thành công! Chúng tôi sẽ liên hệ sớm nhất.";
+                    // Xóa dữ liệu POST sau khi thành công để làm sạch form
+                    $postData = []; 
+                } else {
+                    throw new Exception("Lỗi không xác định khi lưu yêu cầu.");
+                }
+            } catch (Exception $e) {
+                // Lỗi SQL hoặc hệ thống
+                $message = "Lỗi hệ thống: " . $e->getMessage();
+            }
+        }
+    }
+    
+    // Gửi dữ liệu POST (hoặc rỗng) trở lại View để giữ form dính
+    $data = $postData; 
+
+    $title = "Đặt Tour Theo Yêu Cầu";
+    $view = "guide/request-tour"; 
+    require_once PATH_VIEW . 'main.php';
+}
+public function listCustomRequests()
+{
+    // Sử dụng Model đã khởi tạo
+    $listRequests = $this->customRequestModel->getListRequests();
+
+    $title = "Quản lý Yêu cầu Tour Tùy chỉnh";
+    $view = "admin/requests/list-requests"; // <<< View cần tạo ở bước sau
+    require_once PATH_VIEW . 'main.php';
+}
+public function submitQuote()
+{
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        header('Location: ' . BASE_URL . '?action=list-requests');
+        exit;
+    }
+    
+   $data = $_POST;
+    // Đảm bảo bạn lấy được ID của Admin (Nếu không có session, sẽ dùng ID mặc định, ví dụ 1)
+    $staffId = $_SESSION['user']['id'] ?? 1; 
+
+    try {
+       if ($this->customRequestModel->insertQuote($data, $staffId)) {
+            // Tùy chọn: Chuyển trạng thái yêu cầu sang 'Quoting'
+            $this->customRequestModel->updateRequestStatus($data['request_id'], 'Quoting');
+            // Tùy chọn: set_message("Báo giá đã được gửi thành công!", 'success');
+        }
+    } catch (Exception $e) {
+        // Tùy chọn: set_message("Lỗi gửi báo giá: " . $e->getMessage(), 'error');
+    }
+
+    // Quay lại trang chi tiết yêu cầu
+    header('Location: ' . BASE_URL . '?action=view-request&id=' . $data['request_id']);
+    exit;
+}
+
+/**
+ * Xử lý việc cập nhật trạng thái yêu cầu từ Admin
+ */
+public function updateRequestStatus()
+{
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_POST['request_id']) || empty($_POST['status'])) {
+        header('Location: ' . BASE_URL . '?action=list-requests');
+        exit;
+    }
+    
+    $requestId = $_POST['request_id'];
+    $status = $_POST['status'];
+
+    try {
+        $this->customRequestModel->updateRequestStatus($requestId, $status);
+    } catch (Exception $e) {
+        // Xử lý lỗi
+    }
+    // Quay lại trang chi tiết yêu cầu
+    header('Location: ' . BASE_URL . '?action=view-request&id=' . $requestId);
+    exit;
+}
+// TRONG TourController.php
+// TRONG TourController.php
+
+public function viewCustomRequest()
+{
+    $requestId = $_GET['id'] ?? null;
+    
+    // Cần đảm bảo $this->customRequestModel đã được khởi tạo
+    $request = $this->customRequestModel->getRequestDetail($requestId);
+
+    if (!$request) {
+        header('Location: ' . BASE_URL . '?action=list-requests');
+        exit;
+    }
+
+    $title = "Chi tiết Yêu cầu #" . $requestId;
+    $view = "admin/requests/view-request-detail"; 
+    require_once PATH_VIEW . 'main.php';
+}
+// TRONG TourController.php
+
+/**
+ * Hiển thị danh sách yêu cầu và báo giá cho người dùng đã đăng nhập
+ */
+// TRONG TourController.php::viewMyQuotes()
+
+public function viewMyQuotes()
+{
+    if (empty($_SESSION['user']) || empty($_SESSION['user']['id'])) {
+        header('Location: ' . BASE_URL . '?action=login');
+        exit;
+    }
+
+    $userId = $_SESSION['user']['id'];
+    
+    // 🟢 DÒNG ĐÃ ĐƯỢC ĐƠN GIẢN HÓA: Chỉ cần lấy danh sách thô (flat list)
+    $quotesData = $this->customRequestModel->getRequestsAndQuotesByUserId($userId);
+    
+    // KHÔNG CẦN VÒNG LẶP FOREACH PHỨC TẠP NỮA!
+
+    $data = ['quotesData' => $quotesData]; // Đổi tên biến để rõ ràng hơn
+    $title = "Báo giá của tôi";
+    $view = "guide/my-quotes-simple"; // Tạo View mới cho phiên bản đơn giản
+    require_once PATH_VIEW . 'main.php';
+}
 }

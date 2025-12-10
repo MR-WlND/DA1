@@ -16,28 +16,28 @@ $destinationOptionsHtml = '';
 if (!empty($listDestinations)) { 
     foreach ($listDestinations as $des) {
         $id = $des['id'];
-        $name = htmlspecialchars($des['name'] ?? '');
+        $name = $des['name'] ?? '';
         $destinationOptionsHtml .= "<option value=\"{$id}\">{$name}</option>";
     }
 }
 ?>
 
 <div class="main">
-    <h2>Cập nhật Tour: <?= htmlspecialchars($tour['name'] ?? 'Không tên') ?></h2>
+    <h2>Cập nhật Tour: <?= $tour['name'] ?? 'Không tên' ?></h2>
 
     <div class="card">
         <form action="<?= BASE_URL ?>?action=update-tour&id=<?= $tour['id'] ?>" method="post" enctype="multipart/form-data">
             
             <?php if (isset($error)): ?>
                 <div class="alert alert-danger mb-3">
-                    <strong>Lỗi:</strong> <?= htmlspecialchars($error) ?>
+                    <strong>Lỗi:</strong> <?= $error ?>
                 </div>
             <?php endif; ?>
 
             <div class="row">
                 <div class="col-md-6"><div class="form-group mb-3">
                     <label for="name" class="form-label">Tên Tour:</label>
-                    <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($tour['name'] ?? '') ?>" required>
+                    <input type="text" name="name" class="form-control" value="<?= $tour['name'] ?? '' ?>" required>
                 </div></div>
                 <div class="col-md-6"><div class="form-group mb-3">
                     <label for="base_price" class="form-label">Giá cơ bản (VNĐ):</label>
@@ -72,7 +72,7 @@ if (!empty($listDestinations)) {
                             <option value="">-- Chọn danh mục --</option>
                             <?php foreach ($listCategories as $c): ?>
                                 <option value="<?= $c['id'] ?>" <?= (($tour['category_id'] ?? null) == $c['id']) ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($c['name'] ?? '') ?>
+                                    <?= $c['name'] ?? '' ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -82,14 +82,14 @@ if (!empty($listDestinations)) {
                 <div class="form-group mb-3">
     <label for="cancellation_policy_text" class="form-label">Nội dung Chính sách Hủy:</label>
     <textarea id="cancellation_policy_text" name="cancellation_policy_text" class="form-control" rows="6">
-        <?= htmlspecialchars($tour['cancellation_policy_text'] ?? '') ?>
+        <?= $tour['cancellation_policy_text'] ?? '' ?>
     </textarea>
 </div>
             </div>
             
             <div class="form-group mb-3">
                 <label for="description" class="form-label">Mô tả Tour:</label>
-                <textarea name="description" class="form-control" rows="4"><?= htmlspecialchars($tour['description'] ?? '') ?></textarea>
+                <textarea name="description" class="form-control" rows="4"><?= $tour['description'] ?? '' ?></textarea>
             </div>
             
             <div class="form-group mb-3">
@@ -97,7 +97,7 @@ if (!empty($listDestinations)) {
                 <div class="d-flex flex-wrap gap-2 mb-2">
                     <?php foreach ($currentGallery as $img): ?>
                         <div style="position: relative; width: 80px; height: 60px;">
-                            <img src="<?= BASE_ASSETS_UPLOADS . htmlspecialchars($img['image_url']) ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" title="<?= htmlspecialchars($img['image_url']) ?>">
+                            <img src="<?= BASE_ASSETS_UPLOADS . $img['image_url'] ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" title="<?= htmlspecialchars($img['image_url']) ?>">
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -118,7 +118,7 @@ if (!empty($listDestinations)) {
                             <option value="">-- Chọn điểm đến --</option>
                             <?php foreach ($listDestinations as $d): ?>
                                 <?php $selected = (($dest['destination_id'] ?? $dest['id']) == $d['id']) ? 'selected' : ''; ?>
-                                <option value="<?= $d['id'] ?>" <?= $selected ?>><?= htmlspecialchars($d['name']) ?></option>
+                                <option value="<?= $d['id'] ?>" <?= $selected ?>><?= $d['name'] ?></option>
                             <?php endforeach; ?>
                         </select>
                         <input type="number" min="1" name="destinations[<?= $i ?>][order_number]" class="form-control" value="<?= $dest['order_number'] ?? '' ?>" placeholder="Thứ tự" required>

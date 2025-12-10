@@ -13,36 +13,39 @@
             <h4>Danh sách Khách sạn</h4>
             <a href="<?= BASE_URL ?>?action=create-hotel" class="btn btn-nut">+ Thêm Khách sạn</a>
         </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên khách sạn</th>
-                        <th>Địa chỉ</th>
-                        <th>Điểm đến</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (!empty($listHotel)): ?>
-                        <?php foreach ($listHotel as $hotel): ?>
-                            <tr>
-                                <td><?= $hotel['id'] ?></td>
-                                <td><?= $hotel['name'] ?></td>
-                                <td><?= $hotel['address'] ?></td>
-                                <td><?= $hotel['destination_name'] ?></td>
-                                <td>
-                                    <a href="<?= BASE_URL ?>?action=update-hotel&id=<?= $hotel['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên khách sạn</th>
+                    <th>Địa chỉ</th>
+                    <th>Điểm đến</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($listHotel)): ?>
+                    <?php foreach ($listHotel as $hotel): ?>
                         <tr>
-                            <td colspan="5" style="text-align:center;">Chưa có khách sạn nào</td>
+                            <td><?= $hotel['id'] ?></td>
+                            <td><?= $hotel['name'] ?></td>
+                            <td><?= $hotel['address'] ?></td>
+                            <td><?= $hotel['destination_name'] ?></td>
+                            <td>
+                                <a href="<?= BASE_URL ?>?action=update-hotel&id=<?= $hotel['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
+                                <a href="<?= BASE_URL ?>?action=delete-hotel&id=<?= $hotel['id'] ?>"
+                                    onclick="return confirm('Bạn có chắc chắn muốn xóa khách sạn này không?')"
+                                    class="btn delete"><i class="fas fa-trash"></i></a>
+                            </td>
                         </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" style="text-align:center;">Chưa có khách sạn nào</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
 </div>
 

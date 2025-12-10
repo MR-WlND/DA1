@@ -16,15 +16,15 @@
         </div>
         <div class="detail-row">
             <div class="detail-label">Email:</div>
-            <div class="detail-value"><?= htmlspecialchars($user['email']) ?></div>
+            <div class="detail-value"><?= $user['email'] ?></div>
         </div>
         <div class="detail-row">
             <div class="detail-label">Số điện thoại:</div>
-            <div class="detail-value"><?= htmlspecialchars($user['phone']) ?></div>
+            <div class="detail-value"><?= $user['phone'] ?></div>
         </div>
         <div class="detail-row">
             <div class="detail-label">Vai trò:</div>
-            <div class="detail-value"><?= htmlspecialchars($user['role']) ?></div>
+            <div class="detail-value"><?= $user['role'] ?></div>
         </div>
         <div class="detail-row">
             <div class="detail-label">Ngày tạo:</div>
@@ -33,9 +33,8 @@
     </div>
 
     <div class="mt-3">
-        <a href="<?= BASE_URL ?>?action=list-user" class="btn btn-primary">Quay lại danh sách</a>
-        <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>"
-            onclick="return confirm('Xóa người dùng này?')" class="btn btn-danger">Xóa</a>
+        <a href="<?= BASE_URL ?>?action=list-admin" class="btn btn-primary">Quay lại danh sách</a>
+
     </div>
 
 </div>

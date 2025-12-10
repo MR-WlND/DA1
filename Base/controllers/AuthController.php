@@ -22,8 +22,11 @@ class AuthController
                 case 'admin':
                     header("Location: index.php?action=dashboard");
                     break;
-                default:
+                case 'guide':
                     header("Location: index.php?action=schedule");
+                    break;
+                default:
+                    header("Location: index.php?action=customer_list");
                     break;
             }
             exit;

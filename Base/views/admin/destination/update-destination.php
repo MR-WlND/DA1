@@ -4,19 +4,19 @@
     <h2>Cập nhật điểm đến :</h2>
     <div class="card">
         <div class="toph4">
-            <h4><?= htmlspecialchars($data['name'] ?? '') ?></h4>
+            <h4><?= $data['name'] ?? '' ?></h4>
         </div>
         <form action="<?= BASE_URL ?>?action=update-destination&id=<?= $data['id'] ?? '' ?>" method="post">
             <div class="form-group">
                 <label for="name" class="form-label">Tên điểm đến:</label>
                 <input type="text" class="form-control" id="name" name="name"
-                       value="<?= htmlspecialchars($data['name'] ?? '') ?>" required>
+                       value="<?= $data['name'] ?? '' ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="country" class="form-label">Quốc gia:</label>
                 <input type="text" class="form-control" id="country" name="country"
-                       value="<?= htmlspecialchars($data['country'] ?? '') ?>" required>
+                       value="<?= $data['country'] ?? '' ?>" required>
             </div>
 
             <div class="form-group">

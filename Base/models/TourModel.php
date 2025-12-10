@@ -2,6 +2,7 @@
 class TourModel
 {
     public $db;
+    public $customRequestModel;
 
     public function __construct()
     {
@@ -230,9 +231,9 @@ public function update($id, $data, $destinations = [], $departures = [], $upload
         $stmt->execute([':tour_id' => $tour_id]);
         return $stmt->fetchAll();
     }
-    public function getDepartures($tour_id)
-    {
-        $sql = "SELECT
+public function getDepartures($tour_id)
+{
+    $sql = "SELECT
                 td.id AS departure_id,
                 td.start_date,
                 td.end_date,
@@ -240,15 +241,18 @@ public function update($id, $data, $destinations = [], $departures = [], $upload
                 td.available_slots AS max_slots,
                 IFNULL(td.available_slots - COUNT(BC.id), 0) AS remaining_slots
             FROM tour_departures td
-            LEFT JOIN bookings b ON b.departure_id = td.id AND b.status IN ('Confirmed', 'Pending')
+            
+            -- 🟢 DÒNG CẦN SỬA: Thay b.status bằng b.payment_status
+            LEFT JOIN bookings b ON b.departure_id = td.id AND b.payment_status IN ('Confirmed', 'Pending') 
+            
             LEFT JOIN booking_customers BC ON BC.booking_id = b.id
             WHERE td.tour_id = :tour_id
             GROUP BY td.id, td.start_date, td.end_date, td.current_price, td.available_slots
             ORDER BY td.start_date ASC";
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([':tour_id' => $tour_id]);
-        $departures = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([':tour_id' => $tour_id]);
+    $departures = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Map lại key để form hiển thị đúng
         return array_map(function ($dep) {
@@ -314,5 +318,32 @@ private function saveItineraryDetails($tour_id, $details = [])
             ]);
         }
     }
+}
+// TRONG TourController.php (Bổ sung vào class)
+
+/**
+ * Hiển thị chi tiết yêu cầu tùy chỉnh và các báo giá liên quan
+ */
+public function viewCustomRequest()
+{
+    $requestId = $_GET['id'] ?? null;
+    if (!$requestId || !is_numeric($requestId)) {
+        // Chuyển hướng nếu ID không hợp lệ
+        header('Location: ' . BASE_URL . '?action=list-requests');
+        exit;
+    }
+
+    $request = $this->customRequestModel->getRequestDetail($requestId);
+
+    if (!$request) {
+        // Xử lý nếu không tìm thấy yêu cầu
+        // Tùy chọn: set_message("Yêu cầu không tồn tại", 'error');
+        header('Location: ' . BASE_URL . '?action=list-requests');
+        exit;
+    }
+
+    $title = "Chi tiết Yêu cầu #" . $requestId;
+    $view = "admin/requests/view-request-detail"; // <<< View cần tạo
+    require_once PATH_VIEW . 'main.php';
 }
 }

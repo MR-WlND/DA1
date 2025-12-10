@@ -109,26 +109,80 @@ class GuideModel
         $stmt->execute([':id' => $id]);
     }
 
-    public function getAssignedDepartures($guideId)
-    {
-        // Count booked customers by joining bookings -> booking_customers
-        $sql = "
-            SELECT 
-                td.id AS departure_id,
-                t.name AS tour_name,
-                td.start_date,
-                COUNT(bc.id) AS total_booked_guests
-            FROM tour_departures td
-            JOIN tours t ON td.tour_id = t.id
-            JOIN departure_resources dr ON td.id = dr.departure_id
-            LEFT JOIN bookings b ON td.id = b.departure_id
-            LEFT JOIN booking_customers bc ON b.id = bc.booking_id
-            WHERE dr.resource_type = 'guide' AND dr.resource_id = :guide_id
-            GROUP BY td.id, t.name, td.start_date
-            ORDER BY td.start_date ASC
-        ";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([':guide_id' => $guideId]);
-        return $stmt->fetchAll();
+    // TRONG GuideModel.php
+public function getAssignedDepartures($guideId)
+{
+    // 🛑 BƯỚC 1: TRUY VẤN CƠ BẢN (Lấy danh sách chuyến đi và tổng số khách)
+    $sql = "
+        SELECT 
+            td.id AS departure_id,
+            t.name AS tour_name,
+            td.start_date,
+            td.end_date,
+            COUNT(bc.id) AS total_booked_guests
+        FROM tour_departures td
+        JOIN tours t ON td.tour_id = t.id
+        JOIN departure_resources dr ON td.id = dr.departure_id
+        LEFT JOIN bookings b ON td.id = b.departure_id
+        LEFT JOIN booking_customers bc ON b.id = bc.booking_id
+        WHERE dr.resource_type = 'guide' AND dr.resource_id = :guide_id
+        GROUP BY td.id, t.name, td.start_date, td.end_date
+        ORDER BY td.start_date ASC
+    ";
+    
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([':guide_id' => $guideId]);
+    $departures = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // 🛑 BƯỚC 2: BỔ SUNG DỮ LIỆU CHI TIẾT (Manifest và Lộ trình)
+    foreach ($departures as &$departure) {
+        $departureId = $departure['departure_id'];
+        
+        // 🟢 THÊM DANH SÁCH KHÁCH HÀNG (Dùng cho điểm danh)
+        $departure['guests_manifest'] = $this->getManifestByDepartureId($departureId);
+
+        // 🟢 THÊM LỘ TRÌNH CHI TIẾT
+        $departure['itinerary_stops'] = $this->getItineraryStops($departureId); 
     }
+
+    return $departures;
+}
+protected function getItineraryStops($departureId) {
+    // Lấy chi tiết lộ trình thông qua tour_id của chuyến khởi hành
+    $sql = "
+        SELECT 
+            id.day_number, 
+            id.time_slot, 
+            id.activity
+        FROM 
+            itinerary_details id
+        JOIN 
+            tours t ON t.id = id.tour_id
+        JOIN
+            tour_departures td ON td.tour_id = t.id
+        WHERE 
+            td.id = :dep_id 
+        ORDER BY 
+            id.day_number ASC, id.time_slot ASC
+    ";
+    
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([':dep_id' => $departureId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+// TRONG GuideModel.php
+protected function getManifestByDepartureId($departureId) {
+    // Lấy tên, SĐT, trạng thái check-in (is_checked_in)
+    $sql = "SELECT bc.id, bc.name, bc.phone, bc.is_checked_in
+            FROM bookings b 
+            JOIN booking_customers bc ON b.id = bc.booking_id 
+            WHERE b.departure_id = :dep_id";
+    
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([':dep_id' => $departureId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+// TRONG GuideModel.php
+
+    
 }

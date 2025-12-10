@@ -4,18 +4,18 @@
     <h2>Cập nhật thông tin người dùng :</h2>
     <div class="card">
         <div class="toph4">
-            <h4><?= htmlspecialchars($user['name']) ?></h4>
+            <h4><?= $user['name'] ?></h4>
         </div>
 
         <form action="<?= BASE_URL ?>?action=update-user&id=<?= $user['id'] ?>" method="post">
             <div class="form-group mb-3">
                 <label for="name" class="form-label">Họ và tên:</label>
-                <input type="text" class="form-control" id="name" name="name" value="<?= htmlspecialchars($user['name']) ?>" required>
+                <input type="text" class="form-control" id="name" name="name" value="<?= $user['name'] ?>" required>
             </div>
 
             <div class="form-group mb-3">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
+                <input type="email" class="form-control" id="email" name="email" value="<?= $user['email'] ?>" required>
             </div>
 
             <div class="form-group mb-3">
@@ -25,7 +25,7 @@
 
             <div class="form-group mb-3">
                 <label for="phone" class="form-label">Số điện thoại:</label>
-                <input type="tel" class="form-control" id="phone" name="phone" value="<?= htmlspecialchars($user['phone']) ?>" required>
+                <input type="tel" class="form-control" id="phone" name="phone" value="<?= $user['phone'] ?>" required>
             </div>
 
             <div class="form-group mb-3">

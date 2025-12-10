@@ -56,8 +56,60 @@ class DepartureController
 
     public function deleteDeparture()
     {
-        $departure = new DepartureModel();
-        $departure->delete($_GET['id']);
-        header('Location:' . BASE_URL . '?action=list-departure');
+        $departureModel = new DepartureModel();
+        $id = $_GET['id'];
+
+        // Kiểm tra xem có booking nào liên quan không
+        if ($departureModel->hasBookings($id)) {
+            // Nếu có, báo lỗi và không cho xóa
+            $errorMessage = "Không thể xóa lịch khởi hành này vì đã có booking tồn tại.";
+            header('Location:' . BASE_URL . '?action=list-departure&error=' . urlencode($errorMessage));
+        } else {
+            // Nếu không, tiến hành xóa
+            $departureModel->delete($id);
+            header('Location:' . BASE_URL . '?action=list-departure&success=1');
+        }
+        exit;
     }
+    public function departureDetail()
+{
+    // BẢO VỆ TRANG (chỉ Admin/Staff mới được xem chi tiết)
+    if (!isset($_SESSION['user']) || ($_SESSION['user']['role'] ?? 'user') !== 'admin') { 
+        header('Location: ' . BASE_URL . '?action=homepage');
+        exit;
+    }
+    
+    $departureId = $_GET['id'] ?? null;
+
+    if (!$departureId) {
+        header('Location: ' . BASE_URL . '?action=list-departures');
+        exit;
+    }
+    
+    // Khởi tạo các Model cần thiết
+    $departureModel = new DepartureModel(); // Giả định Model này tồn tại
+    $tourLogModel = new TourLogModel();
+    
+    // 1. Lấy chi tiết chuyến đi
+    $departure = $departureModel->getOne($departureId); 
+    
+    if (!$departure) {
+        header('Location: ' . BASE_URL . '?action=list-departures');
+        exit;
+    }
+
+    // 2. 🟢 LẤY LỊCH SỬ LOG HOẠT ĐỘNG
+    $departureLogs = $tourLogModel->getLogsByDepartureId($departureId);
+    
+    // 3. Truyền dữ liệu sang View
+    $data = [
+        'departure' => $departure,
+        'departureLogs' => $departureLogs, // 🟢 Truyền log đi
+        // ... (Thêm list bookings, customers nếu cần)
+    ];
+
+    $title = "Chi tiết Chuyến đi";
+    $view = "admin/departure/departure-detail"; // Đảm bảo đường dẫn View này chính xác
+    require_once PATH_VIEW . 'main.php';
+}
 }

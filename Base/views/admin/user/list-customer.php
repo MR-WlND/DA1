@@ -28,18 +28,22 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $index = 1; foreach ($listUser as $user): if ($user['role'] == 'customer'): ?>
-                    <tr>
-                        <td><?= $index++ ?></td>
-                        <td><?= htmlspecialchars($user['name']) ?></td>
-                        <td><?= htmlspecialchars($user['email']) ?></td>
-                        <td><?= htmlspecialchars($user['phone']) ?></td>
-                        <td><?= $user['role'] ?></td>
-                        <td>
-                            <a href="<?= BASE_URL ?>?action=update-user&id=<?= $user['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                <?php endif; endforeach; ?>
+                <?php $index = 1;
+                foreach ($listUser as $user): if ($user['role'] == 'customer'): ?>
+                        <tr>
+                            <td><?= $index++ ?></td>
+                            <td><?= $user['name'] ?></td>
+                            <td><?= $user['email'] ?></td>
+                            <td><?= $user['phone'] ?></td>
+                            <td><?= $user['role'] ?></td>
+                            <td>
+                                <a href="<?= BASE_URL ?>?action=update-user&id=<?= $user['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
+                                <a href="<?= BASE_URL ?>?action=delete-user&id=<?= $user['id'] ?>"
+                                    onclick="return confirm('Xóa người dùng này?')" class="btn delete"><i class="fa-regular fa-trash-can"></i></a>
+                            </td>
+                        </tr>
+                <?php endif;
+                endforeach; ?>
             </tbody>
         </table>
     </div>

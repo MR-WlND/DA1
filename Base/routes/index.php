@@ -3,7 +3,7 @@
 $action = $_GET['action'] ?? '/';
 
 match ($action) {
-    '/'                 => (new AuthController)->index(),
+    '/', 'homepage'     => (new AuthController)->index(),
     'login'             => (new AuthController)->index(),
     'handleLogin'       => (new AuthController)->handleLogin(),
     'logout'            => (new AuthController)->logout(),
@@ -11,6 +11,10 @@ match ($action) {
     // Dashboard theo vai trò
     'dashboard'         => (new DashboardController)->index(),
     'schedule'     => (new GuideViewController)->schedule(),
+    'customer_list'     => (new TourController) -> requestTour(),
+    
+    'detail-tour'       => (new TourController) -> detailTour(),
+    'request-tour'      => (new TourController)-> requestTour(),
 
     // User Management 
     'list-admin'         => (new UsersController)->listAdmin(),
@@ -26,6 +30,10 @@ match ($action) {
     'update-booking'     => (new BookingController)->updateBooking(),
     'delete-booking'     => (new BookingController)->deleteBooking(),
     'detail-booking'     => (new BookingController)->detailBooking(),
+    'checkout-simple' => (new BookingController)->checkoutSimple(),
+    'mark-booking-paid' => (new BookingController)->markAsPaid(),
+    'booking-detail'     => (new BookingController)->detailBooking(),
+
 
     // Tour Management
     'list-tour'         => (new TourController)->listTour(),
@@ -52,6 +60,7 @@ match ($action) {
     'create-departure'       => (new DepartureController)->createDeparture(),
     'update-departure'       => (new DepartureController)->updateDeparture(),
     'delete-departure'       => (new DepartureController)->deleteDeparture(),
+    'departure-detail'       => (new DepartureController)->departureDetail(),
 
     // Hotel Management
     'list-hotel'         => (new HotelController)->listHotel(),
@@ -72,12 +81,6 @@ match ($action) {
     'delete-guide'       => (new GuideController)->deleteGuide(),
     'detail-guide'       => (new GuideController)->detailGuide(),
 
-    // Cancellation Policy Management
-    'list-policies'   => (new CancellationPolicyController)->listPolicies(),
-    'create-policy'  => (new CancellationPolicyController)->createPolicy(),
-    'update-policy'  => (new CancellationPolicyController)->updatePolicy(),
-    'delete-policy'  => (new CancellationPolicyController)->deletePolicy(),
-
     // Phân bổ tài nguyên
     'list-resource' => (new DepartureResourceController)->listResource(),
     'create-resource' => (new DepartureResourceController)->createResource(),
@@ -90,4 +93,18 @@ match ($action) {
     //checkin
     'list-customers'       => (new BookingCustomerController)->listCustomers(),
     'update-checkin-status' => (new BookingCustomerController)->updateCheckInStatus(),
+
+    'list-requests'     => (new TourController) -> listCustomRequests(),     //Xem danh sách yêu cầu
+    'view-request'      => (new TourController)-> viewCustomRequest(),      //Xem chi tiết và Báo giá
+
+    'submit-quote'          => (new TourController)->submitQuote(),             
+    'update-request-status' => (new TourController)->updateRequestStatus(),
+
+    'my-quotes' => (new TourController)->viewMyQuotes(),
+
+    'add-departure-log' =>(new OperationLogController)->addDepartureLog(),
+
+    'get_tour_logs' => (new GuideViewController)->getTourLogs(),
+    'add_tour_log' => (new GuideViewController)->addTourLog(),
+    
 };

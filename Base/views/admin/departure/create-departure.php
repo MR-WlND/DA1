@@ -12,7 +12,7 @@
                 <label for="tour_id">Chọn tour:</label>
                 <select name="tour_id" id="tour_id" class="form-control">
                     <?php foreach($listTours as $tour): ?>
-                        <option value="<?= $tour['id'] ?>"><?= htmlspecialchars($tour['name']) ?></option>
+                        <option value="<?= $tour['id'] ?>"><?= $tour['name'] ?></option>
                     <?php endforeach ?>
                 </select>
             </div>

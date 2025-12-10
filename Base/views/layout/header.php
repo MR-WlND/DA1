@@ -44,13 +44,13 @@
 
                 <div class="menu">
                     <!-- Dashboard -->
-                    <a href="<?= BASE_URL ?>?action=dashboard" class="<?= ($action == 'dashboard') ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>?action=dashboard" class="<?= ($action == 'dashboard')?>">
                         <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
 
                     <!-- Quản lý Tour -->
                     <?php
-                    $tour_actions = ['list-tour', 'list-departure', 'list-destination', 'list-category', 'list-custom-requests', 'list-policies'];
+                    $tour_actions = ['list-tour', 'list-departure', 'list-destination', 'list-category', 'list-requests', 'list-policies'];
                     $is_tour_group_active = in_array($action, $tour_actions);
                     ?>
                     <div class="dropdown <?= $is_tour_group_active ? 'active' : '' ?>">
@@ -60,7 +60,7 @@
                             <a href="<?= BASE_URL ?>?action=list-departure" class="<?= ($action == 'list-departure') ? 'active-sub' : '' ?>">• Lịch Khởi Hành</a>
                             <a href="<?= BASE_URL ?>?action=list-destination" class="<?= ($action == 'list-destination') ? 'active-sub' : '' ?>">• Điểm Đến</a>
                             <a href="<?= BASE_URL ?>?action=list-category" class="<?= ($action == 'list-category') ? 'active-sub' : '' ?>">• Danh Mục Tour</a>
-                            <a href="<?= BASE_URL ?>?action=list-custom-requests" class="<?= ($action == 'list-custom-requests') ? 'active-sub' : '' ?>">• Tour Theo Yêu Cầu</a>
+                            <a href="<?= BASE_URL ?>?action=list-requests" class="<?= ($action == 'list-requests') ? 'active-sub' : '' ?>">• Tour Theo Yêu Cầu</a>
                         </div>
                     </div>
 
@@ -74,8 +74,7 @@
                         <div class="drop-content">
                             <a href="<?= BASE_URL ?>?action=list-resource" class="<?= ($action == 'list-resource') ? 'active-sub' : '' ?>">• Phân Bổ Tài Nguyên</a>
                             <a href="<?= BASE_URL ?>?action=list-booking" class="<?= ($action == 'list-booking') ? 'active-sub' : '' ?>">• Đơn Đặt Tour</a>
-                            <a href="<?= BASE_URL ?>?action=list-payment" class="<?= ($action == 'list-payment') ? 'active-sub' : '' ?>">• Thanh Toán</a>
-                            <a href="<?= BASE_URL ?>?action=list-booking-customers" class="<?= ($action == 'list-booking-customers') ? 'active-sub' : '' ?>">• Khách Tham Gia</a>
+                            
                         </div>
                     </div>
 
@@ -113,7 +112,7 @@
 
                     <!-- Báo cáo & Đăng xuất -->
                     <div class="dropdown <?= $is_order_group_active ? 'active' : '' ?>">
-                        <a href="<?= BASE_URL ?>?action=list-profit-loss.php" class="<?= ($action == 'list-profit-loss.php') ? 'active' : '' ?>"><i class="fas fa-file-alt"></i> Báo Cáo</a>
+                        <a href="<?= BASE_URL ?>?action=list-profit-loss" class="<?= ($action == 'list-profit-loss') ? 'active' : '' ?>"><i class="fas fa-file-alt"></i> Báo Cáo</a>
                     </div>
                     
                     <a href="<?= BASE_URL ?>?action=logout"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a>

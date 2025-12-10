@@ -4,18 +4,18 @@
     <h2>Cập nhật danh mục :</h2>
     <div class="card">
         <div class="toph4">
-            <h4><?= htmlspecialchars($category['name'] ?? 'Danh mục') ?></h4>
+            <h4><?= $category['name'] ?? 'Danh mục' ?></h4>
         </div>
 
         <form action="<?= BASE_URL ?>?action=update-category&id=<?= $category['id'] ?>" method="post" enctype="multipart/form-data">
             <div class="form-group mb-3">
                 <label for="name" class="form-label">Tên danh mục:</label>
-                <input type="text" class="form-control" id="name" name="name" value="<?= htmlspecialchars($category['name'] ?? '') ?>" required>
+                <input type="text" class="form-control" id="name" name="name" value="<?= $category['name'] ?? '' ?>" required>
             </div>
 
             <div class="form-group mb-3">
                 <label for="description" class="form-label">Mô tả:</label>
-                <textarea class="form-control" id="description" name="description" rows="3"><?= htmlspecialchars($category['description'] ?? '') ?></textarea>
+                <textarea class="form-control" id="description" name="description" rows="3"><?= $category['description'] ?? '' ?></textarea>
             </div>
 
             <div class="mt-3">

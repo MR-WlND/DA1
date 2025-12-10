@@ -4,20 +4,20 @@
     <h2>Cập nhật Khách sạn :</h2>
     <div class="card">
         <div class="toph4">
-            <h4><?= htmlspecialchars($data['name'] ?? 'Khách sạn') ?></h4>
+            <h4><?= $data['name'] ?? 'Khách sạn' ?></h4>
         </div>
 
         <form action="<?= BASE_URL ?>?action=update-hotel&id=<?= $data['id'] ?? '' ?>" method="post">
             <div class="form-group mb-3">
                 <label for="name">Tên khách sạn:</label>
                 <input type="text" class="form-control" id="name" name="name" 
-                       value="<?= htmlspecialchars($data['name'] ?? '') ?>" required>
+                       value="<?= $data['name'] ?? '' ?>" required>
             </div>
 
             <div class="form-group mb-3">
                 <label for="address">Địa chỉ:</label>
                 <input type="text" class="form-control" id="address" name="address" 
-                       value="<?= htmlspecialchars($data['address'] ?? '') ?>">
+                       value="<?= $data['address'] ?? '' ?>">
             </div>
 
             <div class="form-group mb-3">
@@ -26,7 +26,7 @@
                     <?php foreach ($listDestination as $dest): ?>
                         <option value="<?= $dest['id'] ?>" 
                             <?= isset($data['destination_id']) && $data['destination_id'] == $dest['id'] ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($dest['name']) ?>
+                            <?= $dest['name'] ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

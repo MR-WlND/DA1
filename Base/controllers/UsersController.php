@@ -28,7 +28,7 @@ class UsersController {
                 $_POST['role'],
             );
 
-            header("Location: " . BASE_URL . "?action=list-user");
+            header("Location: " . BASE_URL . "?action=list-customer");
             exit();
         }
 
@@ -56,7 +56,7 @@ class UsersController {
             $_POST['role'],
         );
 
-        header("Location: " . BASE_URL . "?action=list-user");
+        header("Location: " . BASE_URL . "?action=list-customer");
         exit();
     }
 
@@ -71,6 +71,6 @@ class UsersController {
     public function deleteUser() {
         $model = new UserModel();
         $model->delete($_GET['id']);
-        header("Location: " . BASE_URL . "?action=list-user");
+        header("Location: " . BASE_URL . "?action=list-customer");
     }
 }

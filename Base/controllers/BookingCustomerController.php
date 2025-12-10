@@ -1,9 +1,6 @@
 <?php
-// File: controllers/BookingCustomerController.php
-
 class BookingCustomerController
 {
-    // 1. Hiển thị Danh sách Khách tham gia (Manifest)
     public function listCustomers()
     {
         $bookingId = $_GET['booking_id'] ?? null; // Lấy ID Booking để lọc
@@ -31,8 +28,8 @@ class BookingCustomerController
         // Gọi Model để cập nhật trạng thái mà không cần kiểm tra lỗi
         $customerModel->updateCheckInStatus($customerId, $status);
         
-        // Chuyển hướng quay lại trang chi tiết Booking
         header('Location: ' . BASE_URL . '?action=detail-booking&id=' . $bookingId);
         exit;
     }
+    
 }

@@ -36,12 +36,14 @@
                         <td><?= $user['phone'] ?></td>
                         <td><span class="text-danger fw-bold"><?= $user['role'] ?></span></td>
                         <td>
-                            <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $user['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
+                            <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $user['id'] ?>" class="btn edit"><i class="fas fa-eye"></i></a>
                     </tr>
                 <?php endif; endforeach; ?>
             </tbody>
         </table>
     </div>
 </div>
+
+
 
 <?php include 'views/layout/footer.php'; ?>

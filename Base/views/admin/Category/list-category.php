@@ -11,7 +11,7 @@
     <div class="card">
         <div class="toph4">
             <h4>Danh sách danh mục tour<h4>
-            <a href="<?= BASE_URL ?>?action=create-category" class="btn btn-nut">+ Thêm danh mục</a>
+                    <a href="<?= BASE_URL ?>?action=create-category" class="btn btn-nut">+ Thêm danh mục</a>
         </div>
         <table class="table">
             <thead>
@@ -32,6 +32,9 @@
                         <td><?= date('d/m/Y', strtotime($category['created_at'])) ?></td>
                         <td>
                             <a href="<?= BASE_URL ?>?action=update-category&id=<?= $category['id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
+                            <a href="<?= BASE_URL ?>?action=delete-category&id=<?= $category['id'] ?>"
+                                onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?')"
+                                class="btn delete"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>

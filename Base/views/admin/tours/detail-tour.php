@@ -3,327 +3,283 @@
 <style>
     body {
         font-family: 'Inter', sans-serif;
-        background: #f3f4f6;
+        background: #f5f6f7;
+        margin: 0;
+        padding: 0;
         color: #1f2937;
     }
-    .tour-detail {
-        max-width: 1200px;
-        margin: 40px auto;
+
+    /* ===== HERO GALLERY ===== */
+    .gallery {
+        position: relative;
+        width: 100%;
+        height: 420px;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #ddd;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    .gallery img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        display: none;
     }
 
-    /* Hero Gallery */
-    .hero-gallery {
-        position: relative;
-        border-radius: 16px;
-        overflow: hidden;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    .gallery .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 42px;
+        height: 42px;
+        background: rgba(255,255,255,0.8);
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    .hero-gallery img {
-        width: 100%;
-        height: 450px;
-        object-fit: cover;
-        transition: transform 0.5s;
-    }
-    .hero-gallery:hover img {
-        transform: scale(1.05);
-    }
-    .hero-overlay {
+    .arrow:hover { transform: translateY(-50%) scale(1.05); }
+
+    .arrow.prev { left: 12px; }
+    .arrow.next { right: 12px; }
+
+    .hero-info {
         position: absolute;
         bottom: 20px;
-        left: 30px;
+        left: 24px;
         color: #fff;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        text-shadow: 0 3px 12px rgba(0,0,0,0.7);
     }
-    .hero-overlay h1 {
-        font-size: 36px;
-        font-weight: 700;
-        margin: 0;
+
+    .hero-info h1 {
+        font-size: 32px;
+        margin: 0 0 8px;
+        font-weight: 800;
     }
-    .hero-overlay .tags {
-        margin-top: 10px;
-    }
-    .hero-overlay .tag {
+
+    .tag {
         display: inline-block;
-    background: linear-gradient(90deg,#8b5cf6,#c084fc);
-        padding: 6px 14px;
+        padding: 5px 14px;
         border-radius: 20px;
+        background: #7c3aed;
+        color: #fff;
+        margin-right: 6px;
         font-size: 13px;
         font-weight: 600;
-        margin-right: 6px;
     }
 
-    /* Section Cards */
-    .section-card {
+    /* ===== SECTION CARD ===== */
+    .card {
         background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        margin-top: 30px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        transition: 0.3s;
-    }
-    .section-card:hover {
-    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        border-radius: 12px;
+        padding: 22px;
+        margin-top: 26px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     }
 
-    /* Timeline / Itinerary */
+    .card h2 {
+        margin-bottom: 14px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    /* ===== TIMELINE ===== */
     .timeline {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-    .timeline-item {
-        position: relative;
-        padding-left: 50px;
         border-left: 3px solid #6366f1;
+        padding-left: 18px;
     }
+
+    .timeline-item {
+        margin-bottom: 16px;
+        position: relative;
+    }
+
     .timeline-item::before {
         content: '';
-        position: absolute;
-        left: -10px;
-        top: 5px;
-        width: 20px;
-        height: 20px;
+        width: 14px;
+        height: 14px;
         background: #6366f1;
         border-radius: 50%;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        position: absolute;
+        left: -26px;
+        top: 10px;
     }
+
     .timeline-item h4 {
         margin: 0;
         font-size: 16px;
-        font-weight: 600;
-    }
-    .timeline-item p {
-        margin: 4px 0 0 0;
-        color: #4b5563;
-        font-size: 14px;
+        font-weight: 700;
     }
 
-    /* Departure cards */
+    /* ===== DEPARTURES ===== */
     .departure-grid {
         display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 18px;
     }
-    .departure-card {
-    background: linear-gradient(145deg,#ffffff,#f1f1f1);
-        border-radius: 16px;
+
+    .departure {
+        background: #fff;
         padding: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        transition: 0.3s;
+        border-radius: 12px;
+        border: 1px solid #ececec;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-    .departure-card:hover {
-    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
-        transform: translateY(-4px);
+
+    .departure h5 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        font-weight: 700;
     }
-    .departure-card h5 {
-        margin: 0 0 8px 0;
-        font-weight: 600;
-    }
-    .departure-card .price-slot {
+
+    .price-line {
         display: flex;
         justify-content: space-between;
-        margin-top: 10px;
+        margin: 8px 0;
         font-weight: 600;
-        font-size: 14px;
     }
-    .departure-card .btn-book {
+
+    .btn-book {
         display: block;
-        margin-top: 12px;
         text-align: center;
+        padding: 8px 0;
         background: #10b981;
         color: #fff;
-        padding: 6px 0;
+        font-weight: 700;
         border-radius: 10px;
         text-decoration: none;
-        font-weight: 600;
-    }
-    .departure-card .btn-book:hover {
-        background: #059669;
     }
 
-    /* Policy & Description */
-    .collapsible {
-        background: #6366f1;
-        color: #fff;
-        cursor: pointer;
-        padding: 12px 16px;
-        width: 100%;
-        border: none;
-        border-radius: 12px;
-        text-align: left;
-        font-size: 16px;
-        font-weight: 600;
-        outline: none;
-        margin-top: 10px;
-        transition: 0.25s;
-    }
-    .collapsible:hover {
-        background: #4f46e5;
-    }
-    .content-collapsible {
-        padding: 0 16px;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-        background: #f9fafb;
-        border-radius: 0 0 12px 12px;
+    /* ===== DESCRIPTION & POLICY ===== */
+    .text-block {
+        line-height: 1.65;
+        color: #374151;
+        margin-top: 12px;
+        white-space: pre-line;
     }
 
-    /* Back Button */
+    /* ===== BACK ===== */
     .btn-back {
         display: inline-block;
-        margin-top: 20px;
-        padding: 10px 20px;
+        margin-top: 24px;
+        padding: 10px 18px;
         background: #ef4444;
         color: #fff;
         border-radius: 10px;
+        font-weight: 700;
         text-decoration: none;
-        transition: 0.25s;
-    }
-    .btn-back:hover {
-        background: #b91c1c;
     }
 </style>
+<div class="main">
 
-<div class="tour-detail">
-    <!-- Hero Gallery -->
+    <!-- HERO GALLERY -->
     <?php if (!empty($tour['gallery'])): ?>
-        <div class="hero-gallery">
-            <?php foreach ($tour['gallery'] as $i => $img): ?>
-                <img class="slide" src="<?= BASE_ASSETS_UPLOADS . $img['image_url'] ?>" style="display: <?= $i===0?'block':'none' ?>;">
-            <?php endforeach; ?>
-            <div class="hero-overlay">
-                <h1><?= htmlspecialchars($tour['name']) ?></h1>
-                <div class="tags">
-                    <span class="tag"><?= htmlspecialchars($tour['category_name'] ?? '') ?></span>
-                    <span class="tag"><?= ($tour['tour_type']=='domestic')?'Nội địa':'Quốc tế' ?></span>
-                </div>
-            </div>
-            <button onclick="plusSlide(-1)" style="position:absolute;top:50%;left:10px;border-radius:50%;width:30px;height:30px;"></button>
-            <button onclick="plusSlide(1)" style="position:absolute;top:50%;right:10px;border-radius:50%;width:30px;height:30px;"></button>
-        </div>
+    <div class="gallery">
+        <?php foreach ($tour['gallery'] as $i => $img): ?>
+            <img class="slide" src="<?= BASE_ASSETS_UPLOADS . $img['image_url'] ?>" style="<?= $i === 0 ? 'display:block;' : '' ?>">
+        <?php endforeach; ?>
 
-        <script>
-            let slideIndex = 0;
+        <button class="arrow prev" id="prev">&#10094;</button>
+        <button class="arrow next" id="next">&#10095;</button>
+
+        <div class="hero-info">
+            <h1><?= $tour['name'] ?></h1>
+            <span class="tag"><?= $tour['category_name'] ?? '' ?></span>
+            <span class="tag"><?= $tour['tour_type']=='domestic'?'Nội địa':'Quốc tế' ?></span>
+        </div>
+    </div>
+
+    <script>
+        (function(){
             const slides = document.querySelectorAll('.slide');
-            function showSlide(n){ slides.forEach(s=>s.style.display='none'); slides[n].style.display='block'; }
-            function plusSlide(n){ slideIndex=(slideIndex+n+slides.length)%slides.length; showSlide(slideIndex);}
-        </script>
+            let i = 0;
+            const show = idx => {
+                slides.forEach(s => s.style.display = 'none');
+                slides[idx].style.display = 'block';
+            };
+            document.getElementById('prev').onclick = () => { i = (i - 1 + slides.length) % slides.length; show(i); };
+            document.getElementById('next').onclick = () => { i = (i + 1) % slides.length; show(i); };
+        })();
+    </script>
+
     <?php endif; ?>
 
-    <!-- Lộ trình -->
-    <div class="section-card">
+    <!-- TIMELINE -->
+    <div class="card">
         <h2>Lộ trình</h2>
         <div class="timeline">
-            <?php foreach($tour['destinations']??[] as $d): ?>
-                <div class="timeline-item">
-                    <h4><?= htmlspecialchars($d['name']) ?></h4>
-                    <p><?= htmlspecialchars($d['description']??$tour['description']??'') ?></p>
-                </div>
+            <?php foreach($tour['destinations'] ?? [] as $d): ?>
+            <div class="timeline-item">
+                <h4><?= $d['name'] ?></h4>
+                <p><?= $d['description'] ?? '' ?></p>
+            </div>
             <?php endforeach; ?>
         </div>
     </div>
 
+    <!-- ITINERARY DETAILS -->
+    <div class="card">
+        <h2>Lịch trình Chi tiết</h2>
 
-    <section class="general-description mt-4">
-    <h2>Mô tả chung & Ghi chú</h2>
-    <?php if (!empty($tour['description'])): ?>
-        <div class="card card-body bg-light">
-            <p><?= nl2br(htmlspecialchars($tour['description'])) ?></p>
-        </div>
-    <?php else: ?>
-        <p class="text-muted">Tour này chưa có mô tả chung.</p>
-    <?php endif; ?>
-</section>
+        <?php $itinerary = $tour['itinerary_details'] ?? []; ?>
 
-<hr>
-
-<section class="itinerary-details mt-5">
-    <h2>🗓️ Lịch trình Chi tiết (Ngày/Giờ/Hoạt động)</h2>
-    
-    <?php $itineraryDetails = $tour['itinerary_details'] ?? []; // Lấy dữ liệu từ Model ?>
-
-    <?php if (empty($itineraryDetails)): ?>
-        <p class="alert alert-warning">Tour này chưa có lịch trình chi tiết theo ngày/giờ được thiết lập.</p>
-    <?php else: ?>
-        <table class="table table-bordered table-striped table-sm table-responsive">
+        <?php if (empty($itinerary)): ?>
+            <p>Chưa có dữ liệu.</p>
+        <?php else: ?>
+        <table style="width:100%; border-collapse:collapse;" border="1">
             <thead>
-                <tr>
-                    <th style="width: 10%;">Ngày</th>
-                    <th style="width: 15%;">Thời gian</th>
-                    <th style="width: 75%;">Hoạt động chi tiết</th>
+                <tr style="background:#f1f5f9;">
+                    <th style="padding:10px; width:15%;">Ngày</th>
+                    <th style="padding:10px; width:20%;">Thời gian</th>
+                    <th style="padding:10px;">Hoạt động</th>
                 </tr>
             </thead>
             <tbody>
-                <?php 
-                $currentDay = 0;
-                foreach ($itineraryDetails as $item): 
-                    // Logic nhóm theo Ngày: chỉ hiển thị số ngày ở dòng đầu tiên của ngày đó
-                    $displayDay = ($item['day_number'] != $currentDay) ? 'Ngày ' . $item['day_number'] : '';
-                    $currentDay = $item['day_number'];
-                ?>
-                    <tr>
-                        <td class="align-top fw-bold <?= !empty($displayDay) ? 'bg-light' : '' ?>">
-                            <?= !empty($displayDay) ? $displayDay : '' ?>
-                        </td>
-                        <td><?= htmlspecialchars($item['time_slot'] ?? 'Cả ngày') ?></td>
-                        <td><?= htmlspecialchars($item['activity']) ?></td>
-                    </tr>
-                <?php endforeach; ?>
+                <?php $dNow = null; foreach($itinerary as $row): ?>
+                <tr>
+                    <td style="padding:10px; font-weight:700;"><?= $row['day_number'] != $dNow ? 'Ngày '.$row['day_number'] : '' ?></td>
+                    <td style="padding:10px;"><?= $row['time_slot'] ?? 'Cả ngày' ?></td>
+                    <td style="padding:10px;"><?= $row['activity'] ?></td>
+                </tr>
+                <?php $dNow = $row['day_number']; endforeach; ?>
             </tbody>
         </table>
-    <?php endif; ?>
-</section>
+        <?php endif; ?>
+    </div>
 
-
-    <!-- Lịch khởi hành -->
-    <div class="section-card">
+    <!-- DEPARTURE -->
+    <div class="card">
         <h2>Lịch khởi hành & Giá</h2>
         <div class="departure-grid">
-            <?php foreach($tour['departures']??[] as $dep): ?>
-                <div class="departure-card">
-                    <h5><?= $dep['start_date'] ?? '-' ?> → <?= $dep['end_date'] ?? '-' ?></h5>
-                    <div class="price-slot">
-                        <span>Giá: <?= number_format($dep['current_price']??0) ?> đ</span>
-                        <span>Số chỗ: <?= $dep['available_slots']??0 ?></span>
-                    </div>
-                    <a href="<?= BASE_URL ?>?action=book&id=<?= $tour['id'] ?>&dep_id=<?= $dep['departure_id'] ?>" class="btn-book">Đặt chỗ</a>
+            <?php foreach($tour['departures'] ?? [] as $dep): ?>
+            <div class="departure">
+                <h5><?= $dep['start_date'] ?> → <?= $dep['end_date'] ?></h5>
+                <div class="price-line">
+                    <span>Giá: <?= number_format($dep['current_price']) ?>đ</span>
+                    <span>Chỗ: <?= $dep['available_slots'] ?></span>
                 </div>
+                <a class="btn-book" href="<?= BASE_URL ?>?action=create-booking&id=<?= $tour['id'] ?>&dep_id=<?= $dep['departure_id'] ?>">Đặt chỗ</a>
+            </div>
             <?php endforeach; ?>
         </div>
     </div>
 
-<div class="section-card">
-    <?php 
-        // 🟢 LẤY NỘI DUNG CHÍNH SÁCH TỪ CỘT TEXT MỚI
-        $policyContent = $tour['cancellation_policy_text'] ?? null;
-    ?>
+    <!-- DESCRIPTION -->
+    <div class="card">
+        <h2>Mô tả chi tiết</h2>
+        <div class="text-block"><?= $tour['description'] ?? '' ?></div>
 
-    <?php if(!empty($policyContent)): ?>
-        <button class="collapsible">Chính sách hủy</button>
-        <div class="content-collapsible">
-            <p><?= nl2br(htmlspecialchars($policyContent)) ?></p>
-        </div>
-    <?php endif; ?>
-    
-    <button class="collapsible">Mô tả chi tiết</button>
-    <div class="content-collapsible">
-        <p><?= nl2br(htmlspecialchars($tour['description']??'')) ?></p>
+        <?php if (!empty($tour['cancellation_policy_text'])): ?>
+        <h2 style="margin-top:24px;">Chính sách hủy</h2>
+        <div class="text-block"><?=$tour['cancellation_policy_text'] ?></div>
+        <?php endif; ?>
     </div>
-</div>
-
 
     <a href="<?= BASE_URL ?>?action=list-tour" class="btn-back">Quay lại</a>
-</div>
 
-<script>
-    const coll = document.querySelectorAll(".collapsible");
-coll.forEach(c=>{
-    c.addEventListener("click", function(){
-            this.classList.toggle("active");
-        const content=this.nextElementSibling;
-        if(content.style.maxHeight){ content.style.maxHeight=null;}
-        else{ content.style.maxHeight=content.scrollHeight+"px";}
-        });
-    });
-</script>
+</div>

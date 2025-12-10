@@ -13,7 +13,7 @@
             <h4>Danh sách Nhà Cung Cấp</h4>
             <a href="<?= BASE_URL ?>?action=create-supplier" class="btn btn-nut">+ Thêm NCC Vận Tải</a>
         </div>
-        
+
         <table class="table">
             <thead>
                 <tr>
@@ -40,6 +40,9 @@
                             </td>
                             <td>
                                 <a href="<?= BASE_URL ?>?action=update-supplier&id=<?= $supplier['id'] ?>" class="btn edit"><i class="fas fa-edit"></i> </a>
+                                <a href="<?= BASE_URL ?>?action=delete-supplier&id=<?= $supplier['id'] ?? '' ?>"
+                                    onclick="return confirm('Bạn có chắc chắn muốn xóa NCC này không?')"
+                                    class="btn delete"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

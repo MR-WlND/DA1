@@ -18,11 +18,11 @@
 
 
         <div class="row">
-            <?php
-            if (isset($view)) {
-                require_once PATH_VIEW . $view . '.php';
-            }
-            ?>
+<?php
+if (isset($view)) {
+    require_once PATH_VIEW . $view . '.php';
+}
+?>
         </div>
 
 </body>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sơ Đồ Hoạt Động - Activity Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .diagram-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f6f8fb 0%, #e9ecef 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .info-box p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .legend-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .start-icon { background: #48bb78; }
+        .process-icon { background: #4299e1; }
+        .decision-icon { background: #ed8936; }
+        .end-icon { background: #f56565; }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .diagram-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Sơ Đồ Hoạt Động Đăng Nhập</h1>
+        
+        <div class="diagram-container">
+            <div class="mermaid">
+graph TB
+    Start([Bắt đầu]) --> Input[Truy cập trang đăng nhập]
+    Input --> Display[Hiển thị giao diện đăng nhập]
+    Display --> UserInput[Nhập thông tin đăng nhập]
+    UserInput --> Validate[Kiểm tra đăng nhập]
+    Validate --> Decision{Thất bại<br/>hoặc<br/>Thành công?}
+    Decision -->|Thất bại| Display
+    Decision -->|Thành công| Management[Hiển thị trang quản lý dữ liệu]
+    Management --> End([Kết thúc])
+
+    classDef startEnd fill:#48bb78,stroke:#2f855a,stroke-width:3px,color:#fff
+    classDef process fill:#4299e1,stroke:#2b6cb0,stroke-width:2px,color:#fff
+    classDef decision fill:#ed8936,stroke:#c05621,stroke-width:2px,color:#fff
+    
+    class Start,End startEnd
+    class Input,Display,UserInput,Validate,Management process
+    class Decision decision
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>📋 Mô tả quy trình</h3>
+            <p>Sơ đồ hoạt động này mô tả quy trình đăng nhập của hệ thống, bao gồm các bước từ khi người dùng truy cập trang đăng nhập, nhập thông tin, kiểm tra xác thực, và hiển thị kết quả tương ứng.</p>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-icon start-icon">●</div>
+                <div>
+                    <strong>Bắt đầu/Kết thúc</strong>
+                    <p style="font-size: 0.9em; color: #718096;">Điểm bắt đầu và kết thúc</p>
+                </div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-icon process-icon">▭</div>
+                <div>
+                    <strong>Hoạt động</strong>
+                    <p style="font-size: 0.9em; color: #718096;">Các bước xử lý</p>
+                </div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-icon decision-icon">◆</div>
+                <div>
+                    <strong>Quyết định</strong>
+                    <p style="font-size: 0.9em; color: #718096;">Điểm phân nhánh</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

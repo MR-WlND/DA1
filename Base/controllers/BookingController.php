@@ -1,67 +1,59 @@
 <?php
-
 class BookingController
 {
-    // Cần khởi tạo các Model phụ thuộc cục bộ trong từng hàm
-
-    // 1. Hiển thị danh sách Đơn đặt Tour (READ List)
+    protected $bookingModel;
+    public function __construct() 
+    {
+        // Khởi tạo Model để sử dụng lại
+        $this->bookingModel = new BookingModel();
+    }
     public function listBooking()
     {
-        $model = new BookingModel();
-        $listBookings = $model->getList();
+        // 🟢 SỬA LỖI: Dùng $this->bookingModel
+        $listBookings = $this->bookingModel->getList();
 
         $title = "Quản lý Đơn đặt Tour";
         $view = "admin/booking/list-booking";
         require_once PATH_VIEW . 'main.php';
     }
-
-    // 2. Tạo Đơn đặt Tour mới (CREATE Transactional)
     public function createBooking()
     {
-        // Khởi tạo Models (Giả định tồn tại)
-        $bookingModel = new BookingModel();
-        $tourModel = new TourModel();
-        $userModel = new UserModel(); // Cần để lấy danh sách khách hàng đặt
-
+        // Khởi tạo các Model phụ thuộc nếu cần (Chỉ khởi tạo nếu không có trong __construct)
+        $userModel = new UserModel();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            // Lấy dữ liệu nền tảng cho form
-            $listDepartures = (new DepartureModel())->getList(); // Lấy lịch khởi hành để chọn
-            $listUsers = $userModel->getList(); // Lấy danh sách khách hàng (User ID)
+            // Khởi tạo tạm thời các Model chỉ dùng trong GET
+            $listDepartures = (new DepartureModel())->getList(); 
+            $listUsers = $userModel->getList();
 
             $title = "Thêm Đơn đặt Tour";
             $view = "admin/booking/create-booking";
             require_once PATH_VIEW . 'main.php';
         } else {
-            // Lấy dữ liệu chính và các mảng khách hàng (CustomerDetails)
             $dataBooking = [
-                'user_id'      => $_POST['user_id'], // Người đặt
-                'departure_id' => $_POST['departure_id'], // Chuyến đi được chọn
-                'total_price'  => $_POST['total_price'], // Tổng giá trị
-                'status'       => $_POST['status'] ?? 'Pending',
+                'user_id'      => $_POST['user_id'],
+                'departure_id' => $_POST['departure_id'],
+                'total_price'  => $_POST['total_price'],
+                // Lưu ý: Status đã được xử lý thành payment_status trong Model
             ];
 
-            // Lấy mảng chi tiết từng khách hàng (CustomerDetails)
-            $customerDetails = $_POST['customer_details'] ?? [];
+            $customerDetails = $_POST['customer_details'] ?? []; 
 
-            // Gọi Model để insert Booking và giảm tồn kho
-            $bookingModel->insertBooking($dataBooking, $customerDetails);
+            // 🟢 SỬA LỖI: Dùng $this->bookingModel
+            $this->bookingModel->insertBooking($dataBooking, $customerDetails);
 
-            // Chuyển hướng
             header('Location: ' . BASE_URL . '?action=list-booking');
             exit;
         }
     }
 
-    // 3. Cập nhật Đơn đặt Tour (UPDATE)
     public function updateBooking()
     {
         $id = $_GET['id'];
-        $model = new BookingModel();
-
+        
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $data = $model->getOne($id);
+            $data = $this->bookingModel->getOne($id); 
 
-            // Load list data for form dropdowns
+            // Khởi tạo tạm thời các Model phụ thuộc
             $listDepartures = (new DepartureModel())->getList();
             $listUsers = (new UserModel())->getList();
 
@@ -70,38 +62,93 @@ class BookingController
             require_once PATH_VIEW . 'main.php';
         } else {
             // Lấy dữ liệu và gọi Model update
-            $status = $_POST['status'];
             $total_price = $_POST['total_price'];
+            // $status = $_POST['status']; // Nếu không cần thiết thì loại bỏ
 
-            $model->update($id, $status, $total_price);
+            $this->bookingModel->update($id, $total_price); 
 
             header('Location:' . BASE_URL . '?action=list-booking');
             exit;
         }
     }
-
-    // 4. Xóa Đơn đặt Tour (DELETE)
     public function deleteBooking()
     {
         $id = $_GET['id'];
-        $model = new BookingModel();
-        $model->delete($id);
+        // 🟢 SỬA LỖI: Dùng $this->bookingModel
+        $this->bookingModel->delete($id);
+
         header('Location:' . BASE_URL . '?action=list-booking');
         exit;
     }
+
     public function detailBooking()
     {
-        // Lấy ID trực tiếp từ URL (không kiểm tra tính hợp lệ của số)
         $id = $_GET['id'];
-        $bookingModel = new BookingModel();
+        
+        // 🟢 SỬA LỖI: Dùng hàm find() đã tối ưu trong Model thay vì getOne() cũ
+        $booking = $this->bookingModel->find($id);
 
-        // Gọi Model để lấy dữ liệu (sẽ là FALSE nếu ID không tồn tại)
-        $booking = $bookingModel->getOne($id);
+        if (!$booking) {
+            header('Location: ' . BASE_URL . '?action=list-booking');
+            exit;
+        }
 
-        // Thiết lập View
+        // Truyền biến $booking tới View
+        $data['booking'] = $booking; 
+        
         $title = "Chi tiết Đơn đặt Tour";
         $view = "admin/booking/detail-booking";
-
+        
         require_once PATH_VIEW . 'main.php';
     }
+
+
+    // Giao diện thanh toán
+    public function checkoutSimple()
+    {
+        $bookingId = $_GET['id'] ?? null;
+        
+        // 🟢 Dùng hàm find() đã tối ưu trong Model
+        $booking = $this->bookingModel->find($bookingId); 
+        if (!$booking) {
+            header('Location: ' . BASE_URL . '?action=my-bookings');
+            exit;
+        }
+        $customerPhone = $booking['customer_phone'] ?? 'Liên hệ CSKH'; 
+
+        $data = [
+            'booking' => $booking,
+            'customerPhone' => $customerPhone
+        ];
+        
+        $title = "Thông tin Chuyển khoản";
+        $view = "site/bank-transfer-info";
+        require_once PATH_VIEW . 'main.php';
+    }
+
+    // Đánh dấu đơn đã thanh toán
+    public function markAsPaid()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['booking_id']) || !isset($_POST['transaction_id'])) {
+            header("Location: " . BASE_URL . "?action=admin-dashboard");
+            exit;
+        }
+        $bookingId = intval($_POST['booking_id']);
+        $transactionId = trim($_POST['transaction_id']);
+
+        if ($bookingId <= 0 || $transactionId === "") {
+            header("Location: " . BASE_URL . "?action=list-booking");
+            exit;
+        }
+
+        // 🟢 SỬA LỖI: Dùng $this->bookingModel để gọi hàm cập nhật thanh toán
+        $updated = $this->bookingModel->updatePaymentStatus($bookingId, 'Paid', $transactionId);
+
+        if (!$updated) {
+            // Xử lý lỗi DB
+        }
+        header("Location: " . BASE_URL . "?action=detail-booking&id=" . $bookingId);
+        exit;
+    }
+    
 }

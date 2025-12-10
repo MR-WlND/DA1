@@ -89,45 +89,38 @@
             
             <input type="tel" name="customer_details[${index}][phone]" class="form-control" placeholder="SĐT liên hệ" required>
 
+            <input type="date" name="customer_details[${index}][date_of_birth]" class="form-control" title="Ngày sinh">
+
             <input type="text" name="customer_details[${index}][special_note]" class="form-control" placeholder="Ghi chú đặc biệt (Tùy chọn)">
 
-            <button type="button" onclick="this.closest('.customer-row').remove()" class="btn btn-danger btn-sm">X</button>
+            <button type="button" 
+                    onclick="this.closest('.customer-row').remove(); updatePrice();" 
+                    class="btn btn-danger btn-sm">X</button>
         </div>
     `;
         wrapper.insertAdjacentHTML('beforeend', html);
+        
+        updatePrice(); 
     }
 
-    // Khởi tạo form với ít nhất 1 dòng khách hàng khi tải trang
-    // (initial row will be added in the final DOMContentLoaded handler below)
-
-    // Bạn có thể thêm hàm updatePrice() ở đây nếu muốn tự động tính giá dựa trên số lượng khách
-    /*
-    function updatePrice(departureId) {
-        // Logic để tính total_price
-    }
-    */
+    // Hàm tính toán giá được giữ nguyên
     function updatePrice() {
         const departureSelect = document.getElementById('departure_id');
         const totalInput = document.getElementById('total_price');
         const customerRows = document.querySelectorAll('.customer-row');
 
-        // 1. Lấy giá và số chỗ của chuyến đi được chọn
         const selectedOption = departureSelect.options[departureSelect.selectedIndex];
         const unitPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
         const remainingSlots = parseInt(selectedOption.getAttribute('data-slots')) || 0;
 
-        // 2. Lấy số lượng khách hiện tại trong form
         const numCustomers = customerRows.length;
 
-        // 3. Tính tổng giá (Giả định giá đơn vị * số lượng khách)
         const newTotalPrice = unitPrice * numCustomers;
 
-        // 4. Áp dụng giá trị mới
         totalInput.value = newTotalPrice.toFixed(0);
 
-        // 5. UX Check: Nếu số lượng khách > số chỗ còn lại, cảnh báo Admin
+        // UX Check
         if (numCustomers > remainingSlots && remainingSlots !== 0) {
-            // Tùy chọn: Thêm một cảnh báo trực quan vào giao diện
             totalInput.style.border = '2px solid red';
             console.warn(`Cảnh báo: Số lượng khách (${numCustomers}) vượt quá số chỗ còn lại (${remainingSlots}).`);
         } else {
@@ -138,6 +131,8 @@
     // KHỞI TẠO CUỐI CÙNG: 
     document.addEventListener('DOMContentLoaded', function() {
         addCustomer();
-        updatePrice();
+        // 🟢 Thêm Event Listener cho sự kiện thay đổi chuyến đi để tính lại giá
+        document.getElementById('departure_id').addEventListener('change', updatePrice);
+        updatePrice(); 
     });
 </script>
