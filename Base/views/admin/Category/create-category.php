@@ -7,6 +7,13 @@
             <h4>Thông tin danh mục</h4>
         </div>
 
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger" style="padding: 15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 20px;">
+                <?= $_SESSION['error'] ?>
+            </div>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+
         <form action="<?= BASE_URL ?>?action=create-category" method="post" enctype="multipart/form-data">
             <div class="form-group mb-3">
                 <label for="name" class="form-label">Tên danh mục:</label>

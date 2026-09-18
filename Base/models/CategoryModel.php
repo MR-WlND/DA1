@@ -29,6 +29,14 @@
             ]);
         }
 
+        public function findByName($name)
+        {
+            $sql = "SELECT * FROM tour_categories WHERE name = :name LIMIT 1";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([":name" => $name]);
+            return $stmt->fetch();
+        }
+
         public function update($id, $name, $description)
         {
             $sql = "UPDATE tour_categories SET name = :name, description = :description WHERE id = :id";

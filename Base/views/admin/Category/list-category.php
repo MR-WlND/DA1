@@ -1,6 +1,21 @@
 <?php include PATH_VIEW . 'layout/header.php'; ?>
 
 <div class="main">
+    <!-- Session Messages -->
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success" style="padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 20px;">
+            <?= $_SESSION['success'] ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger" style="padding: 15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 20px;">
+            <?= $_SESSION['error'] ?>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
     <div class="header-wrapper">
         <div class="header-content">
             <div class="breadcrumb">Quản Lý Tour / Danh Mục Tour</div>
