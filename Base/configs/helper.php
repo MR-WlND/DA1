@@ -56,3 +56,26 @@ function upload_multiple_files($folder, $files)
     }
     return $uploaded_paths;
 }
+
+if (!function_exists('checkAuth')) {
+    function checkAuth()
+    {
+        if (empty($_SESSION['user'])) {
+            header('Location: ' . BASE_URL . '?action=login');
+            exit();
+        }
+    }
+}
+
+if (!function_exists('checkRole')) {
+    function checkRole($allowedRoles = [])
+    {
+        checkAuth();
+        $userRole = $_SESSION['user']['role'] ?? '';
+        if (!in_array($userRole, (array)$allowedRoles)) {
+            echo "<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>";
+            exit();
+        }
+    }
+}
+

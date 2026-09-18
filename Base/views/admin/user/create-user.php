@@ -31,8 +31,9 @@
             <div class="form-group mb-3">
                 <label for="role" class="form-label">Vai trò:</label>
                 <select class="form-control form-select" id="role" name="role">
-                    <option class="enable-rounded" value="customer">Customer</option>
-                    <option value="admin">Admin</option>
+                    <option value="customer">Customer (Khách hàng)</option>
+                    <option value="guide">Guide (Hướng dẫn viên)</option>
+                    <option value="admin">Admin (Quản trị viên)</option>
                 </select>
             </div>
 

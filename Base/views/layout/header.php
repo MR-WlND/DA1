@@ -28,92 +28,126 @@
                     <input id="search" type="search" placeholder="Tìm kiếm...">
                 </div>
                 <div class="user">
-                    <span><?= $_SESSION['user']['name'] ?? 'Admin' ?></span>
-                    <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $_SESSION['user']['id'] ?>">
-                        <div class="avatar"><i class="fa-regular fa-user"></i></div>
-                    </a>
+                    <?php 
+                    $roleLabel = match($userRole) {
+                        'admin' => 'Admin',
+                        'guide' => 'Hướng Dẫn Viên',
+                        'customer' => 'Khách Hàng',
+                        default => 'User'
+                    };
+                    $badgeClass = match($userRole) {
+                        'admin' => 'bg-danger',
+                        'guide' => 'bg-warning text-dark',
+                        'customer' => 'bg-success',
+                        default => 'bg-secondary'
+                    };
+                    ?>
+                    <span class="badge <?= $badgeClass ?> me-2"><?= $roleLabel ?></span>
+                    <span><?= htmlspecialchars($_SESSION['user']['name'] ?? 'User') ?></span>
+                    <?php if (!empty($_SESSION['user']['id'])): ?>
+                        <a href="<?= BASE_URL ?>?action=detail-user&id=<?= $_SESSION['user']['id'] ?>">
+                            <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
             <!-- SIDEBAR -->
             <div class="sidebar">
                 <div class="brand">
-                    <a href="<?= BASE_URL ?>?action=dashboard">GlobeTrek</a>
+                    <a href="<?= BASE_URL ?>?action=<?= $userRole === 'guide' ? 'schedule' : ($userRole === 'customer' ? 'customer_list' : 'dashboard') ?>">GlobeTrek</a>
                 </div>
 
                 <?php $action = $_GET['action'] ?? 'dashboard'; ?>
 
                 <div class="menu">
-                    <!-- Dashboard -->
-                    <a href="<?= BASE_URL ?>?action=dashboard" class="<?= ($action == 'dashboard')?>">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </a>
+                    <?php if ($userRole === 'admin'): ?>
+                        <!-- Dashboard -->
+                        <a href="<?= BASE_URL ?>?action=dashboard" class="<?= ($action == 'dashboard') ? 'active' : '' ?>">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
 
-                    <!-- Quản lý Tour -->
-                    <?php
-                    $tour_actions = ['list-tour', 'list-departure', 'list-destination', 'list-category', 'list-requests', 'list-policies'];
-                    $is_tour_group_active = in_array($action, $tour_actions);
-                    ?>
-                    <div class="dropdown <?= $is_tour_group_active ? 'active' : '' ?>">
-                        <span class="drop-btn"><i class="fas fa-suitcase-rolling"></i> Quản Lý Tour</span>
-                        <div class="drop-content">
-                            <a href="<?= BASE_URL ?>?action=list-tour" class="<?= ($action == 'list-tour') ? 'active-sub' : '' ?>">• Danh Sách Tour</a>
-                            <a href="<?= BASE_URL ?>?action=list-departure" class="<?= ($action == 'list-departure') ? 'active-sub' : '' ?>">• Lịch Khởi Hành</a>
-                            <a href="<?= BASE_URL ?>?action=list-destination" class="<?= ($action == 'list-destination') ? 'active-sub' : '' ?>">• Điểm Đến</a>
-                            <a href="<?= BASE_URL ?>?action=list-category" class="<?= ($action == 'list-category') ? 'active-sub' : '' ?>">• Danh Mục Tour</a>
-                            <a href="<?= BASE_URL ?>?action=list-requests" class="<?= ($action == 'list-requests') ? 'active-sub' : '' ?>">• Tour Theo Yêu Cầu</a>
+                        <!-- Quản lý Tour -->
+                        <?php
+                        $tour_actions = ['list-tour', 'list-departure', 'list-destination', 'list-category', 'list-requests', 'list-policies'];
+                        $is_tour_group_active = in_array($action, $tour_actions);
+                        ?>
+                        <div class="dropdown <?= $is_tour_group_active ? 'active' : '' ?>">
+                            <span class="drop-btn"><i class="fas fa-suitcase-rolling"></i> Quản Lý Tour</span>
+                            <div class="drop-content">
+                                <a href="<?= BASE_URL ?>?action=list-tour" class="<?= ($action == 'list-tour') ? 'active-sub' : '' ?>">• Danh Sách Tour</a>
+                                <a href="<?= BASE_URL ?>?action=list-departure" class="<?= ($action == 'list-departure') ? 'active-sub' : '' ?>">• Lịch Khởi Hành</a>
+                                <a href="<?= BASE_URL ?>?action=list-destination" class="<?= ($action == 'list-destination') ? 'active-sub' : '' ?>">• Điểm Đến</a>
+                                <a href="<?= BASE_URL ?>?action=list-category" class="<?= ($action == 'list-category') ? 'active-sub' : '' ?>">• Danh Mục Tour</a>
+                                <a href="<?= BASE_URL ?>?action=list-requests" class="<?= ($action == 'list-requests') ? 'active-sub' : '' ?>">• Tour Theo Yêu Cầu</a>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Quản lý Đặt chỗ -->
-                    <?php
-                    $order_actions = ['list-resource', 'list-booking', 'list-payment', 'list-booking-customers'];
-                    $is_order_group_active = in_array($action, $order_actions);
-                    ?>
-                    <div class="dropdown <?= $is_order_group_active ? 'active' : '' ?>">
-                        <span class="drop-btn"><i class="fas fa-ticket-alt"></i> Quản Lý Đặt Chỗ</span>
-                        <div class="drop-content">
-                            <a href="<?= BASE_URL ?>?action=list-resource" class="<?= ($action == 'list-resource') ? 'active-sub' : '' ?>">• Phân Bổ Tài Nguyên</a>
-                            <a href="<?= BASE_URL ?>?action=list-booking" class="<?= ($action == 'list-booking') ? 'active-sub' : '' ?>">• Đơn Đặt Tour</a>
-                            
+                        <!-- Quản lý Đặt chỗ -->
+                        <?php
+                        $order_actions = ['list-resource', 'list-booking', 'list-payment', 'list-booking-customers'];
+                        $is_order_group_active = in_array($action, $order_actions);
+                        ?>
+                        <div class="dropdown <?= $is_order_group_active ? 'active' : '' ?>">
+                            <span class="drop-btn"><i class="fas fa-ticket-alt"></i> Quản Lý Đặt Chỗ</span>
+                            <div class="drop-content">
+                                <a href="<?= BASE_URL ?>?action=list-resource" class="<?= ($action == 'list-resource') ? 'active-sub' : '' ?>">• Phân Bổ Tài Nguyên</a>
+                                <a href="<?= BASE_URL ?>?action=list-booking" class="<?= ($action == 'list-booking') ? 'active-sub' : '' ?>">• Đơn Đặt Tour</a>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- user -->
-                    <?php
-                    $user_actions = ['list-admin', 'list-customer'];
-                    $is_user_group_active = in_array($action, $user_actions);
-                    ?>
-                    <div class="dropdown <?= $is_user_group_active ? 'active' : '' ?>">
-                        <span class="drop-btn"><i class="fas fa-users"></i> Quản Lý User</span>
-                        <div class="drop-content">
-                            <a href="<?= BASE_URL ?>?action=list-admin" class="<?= ($action == 'list-admin') ? 'active-sub' : '' ?>">• Quản trị viên</a>
-                            <a href="<?= BASE_URL ?>?action=list-customer" class="<?= ($action == 'list-customer') ? 'active-sub' : '' ?>">• Khách hàng</a>
+                        <!-- user -->
+                        <?php
+                        $user_actions = ['list-admin', 'list-customer'];
+                        $is_user_group_active = in_array($action, $user_actions);
+                        ?>
+                        <div class="dropdown <?= $is_user_group_active ? 'active' : '' ?>">
+                            <span class="drop-btn"><i class="fas fa-users"></i> Quản Lý User</span>
+                            <div class="drop-content">
+                                <a href="<?= BASE_URL ?>?action=list-admin" class="<?= ($action == 'list-admin') ? 'active-sub' : '' ?>">• Quản trị viên</a>
+                                <a href="<?= BASE_URL ?>?action=list-customer" class="<?= ($action == 'list-customer') ? 'active-sub' : '' ?>">• Khách hàng</a>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Quản lý Tài nguyên -->
-                    <div class="dropdown <?= $is_order_group_active ? 'active' : '' ?>">
-                        <a href="<?= BASE_URL ?>?action=list-guide" class="<?= ($action == 'list-guide') ? 'active' : '' ?>"><i class="fas fa-user-tie"></i> Hướng Dẫn Viên</a>
-                    </div>
-
-
-                    <?php
-                    $order_actions = ['list-hotel', 'list-supplier'];
-                    $is_order_group_active = in_array($action, $order_actions);
-                    ?>
-                    <div class="dropdown <?= $is_order_group_active ? 'active' : '' ?>">
-                        <span class="drop-btn"><i class="fas fa-hotel"></i> Khách Sạn & NCC</span>
-                        <div class="drop-content">
-                            <a href="<?= BASE_URL ?>?action=list-hotel" class="<?= ($action == 'list-hotel') ? 'active-sub' : '' ?>">• Khách Sạn</a>
-                            <a href="<?= BASE_URL ?>?action=list-supplier" class="<?= ($action == 'list-supplier') ? 'active-sub' : '' ?>">• NCC Vận Tải</a>
+                        <!-- Quản lý Tài nguyên -->
+                        <div class="dropdown">
+                            <a href="<?= BASE_URL ?>?action=list-guide" class="<?= ($action == 'list-guide') ? 'active' : '' ?>"><i class="fas fa-user-tie"></i> Hướng Dẫn Viên</a>
                         </div>
-                    </div>
 
+                        <?php
+                        $hotel_actions = ['list-hotel', 'list-supplier'];
+                        $is_hotel_group_active = in_array($action, $hotel_actions);
+                        ?>
+                        <div class="dropdown <?= $is_hotel_group_active ? 'active' : '' ?>">
+                            <span class="drop-btn"><i class="fas fa-hotel"></i> Khách Sạn & NCC</span>
+                            <div class="drop-content">
+                                <a href="<?= BASE_URL ?>?action=list-hotel" class="<?= ($action == 'list-hotel') ? 'active-sub' : '' ?>">• Khách Sạn</a>
+                                <a href="<?= BASE_URL ?>?action=list-supplier" class="<?= ($action == 'list-supplier') ? 'active-sub' : '' ?>">• NCC Vận Tải</a>
+                            </div>
+                        </div>
 
-                    <!-- Báo cáo & Đăng xuất -->
-                    <div class="dropdown <?= $is_order_group_active ? 'active' : '' ?>">
-                        <a href="<?= BASE_URL ?>?action=list-profit-loss" class="<?= ($action == 'list-profit-loss') ? 'active' : '' ?>"><i class="fas fa-file-alt"></i> Báo Cáo</a>
-                    </div>
+                        <!-- Báo cáo -->
+                        <div class="dropdown">
+                            <a href="<?= BASE_URL ?>?action=list-profit-loss" class="<?= ($action == 'list-profit-loss') ? 'active' : '' ?>"><i class="fas fa-file-alt"></i> Báo Cáo</a>
+                        </div>
+
+                    <?php elseif ($userRole === 'guide'): ?>
+                        <!-- Menu Hướng Dẫn Viên -->
+                        <a href="<?= BASE_URL ?>?action=schedule" class="<?= ($action == 'schedule') ? 'active' : '' ?>">
+                            <i class="fas fa-calendar-alt"></i> Lịch Phân Công
+                        </a>
+                        <a href="<?= BASE_URL ?>?action=list-requests" class="<?= ($action == 'list-requests') ? 'active' : '' ?>">
+                            <i class="fas fa-list-alt"></i> Yêu Cầu Tour
+                        </a>
+
+                    <?php else: ?>
+                        <!-- Menu Khách Hàng -->
+                        <a href="<?= BASE_URL ?>?action=customer_list" class="<?= ($action == 'customer_list' || $action == 'request-tour') ? 'active' : '' ?>">
+                            <i class="fas fa-suitcase-rolling"></i> Yêu Cầu Tour
+                        </a>
+                        <a href="<?= BASE_URL ?>?action=my-quotes" class="<?= ($action == 'my-quotes') ? 'active' : '' ?>">
+                            <i class="fas fa-file-invoice-dollar"></i> Báo Giá Của Tôi
+                        </a>
+                    <?php endif; ?>
                     
                     <a href="<?= BASE_URL ?>?action=logout"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a>
                 </div>

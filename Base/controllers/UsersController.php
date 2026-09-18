@@ -2,6 +2,7 @@
 class UsersController {
 
     public function listAdmin() {
+        checkRole(['admin']);
         $user = new UserModel();
         $listUser = $user->getList();
 
@@ -9,6 +10,7 @@ class UsersController {
         require_once PATH_VIEW . "main.php";
     }
     public function listCustomer() {
+        checkRole(['admin']);
         $user = new UserModel();
         $listUser = $user->getList();
 
@@ -17,6 +19,7 @@ class UsersController {
     }
 
     public function createUser() {
+        checkRole(['admin']);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $model = new UserModel();
@@ -37,6 +40,7 @@ class UsersController {
     }
 
     public function updateUser() {
+        checkRole(['admin']);
         $model = new UserModel();
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -61,6 +65,7 @@ class UsersController {
     }
 
     public function detailUser() {
+        checkAuth();
         $model = new UserModel();
         $user = $model->getOne($_GET['id']);
 
@@ -69,6 +74,7 @@ class UsersController {
     }
 
     public function deleteUser() {
+        checkRole(['admin']);
         $model = new UserModel();
         $model->delete($_GET['id']);
         header("Location: " . BASE_URL . "?action=list-customer");
