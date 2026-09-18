@@ -43,10 +43,10 @@
                         <td><?= $value['start_date'] ?></td>
                         <td><?= $value['end_date'] ?></td>
                         <td><?= number_format($value['current_price']) ?></td>
-                        <td><?= $value['max_slots'] ?></td>
+                        <td><?= $value['remaining_slots'] ?></td>
                         <td>
                             <a href="<?= BASE_URL ?>?action=departure-detail&id=<?= $value['departure_id'] ?>" class="btn view">
-                                <i class="fas fa-eye"></i></a>
+                                <i class="fa-solid fa-book"></i></a>
                             <a href="<?= BASE_URL ?>?action=update-departure&id=<?= $value['departure_id'] ?>" class="btn edit"><i class="fas fa-edit"></i></a>
                             <a href="<?= BASE_URL ?>?action=delete-departure&id=<?= $value['departure_id'] ?>"
                                 onclick="return confirm('Bạn có chắc chắn muốn xóa lịch khởi hành này không?')"

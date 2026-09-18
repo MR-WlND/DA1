@@ -35,59 +35,47 @@ class TourModel
     }
 
     /** Lấy chi tiết tour và dữ liệu liên quan (Orchestrator) */
-    // TRONG TourModel.php
-
-/** Lấy chi tiết tour và dữ liệu liên quan (Orchestrator) */
-/** Lấy chi tiết tour và dữ liệu liên quan (Orchestrator) */
-/** Lấy chi tiết tour và dữ liệu liên quan (Orchestrator) */
-// TRONG TourModel.php
-
-/** Lấy chi tiết tour và dữ liệu liên quan (Orchestrator) */
-/** Lấy chi tiết tour và dữ liệu liên quan (Orchestrator) */
-public function getOne($id)
-{
-    $sql = "SELECT t.*, c.name AS category_name
+    public function getOne($id)
+    {
+        $sql = "SELECT t.*, c.name AS category_name
             FROM tours t
             LEFT JOIN tour_categories c ON t.category_id = c.id
-            -- KHÔNG CÒN JOIN BẢNG CHÍNH SÁCH NÀO NỮA
             WHERE t.id = :id";
-            
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute([':id' => $id]);
-    $tour = $stmt->fetch();
 
-    if ($tour) {
-        // CHỈ GỌI CÁC GETTER ĐƠN GIẢN (KHÔNG GỌI getTourPolicies/N:M)
-        $tour['destinations']      = $this->getDestinations($id);
-        $tour['departures']        = $this->getDepartures($id);
-        $tour['gallery']           = $this->getImages($id);
-        $tour['itinerary_details'] = $this->getItineraryDetails($id);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        $tour = $stmt->fetch();
+
+        if ($tour) {
+            $tour['destinations']      = $this->getDestinations($id);
+            $tour['departures']        = $this->getDepartures($id);
+            $tour['gallery']           = $this->getImages($id);
+            $tour['itinerary_details'] = $this->getItineraryDetails($id);
+        }
+        return $tour;
     }
-    return $tour;
-}
 
-    /** Tạo tour mới (Logic Điều phối Tuần tự) */
+    /** Tạo tour mới */
     public function insert($data, $destinations = [], $departures = [], $uploaded_images = [], $itineraryDetails = [])
-{
-    // SỬA: Loại bỏ policy_id, thêm cancellation_policy_text
-    $sql = "INSERT INTO tours 
+    {
+        // SỬA: Loại bỏ policy_id, thêm cancellation_policy_text
+        $sql = "INSERT INTO tours 
             (name, tour_type, description, base_price, category_id, tour_origin, cancellation_policy_text) 
             VALUES (:name, :tour_type, :description, :base_price, :category_id, :tour_origin, :policy_text)";
-            
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute([
-        ':name' => $data['name'],
-        ':tour_type' => $data['tour_type'],
-        ':description' => $data['description'] ?? null,
-        ':base_price' => $data['base_price'],
-        
-        ':category_id' => $data['category_id'],
-        ':tour_origin' => $data['tour_origin'] ?? 'Catalog',
-        
-        // <<< THAM SỐ TEXT MỚI >>>
-        ':policy_text' => $data['cancellation_policy_text'] ?? null,
-    ]);
-    $tour_id = $this->db->lastInsertId();
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            ':name' => $data['name'],
+            ':tour_type' => $data['tour_type'],
+            ':description' => $data['description'] ?? null,
+            ':base_price' => $data['base_price'],
+
+            ':category_id' => $data['category_id'],
+            ':tour_origin' => $data['tour_origin'] ?? 'Catalog',
+
+            ':policy_text' => $data['cancellation_policy_text'] ?? null,
+        ]);
+        $tour_id = $this->db->lastInsertId();
 
         // Gọi các hàm lưu trữ phụ thuộc
         $this->saveDestinations($tour_id, $destinations);
@@ -99,41 +87,41 @@ public function getOne($id)
         return $tour_id;
     }
 
-/** Cập nhật tour (Logic Điều phối Tuần tự) */
-public function update($id, $data, $destinations = [], $departures = [], $uploaded_images = [], $itineraryDetails = [])
-{
-    // SỬA LỖI LỚN NHẤT: Loại bỏ policy_id khỏi SQL
-    $sql = "UPDATE tours SET 
+    /** Cập nhật tour (Logic Điều phối Tuần tự) */
+    public function update($id, $data, $destinations = [], $departures = [], $uploaded_images = [], $itineraryDetails = [])
+    {
+        // SỬA LỖI LỚN NHẤT: Loại bỏ policy_id khỏi SQL
+        $sql = "UPDATE tours SET 
             name = :name, tour_type = :tour_type, description = :description, base_price = :base_price, 
             category_id = :category_id, tour_origin = :tour_origin, cancellation_policy_text = :policy_text
             WHERE id = :id";
-    
-    $stmt = $this->db->prepare($sql);
-    
-    // Sửa mảng execution
-    $executionArray = [
-        ':id' => $id,
-        ':name' => $data['name'] ?? null,
-        ':tour_type' => $data['tour_type'] ?? null,
-        ':description' => $data['description'] ?? null,
-        ':base_price' => $data['base_price'] ?? 0, 
-        
-        ':category_id' => $data['category_id'] ?? null,
-        ':tour_origin' => $data['tour_origin'] ?? 'Catalog',
-        
-        // <<< THAM SỐ TEXT MỚI >>>
-        ':policy_text' => $data['cancellation_policy_text'] ?? null,
-    ];
-    
-    $stmt->execute($executionArray); // THỰC THI
 
-    // 2. Cập nhật các bảng phụ thuộc (KHÔNG GỌI savePolicies!)
-    $this->saveDestinations($id, $destinations);
-    $departureModel = new DepartureModel();
-    $departureModel->saveDeparturesForTour($id, $departures);
-    $this->saveImages($id, $uploaded_images);
-    $this->saveItineraryDetails($id, $itineraryDetails);
-}
+        $stmt = $this->db->prepare($sql);
+
+        // Sửa mảng execution
+        $executionArray = [
+            ':id' => $id,
+            ':name' => $data['name'] ?? null,
+            ':tour_type' => $data['tour_type'] ?? null,
+            ':description' => $data['description'] ?? null,
+            ':base_price' => $data['base_price'] ?? 0,
+
+            ':category_id' => $data['category_id'] ?? null,
+            ':tour_origin' => $data['tour_origin'] ?? 'Catalog',
+
+            // <<< THAM SỐ TEXT MỚI >>>
+            ':policy_text' => $data['cancellation_policy_text'] ?? null,
+        ];
+
+        $stmt->execute($executionArray); // THỰC THI
+
+        // 2. Cập nhật các bảng phụ thuộc (KHÔNG GỌI savePolicies!)
+        $this->saveDestinations($id, $destinations);
+        $departureModel = new DepartureModel();
+        $departureModel->saveDeparturesForTour($id, $departures);
+        $this->saveImages($id, $uploaded_images);
+        $this->saveItineraryDetails($id, $itineraryDetails);
+    }
 
     // Trong TourModel.php::delete($id)
 
@@ -164,16 +152,12 @@ public function update($id, $data, $destinations = [], $departures = [], $upload
 
     // --- PHƯƠNG THỨC HỖ TRỢ LƯU TRỮ DỮ LIỆU (HELPER METHODS) ---
     /** Lưu Lộ trình: Xóa cũ, Chèn mới (Bao gồm order_number) */
-    // Trong TourModel.php
-
-    /** Lưu Lộ trình: Xóa cũ, Chèn mới (Bao gồm order_number) */
     private function saveDestinations($tour_id, $destinations = [])
     {
         // Xóa cũ (giữ nguyên)
         $this->db->prepare("DELETE FROM tour_destinations WHERE tour_id = :tour_id")->execute([':tour_id' => $tour_id]);
 
         if (!empty($destinations)) {
-            // SQL ĐÃ SỬA: Thêm cột order_number vào danh sách cột
             $sql2 = "INSERT INTO tour_destinations (tour_id, destination_id, order_number) 
                  VALUES (:tour_id, :destination_id, :order_number)";
             $stmt2 = $this->db->prepare($sql2);
@@ -231,9 +215,9 @@ public function update($id, $data, $destinations = [], $departures = [], $upload
         $stmt->execute([':tour_id' => $tour_id]);
         return $stmt->fetchAll();
     }
-public function getDepartures($tour_id)
-{
-    $sql = "SELECT
+    public function getDepartures($tour_id)
+    {
+        $sql = "SELECT
                 td.id AS departure_id,
                 td.start_date,
                 td.end_date,
@@ -242,7 +226,6 @@ public function getDepartures($tour_id)
                 IFNULL(td.available_slots - COUNT(BC.id), 0) AS remaining_slots
             FROM tour_departures td
             
-            -- 🟢 DÒNG CẦN SỬA: Thay b.status bằng b.payment_status
             LEFT JOIN bookings b ON b.departure_id = td.id AND b.payment_status IN ('Confirmed', 'Pending') 
             
             LEFT JOIN booking_customers BC ON BC.booking_id = b.id
@@ -250,9 +233,9 @@ public function getDepartures($tour_id)
             GROUP BY td.id, td.start_date, td.end_date, td.current_price, td.available_slots
             ORDER BY td.start_date ASC";
 
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute([':tour_id' => $tour_id]);
-    $departures = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':tour_id' => $tour_id]);
+        $departures = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Map lại key để form hiển thị đúng
         return array_map(function ($dep) {
@@ -295,55 +278,71 @@ public function getDepartures($tour_id)
     /** Lưu Lịch trình Chi tiết (Day-by-Day schedule) */
     // TRONG TourModel.php::saveItineraryDetails()
 
-private function saveItineraryDetails($tour_id, $details = [])
-{
-    // 1. XÓA TẤT CẢ LỊCH TRÌNH CŨ
-    $this->db->prepare("DELETE FROM itinerary_details WHERE tour_id = :tour_id")
-        ->execute([':tour_id' => $tour_id]);
+    private function saveItineraryDetails($tour_id, $details = [])
+    {
+        // 1. XÓA TẤT CẢ LỊCH TRÌNH CŨ
+        $this->db->prepare("DELETE FROM itinerary_details WHERE tour_id = :tour_id")
+            ->execute([':tour_id' => $tour_id]);
 
-    // 2. CHÈN LẠI CÁC BẢN GHI MỚI
-    if (!empty($details)) {
-        $sql = "INSERT INTO itinerary_details (tour_id, day_number, time_slot, activity)
+        // 2. CHÈN LẠI CÁC BẢN GHI MỚI
+        if (!empty($details)) {
+            $sql = "INSERT INTO itinerary_details (tour_id, day_number, time_slot, activity)
             VALUES (:tour_id, :day_number, :time_slot, :activity)";
-        $stmt = $this->db->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
-        foreach ($details as $item) {
-            $stmt->execute([
-                ':tour_id'    => $tour_id,
-                // SỬA: Dùng 0 nếu day_number rỗng (Vì là cột INT NOT NULL)
-                ':day_number' => $item['day_number'] ?? 0, 
-                // SỬA: Dùng NULL nếu time_slot rỗng (Vì là cột TIME/DATETIME, NULL an toàn hơn)
-                ':time_slot'  => $item['time_slot'] ?? NULL,
-                ':activity'   => $item['activity']
-            ]);
+            foreach ($details as $item) {
+                $stmt->execute([
+                    ':tour_id'    => $tour_id,
+                    // SỬA: Dùng 0 nếu day_number rỗng (Vì là cột INT NOT NULL)
+                    ':day_number' => $item['day_number'] ?? 0,
+                    // SỬA: Dùng NULL nếu time_slot rỗng (Vì là cột TIME/DATETIME, NULL an toàn hơn)
+                    ':time_slot'  => $item['time_slot'] ?? NULL,
+                    ':activity'   => $item['activity']
+                ]);
+            }
         }
     }
-}
 // TRONG TourController.php (Bổ sung vào class)
 
-/**
- * Hiển thị chi tiết yêu cầu tùy chỉnh và các báo giá liên quan
- */
-public function viewCustomRequest()
-{
-    $requestId = $_GET['id'] ?? null;
-    if (!$requestId || !is_numeric($requestId)) {
-        // Chuyển hướng nếu ID không hợp lệ
-        header('Location: ' . BASE_URL . '?action=list-requests');
-        exit;
+    /**
+     * Hiển thị chi tiết yêu cầu tùy chỉnh và các báo giá liên quan
+     */
+    public function viewCustomRequest()
+    {
+        $requestId = $_GET['id'] ?? null;
+        if (!$requestId || !is_numeric($requestId)) {
+            // Chuyển hướng nếu ID không hợp lệ
+            header('Location: ' . BASE_URL . '?action=list-requests');
+            exit;
+        }
+
+        $request = $this->customRequestModel->getRequestDetail($requestId);
+
+        if (!$request) {
+            // Xử lý nếu không tìm thấy yêu cầu
+            // Tùy chọn: set_message("Yêu cầu không tồn tại", 'error');
+            header('Location: ' . BASE_URL . '?action=list-requests');
+            exit;
+        }
+
+        $title = "Chi tiết Yêu cầu #" . $requestId;
+        $view = "admin/requests/view-request-detail"; // <<< View cần tạo
+        require_once PATH_VIEW . 'main.php';
     }
 
-    $request = $this->customRequestModel->getRequestDetail($requestId);
-
-    if (!$request) {
-        // Xử lý nếu không tìm thấy yêu cầu
-        // Tùy chọn: set_message("Yêu cầu không tồn tại", 'error');
-        header('Location: ' . BASE_URL . '?action=list-requests');
-        exit;
+    public function countToursByCategoryId($category_id)
+    {
+        $sql = "SELECT COUNT(*) FROM tours WHERE category_id = :category_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':category_id' => $category_id]);
+        return $stmt->fetchColumn();
     }
 
-    $title = "Chi tiết Yêu cầu #" . $requestId;
-    $view = "admin/requests/view-request-detail"; // <<< View cần tạo
-    require_once PATH_VIEW . 'main.php';
-}
+    public function countToursByDestinationId($destination_id)
+    {
+        $sql = "SELECT COUNT(*) FROM tour_destinations WHERE destination_id = :destination_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':destination_id' => $destination_id]);
+        return $stmt->fetchColumn();
+    }
 }

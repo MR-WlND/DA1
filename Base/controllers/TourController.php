@@ -1,7 +1,6 @@
 <?php
 class TourController
 {
-    // Sử dụng public thay cho private để đơn giản hóa truy cập
     public $tourModel;
     public $categoryModel;
     public $destinationModel;
@@ -209,13 +208,10 @@ class TourController
             }
         }
 
-        // PHẦN 3: GET REQUEST (Render form khi không phải POST)
+        // GET REQUEST (Render form khi không phải POST)
         $view = "admin/tours/update-tour";
         require_once PATH_VIEW . 'main.php';
     }
-
-
-    // Trong TourController.php
 
     public function detailTour()
     {
