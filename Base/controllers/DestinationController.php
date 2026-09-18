@@ -73,14 +73,18 @@ class DestinationController
 
     public function deleteDestination()
     {
-        $model = new DestinationModel();
-        $data = $model->getOne($_GET['id']);
-        if (!$data) {
-            echo "Điểm đến không tồn tại!";
-            return;
+        $destinationID = $_GET['id'];
+        $tourModel = new TourModel();
+        $tourCount = $tourModel->countToursByDestinationId($destinationID);
+
+        if ($tourCount > 0) {
+            $_SESSION['error'] = "Không thể xóa điểm đến này vì đang có tour thuộc điểm đến này.";
+        } else {
+            $destinationModel = new DestinationModel();
+            $destinationModel->delete($destinationID);
+            $_SESSION['success'] = "Xóa điểm đến thành công!";
         }
 
-        $model->delete($_GET['id']);
         header("Location: " . BASE_URL . "?action=list-destination");
         exit;
     }
