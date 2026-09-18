@@ -29,18 +29,34 @@ class BookingController
             $view = "admin/booking/create-booking";
             require_once PATH_VIEW . 'main.php';
         } else {
+            $departureId = $_POST['departure_id'];
+            $customerDetails = $_POST['customer_details'] ?? [];
+            $numCustomers = count($customerDetails);
+
+            // Validate available slots
+            $departureModel = new DepartureModel();
+            $departure = $departureModel->getOne($departureId);
+            $availableSlots = $departure['available_slots'] ?? 0;
+
+            if ($numCustomers > $availableSlots) {
+                $_SESSION['error'] = "Số lượng khách đặt ({$numCustomers}) vượt quá số chỗ còn lại ({$availableSlots}).";
+                // Save form data to session to repopulate
+                $_SESSION['form_data'] = $_POST;
+                header('Location: ' . BASE_URL . '?action=create-booking' . (isset($_GET['id']) ? '&id=' . $_GET['id'] : '') . (isset($_GET['dep_id']) ? '&dep_id=' . $_GET['dep_id'] : ''));
+                exit;
+            }
+
             $dataBooking = [
                 'user_id'      => $_POST['user_id'],
-                'departure_id' => $_POST['departure_id'],
+                'departure_id' => $departureId,
                 'total_price'  => $_POST['total_price'],
-                // Lưu ý: Status đã được xử lý thành payment_status trong Model
             ];
 
-            $customerDetails = $_POST['customer_details'] ?? []; 
-
-            // 🟢 SỬA LỖI: Dùng $this->bookingModel
             $this->bookingModel->insertBooking($dataBooking, $customerDetails);
-
+            
+            // Clear form data on success
+            unset($_SESSION['form_data']);
+            $_SESSION['success'] = "Tạo đơn đặt tour thành công!";
             header('Location: ' . BASE_URL . '?action=list-booking');
             exit;
         }

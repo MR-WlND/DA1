@@ -39,10 +39,6 @@ class BookingCustomersModel extends BaseModel
     }
 
     // --- CÁC HÀM CRUD CƠ BẢN ---
-    
-    // Lưu ý: Hàm INSERT và DELETE khách hàng thường được gọi từ BookingModel 
-    // bên trong Transaction, nhưng vẫn cần thiết cho quản lý trực tiếp.
-
     public function getList()
     {
         // Lấy danh sách khách tham gia (dùng cho Admin check tổng quát)
@@ -62,8 +58,6 @@ class BookingCustomersModel extends BaseModel
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':id' => $id]);
     }
-
-// Trong BookingModel.php
 
 
 }

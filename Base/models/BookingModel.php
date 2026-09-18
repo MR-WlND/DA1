@@ -224,7 +224,6 @@ public function getRecent(int $limit = 5)
             FROM bookings b
             JOIN tour_departures td ON b.departure_id = td.id
             JOIN tours t ON td.tour_id = t.id
-            -- KHÔNG cần JOIN users để tăng tốc độ truy vấn
             ORDER BY b.booking_date DESC
             LIMIT :limit";
 
