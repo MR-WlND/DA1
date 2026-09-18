@@ -86,8 +86,8 @@
                     <div class="dropdown <?= $is_user_group_active ? 'active' : '' ?>">
                         <span class="drop-btn"><i class="fas fa-users"></i> Quản Lý User</span>
                         <div class="drop-content">
-                            <a href="<?= BASE_URL ?>?action=list-admin" class="<?= ($action == 'list-admin') ? 'active-sub' : '' ?>">• Quản Lý Admin</a>
-                            <a href="<?= BASE_URL ?>?action=list-customer" class="<?= ($action == 'list-customer') ? 'active-sub' : '' ?>">• Quản Lý Customer</a>
+                            <a href="<?= BASE_URL ?>?action=list-admin" class="<?= ($action == 'list-admin') ? 'active-sub' : '' ?>">• Quản trị viên</a>
+                            <a href="<?= BASE_URL ?>?action=list-customer" class="<?= ($action == 'list-customer') ? 'active-sub' : '' ?>">• Khách hàng</a>
                         </div>
                     </div>
 

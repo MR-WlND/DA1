@@ -11,7 +11,6 @@
     <div class="card">
         <div class="toph4">
             <h4>Danh sách Admin</h4>
-            <a href="<?= BASE_URL ?>?action=create-user" class="btn btn-nut">+ Thêm User</a>
         </div>
 
         <!-- Quản trị viên -->
