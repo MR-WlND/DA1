@@ -138,7 +138,7 @@ class BookingController
         ];
         
         $title = "Thông tin Chuyển khoản";
-        $view = "site/bank-transfer-info";
+        $view = "guide/bank-transfer-info";
         require_once PATH_VIEW . 'main.php';
     }
 
@@ -160,11 +160,49 @@ class BookingController
         // 🟢 SỬA LỖI: Dùng $this->bookingModel để gọi hàm cập nhật thanh toán
         $updated = $this->bookingModel->updatePaymentStatus($bookingId, 'Paid', $transactionId);
 
-        if (!$updated) {
-            // Xử lý lỗi DB
+        if ($updated) {
+            // Tự động ghi nhận giao dịch doanh thu (Revenue)
+            $booking = $this->bookingModel->find($bookingId);
+            if ($booking) {
+                $financeModel = new FinanceModel();
+                $financeModel->insert([
+                    'departure_id' => $booking['departure_id'],
+                    'transaction_type' => 'Revenue',
+                    'amount' => $booking['total_price'],
+                    'description' => "Thanh toán cho Booking #" . $bookingId . " (GD: " . $transactionId . ")",
+                    'transaction_date' => date('Y-m-d')
+                ]);
+            }
         }
+        
         header("Location: " . BASE_URL . "?action=detail-booking&id=" . $bookingId);
         exit;
+    }
+
+    public function myBookings()
+    {
+        if (empty($_SESSION['user']) || empty($_SESSION['user']['id'])) {
+            header('Location: ' . BASE_URL . '?action=login');
+            exit;
+        }
+
+        $userId = $_SESSION['user']['id'];
+        
+        // Cần phương thức getBookingsByUserId trong BookingModel
+        $sql = "SELECT b.*, t.name AS tour_name, td.start_date 
+                FROM bookings b
+                JOIN tour_departures td ON b.departure_id = td.id
+                JOIN tours t ON td.tour_id = t.id
+                WHERE b.user_id = :user_id
+                ORDER BY b.booking_date DESC";
+        $stmt = clone $this->bookingModel->db; // Tránh reference issue
+        $stmt = clone $this->bookingModel->db->prepare($sql);
+        $stmt->execute([':user_id' => $userId]);
+        $listBookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $title = "Đơn hàng của tôi";
+        $view = "user/my-bookings"; // Khách hàng xem lịch sử
+        require_once PATH_VIEW . 'main.php';
     }
     
 }

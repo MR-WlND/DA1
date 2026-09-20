@@ -368,4 +368,63 @@ public function viewMyQuotes()
     $view = "guide/my-quotes-simple"; // Tạo View mới cho phiên bản đơn giản
     require_once PATH_VIEW . 'main.php';
 }
+
+    // ---------------------------------------------------
+    // CỔNG THÔNG TIN KHÁCH HÀNG (PUBLIC / CUSTOMER PORTAL)
+    // ---------------------------------------------------
+
+    public function publicTours()
+    {
+        // Lấy danh sách tất cả các tour (thêm logic WHERE active nếu cần)
+        $listTours = $this->tourModel->getList();
+        
+        // Lấy filter nếu có
+        $categoryId = $_GET['category_id'] ?? null;
+        if ($categoryId) {
+            $filtered = [];
+            foreach ($listTours as $t) {
+                if ($t['category_id'] == $categoryId) {
+                    $filtered[] = $t;
+                }
+            }
+            $listTours = $filtered;
+        }
+
+        $listCategories = $this->categoryModel->getList();
+
+        $title = "Danh sách Tour Mới Nhất";
+        $view = "tours/public-list";
+        require_once PATH_VIEW . 'main.php';
+    }
+
+    public function publicDetailTour()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: ' . BASE_URL . '?action=public-tours');
+            exit;
+        }
+
+        $tour = $this->tourModel->getOne($id);
+        if (!$tour) {
+            header('Location: ' . BASE_URL . '?action=public-tours');
+            exit;
+        }
+
+        // Lấy lịch khởi hành tương lai cho tour này
+        $departureModel = new DepartureModel();
+        // Lấy tất cả lịch khởi hành và lọc
+        $allDepartures = $departureModel->getList();
+        $tourDepartures = [];
+        $now = date('Y-m-d');
+        foreach ($allDepartures as $dep) {
+            if ($dep['tour_id'] == $id && $dep['start_date'] >= $now && $dep['available_slots'] > 0) {
+                $tourDepartures[] = $dep;
+            }
+        }
+
+        $title = $tour['name'];
+        $view = "tours/public-detail";
+        require_once PATH_VIEW . 'main.php';
+    }
 }
