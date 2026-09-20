@@ -82,7 +82,7 @@ class DepartureController
     $departureId = $_GET['id'] ?? null;
 
     if (!$departureId) {
-        header('Location: ' . BASE_URL . '?action=list-departures');
+        header('Location: ' . BASE_URL . '?action=list-departure');
         exit;
     }
     
@@ -94,7 +94,7 @@ class DepartureController
     $departure = $departureModel->getOne($departureId); 
     
     if (!$departure) {
-        header('Location: ' . BASE_URL . '?action=list-departures');
+        header('Location: ' . BASE_URL . '?action=list-departure');
         exit;
     }
 

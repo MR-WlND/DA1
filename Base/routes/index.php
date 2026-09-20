@@ -11,10 +11,11 @@ match ($action) {
     // Dashboard theo vai trò
     'dashboard'         => (new DashboardController)->index(),
     'schedule'     => (new GuideViewController)->schedule(),
-    'customer_list'     => (new TourController) -> requestTour(),
+    'customer_list'     => (new TourController)->requestTour(),
     
-    'detail-tour'       => (new TourController) -> detailTour(),
-    'request-tour'      => (new TourController)-> requestTour(),
+    'public-tours'      => (new TourController)->publicTours(),
+    'public-detail-tour'=> (new TourController)->publicDetailTour(),
+    'request-tour'      => (new TourController)->requestTour(),
 
     // User Management 
     'list-admin'         => (new UsersController)->listAdmin(),
@@ -32,7 +33,7 @@ match ($action) {
     'detail-booking'     => (new BookingController)->detailBooking(),
     'checkout-simple' => (new BookingController)->checkoutSimple(),
     'mark-booking-paid' => (new BookingController)->markAsPaid(),
-    'booking-detail'     => (new BookingController)->detailBooking(),
+    'my-bookings'      => (new BookingController)->myBookings(),
 
 
     // Tour Management
@@ -89,6 +90,12 @@ match ($action) {
 
     //Báo cáo lãi lỗ 
     'list-profit-loss' => (new ReportController)->listProfitLoss(),
+
+    // Finance Management
+    'list-transaction' => (new FinanceController)->listTransaction(),
+    'create-transaction' => (new FinanceController)->createTransaction(),
+    'update-transaction' => (new FinanceController)->updateTransaction(),
+    'delete-transaction' => (new FinanceController)->deleteTransaction(),
 
     //checkin
     'list-customers'       => (new BookingCustomerController)->listCustomers(),

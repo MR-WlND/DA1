@@ -82,14 +82,14 @@ if (!empty($listDestinations)) {
                 <div class="form-group mb-3">
     <label for="cancellation_policy_text" class="form-label">Nội dung Chính sách Hủy:</label>
     <textarea id="cancellation_policy_text" name="cancellation_policy_text" class="form-control" rows="6">
-        <?= $tour['cancellation_policy_text'] ?? '' ?>
+        <?= htmlspecialchars($tour['cancellation_policy_text'] ?? '') ?>
     </textarea>
 </div>
             </div>
             
             <div class="form-group mb-3">
                 <label for="description" class="form-label">Mô tả Tour:</label>
-                <textarea name="description" class="form-control" rows="4"><?= $tour['description'] ?? '' ?></textarea>
+                <textarea name="description" class="form-control" rows="4"><?= htmlspecialchars($tour['description'] ?? '') ?></textarea>
             </div>
             
             <div class="form-group mb-3">

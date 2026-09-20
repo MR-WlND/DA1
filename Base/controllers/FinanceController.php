@@ -1,7 +1,7 @@
 <?php
 // File: controllers/FinancialController.php
 
-class FinancialController
+class FinanceController
 {
     // 1. Hiển thị danh sách Giao dịch (READ List)
     public function listTransaction()

@@ -38,7 +38,7 @@
 
             <div class="form-group mb-3">
                 <label for="specialty_route">Tuyến chuyên môn:</label>
-                <input type="text" name="specialty_route" id="specialty_route" class="form-control" value="<?= $data['specialty_route'] ?>">
+                <input type="text" name="specialty_route" id="specialty_route" class="form-control" value="<?= htmlspecialchars($data['specialty_route'] ?? '') ?>">
             </div>
 
             <div class="form-group mb-3">
@@ -54,12 +54,12 @@
 
             <div class="form-group mb-3">
                 <label for="certification">Chứng chỉ:</label>
-                <input type="text" name="certification" id="certification" class="form-control" value="<?= $data['certification'] ?>">
+                <input type="text" name="certification" id="certification" class="form-control" value="<?= htmlspecialchars($data['certification'] ?? '') ?>">
             </div>
 
             <div class="form-group mb-3">
                 <label for="health_status">Tình trạng sức khỏe:</label>
-                <input type="text" name="health_status" id="health_status" class="form-control" value="<?= $data['health_status'] ?>">
+                <input type="text" name="health_status" id="health_status" class="form-control" value="<?= htmlspecialchars($data['health_status'] ?? '') ?>">
             </div>
 
             <div class="form-group mb-3">
@@ -69,7 +69,7 @@
 
             <div class="form-group mb-3">
                 <label for="languages">Ngôn ngữ:</label>
-                <input type="text" name="languages" id="languages" class="form-control" value="<?= $data['languages'] ?>">
+                <input type="text" name="languages" id="languages" class="form-control" value="<?= htmlspecialchars($data['languages'] ?? '') ?>">
             </div>
 
             <div class="form-group mb-3">
@@ -79,7 +79,7 @@
 
             <div class="form-group mb-3">
                 <label for="notes">Ghi chú:</label>
-                <textarea name="notes" id="notes" class="form-control" rows="3"><?= $data['notes'] ?></textarea>
+                <textarea name="notes" id="notes" class="form-control" rows="3"><?= htmlspecialchars(strip_tags($data['notes'] ?? '')) ?></textarea>
             </div>
 
             <div class="form-group mb-3">
