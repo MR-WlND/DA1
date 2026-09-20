@@ -48,6 +48,22 @@ body {
   border: none;
   border-bottom: 2px solid #f9f9f9;
   background: transparent;
+  caret-color: #f9f9f9;
+  /* Ghi de nen trang autofill cua trinh duyet */
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #f9f9f9 !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+.field:-webkit-autofill,
+.field:-webkit-autofill:hover,
+.field:-webkit-autofill:focus,
+.field:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #f9f9f9 !important;
+  background-color: transparent !important;
+  transition: background-color 9999s ease-in-out 0s;
 }
 .button {
   display: block;
