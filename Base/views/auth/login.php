@@ -15,11 +15,11 @@
             <p style="color: red; text-align: center; margin-bottom: 15px;"><?= $error ?></p>
         <?php endif; ?>
         <div class="login box">
-            <input class="field" type="email" id="login" name="email" placeholder=" " required>
+            <input class="field" type="email" id="login" name="email" placeholder=" " autocomplete="new-password" required>
             <label for="login">Email</label>
         </div>
         <div class="password box">
-            <input class="field" type="password" id="password" name="password" placeholder=" " required>
+            <input class="field" type="password" id="password" name="password" placeholder=" " autocomplete="new-password" required>
             <input type="checkbox" id="hide" class="hide">
             <label for="password">Password</label>
         </div>
@@ -36,10 +36,14 @@
     </form>
     <script src="assets/js/auth.js"></script>
     <script>
-        // Xóa thông tin trên form khi reload trang
-        window.addEventListener('pageshow', function(event) {
-            document.getElementById('login').value = '';
-            document.getElementById('password').value = '';
+        // Sử dụng setTimeout để đảm bảo ghi đè trình quản lý mật khẩu của trình duyệt
+        window.addEventListener('pageshow', function() {
+            setTimeout(function() {
+                let emailInput = document.getElementById('login');
+                let passInput = document.getElementById('password');
+                if(emailInput) emailInput.value = '';
+                if(passInput) passInput.value = '';
+            }, 50);
         });
     </script>
 </body>
