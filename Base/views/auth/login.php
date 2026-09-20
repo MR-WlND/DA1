@@ -15,11 +15,11 @@
             <p style="color: red; text-align: center; margin-bottom: 15px;"><?= $error ?></p>
         <?php endif; ?>
         <div class="login box">
-            <input class="field" type="email" id="login" name="email" required>
+            <input class="field" type="email" id="login" name="email" placeholder=" " required>
             <label for="login">Email</label>
         </div>
         <div class="password box">
-            <input class="field" type="password" id="password" name="password" required>
+            <input class="field" type="password" id="password" name="password" placeholder=" " required>
             <input type="checkbox" id="hide" class="hide">
             <label for="password">Password</label>
         </div>

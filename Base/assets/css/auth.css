@@ -89,7 +89,9 @@ body {
   transition: 0.3s;
 }
 .field:focus ~ label,
-.field:valid ~ label {
+.field:valid ~ label,
+.field:-webkit-autofill ~ label,
+.field:not(:placeholder-shown) ~ label {
   top: -15px;
   font-size: 0.8rem;
   font-weight: bold;
