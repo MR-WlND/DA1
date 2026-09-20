@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <form action="?action=handleLogin" method="post" class="login-form">
+    <form action="?action=handleLogin" method="post" class="login-form" autocomplete="off">
         <h1 class="title">Login</h1>
         <?php if (isset($error)) : ?>
             <p style="color: red; text-align: center; margin-bottom: 15px;"><?= $error ?></p>
@@ -35,5 +35,12 @@
         </p>
     </form>
     <script src="assets/js/auth.js"></script>
+    <script>
+        // Xóa thông tin trên form khi reload trang
+        window.addEventListener('pageshow', function(event) {
+            document.getElementById('login').value = '';
+            document.getElementById('password').value = '';
+        });
+    </script>
 </body>
 </html>
