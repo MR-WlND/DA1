@@ -141,8 +141,14 @@
 
                     <?php else: ?>
                         <!-- Menu Khách Hàng -->
+                        <a href="<?= BASE_URL ?>?action=public-tours" class="<?= ($action == 'public-tours' || $action == 'public-detail-tour') ? 'active' : '' ?>">
+                            <i class="fas fa-compass"></i> Danh Sách Tour
+                        </a>
+                        <a href="<?= BASE_URL ?>?action=my-bookings" class="<?= ($action == 'my-bookings' || $action == 'checkout-simple') ? 'active' : '' ?>">
+                            <i class="fas fa-ticket-alt"></i> Đơn Hàng Của Tôi
+                        </a>
                         <a href="<?= BASE_URL ?>?action=customer_list" class="<?= ($action == 'customer_list' || $action == 'request-tour') ? 'active' : '' ?>">
-                            <i class="fas fa-suitcase-rolling"></i> Yêu Cầu Tour
+                            <i class="fas fa-suitcase-rolling"></i> Yêu Cầu Tour Tùy Chỉnh
                         </a>
                         <a href="<?= BASE_URL ?>?action=my-quotes" class="<?= ($action == 'my-quotes') ? 'active' : '' ?>">
                             <i class="fas fa-file-invoice-dollar"></i> Báo Giá Của Tôi
