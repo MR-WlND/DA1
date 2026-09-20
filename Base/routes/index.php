@@ -3,7 +3,7 @@
 $action = $_GET['action'] ?? '/';
 
 match ($action) {
-    '/', 'homepage'     => (new AuthController)->index(),
+    '/', 'homepage'     => (new TourController)->publicTours(),
     'login'             => (new AuthController)->index(),
     'handleLogin'       => (new AuthController)->handleLogin(),
     'logout'            => (new AuthController)->logout(),
