@@ -12,6 +12,7 @@ $userRole = $isLoggedIn ? ($_SESSION['user']['role'] ?? '') : null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlobeTrek – Khám Phá Thế Giới</title>
     <meta name="description" content="GlobeTrek – Nền tảng đặt tour du lịch uy tín, chất lượng cao với hàng trăm hành trình hấp dẫn.">
+    <link rel="icon" type="image/svg+xml" href="<?= BASE_URL ?>favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">

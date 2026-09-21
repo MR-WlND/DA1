@@ -60,17 +60,18 @@ body.client-body {
     text-decoration: none;
 }
 .brand-logo {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    border: 1px solid #e5e5e5;
+    border: 1.5px solid #e5e5e5;
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .brand-logo .red-dot {
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     background: #c0392b;
     border-radius: 50%;
 }
@@ -886,15 +887,15 @@ body.client-body {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1.5px solid #eaeaea;
+    border: 1.5px solid #e5e5e5;
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fff;
 }
 .footer-logo-circle .red-dot {
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     background-color: #c0392b;
     border-radius: 50%;
 }
