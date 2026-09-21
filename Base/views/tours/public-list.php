@@ -63,61 +63,77 @@
 
     <!-- SIDEBAR FILTER -->
     <aside class="sidebar-filter">
-        <div class="filter-card">
-            <h4>Danh mục Tour</h4>
-            <a href="<?= BASE_URL ?>?action=public-tours" class="filter-item <?= empty($_GET['category_id']) ? 'active' : '' ?>">
-                <span class="dot"></span> Tất cả
-                <span class="count"><?= count($listTours ?? []) ?></span>
-            </a>
-            <?php foreach ($listCategories as $cat): 
-                $catCount = count(array_filter($listTours ?? [], fn($t) => ($t['category_id'] ?? null) == $cat['id']));
-            ?>
-            <a href="<?= BASE_URL ?>?action=public-tours&category_id=<?= $cat['id'] ?>" class="filter-item <?= (isset($_GET['category_id']) && $_GET['category_id'] == $cat['id']) ? 'active' : '' ?>">
-                <span class="dot"></span>
-                <?= htmlspecialchars($cat['name'] ?? '') ?>
-                <span class="count"><?= $catCount ?></span>
-            </a>
-            <?php endforeach; ?>
+        <div class="filter-header">
+            <h3>BỘ LỌC TINH CHỌN</h3>
+            <a href="<?= BASE_URL ?>?action=public-tours" class="reset-filter">Đặt lại</a>
         </div>
 
-        <div class="filter-card">
-            <h4>Loại hình</h4>
-            <a href="<?= BASE_URL ?>?action=public-tours" class="filter-item <?= empty($_GET['tour_type']) ? 'active' : '' ?>">
-                <span class="dot"></span> Tất cả
-            </a>
-            <a href="<?= BASE_URL ?>?action=public-tours&tour_type=Nội địa" class="filter-item <?= (($_GET['tour_type'] ?? '') === 'Nội địa') ? 'active' : '' ?>">
-                <span class="dot"></span> Nội địa
-            </a>
-            <a href="<?= BASE_URL ?>?action=public-tours&tour_type=Quốc tế" class="filter-item <?= (($_GET['tour_type'] ?? '') === 'Quốc tế') ? 'active' : '' ?>">
-                <span class="dot"></span> Quốc tế
-            </a>
+        <div class="filter-group">
+            <h4>CHỦ ĐỀ TRẢI NGHIỆM</h4>
+            <label class="custom-cb"><input type="checkbox" checked><span class="cb-mark"></span><span class="cb-text">Nghỉ Dưỡng Thụy Sĩ & Onsen Alpine</span></label>
+            <label class="custom-cb"><input type="checkbox" checked><span class="cb-mark"></span><span class="cb-text">Di Sản Châu Âu & Nghệ Thuật Sống</span></label>
+            <label class="custom-cb"><input type="checkbox"><span class="cb-mark"></span><span class="cb-text">Viễn Du Bắc Cực & Cực Quang Tĩnh Lặng</span></label>
+            <label class="custom-cb"><input type="checkbox"><span class="cb-mark"></span><span class="cb-text">Kỳ Nghỉ Biển Đảo Riêng Tư (Amalfi & Maldives)</span></label>
         </div>
 
-        <div class="filter-card">
-            <h4>Liên hệ nhanh</h4>
-            <p style="font-size:0.82rem;color:#888;line-height:1.6;">
-                <i class="fas fa-phone-alt" style="color:#c0392b;margin-right:6px;"></i> 1800 xxxx<br>
-                <i class="fas fa-envelope" style="color:#c0392b;margin-right:6px;"></i> support@globetrek.vn<br>
-                <i class="fas fa-clock" style="color:#c0392b;margin-right:6px;"></i> 7:00 – 22:00 hàng ngày
-            </p>
-            <a href="<?= BASE_URL ?>?action=request-tour" style="display:block;margin-top:14px;padding:10px;background:#fef0ef;border-radius:8px;text-align:center;font-size:0.85rem;font-weight:700;color:#c0392b;text-decoration:none;transition:background 0.18s;">
-                <i class="fas fa-suitcase-rolling me-1"></i> Đặt Tour Tùy Chỉnh
-            </a>
+        <div class="filter-group">
+            <h4>ĐIỂM ĐẾN CHÂU LỤC</h4>
+            <label class="custom-cb"><input type="checkbox" checked><span class="cb-mark"></span><span class="cb-text">Châu Âu Tinh Tuyển</span></label>
+            <label class="custom-cb"><input type="checkbox"><span class="cb-mark"></span><span class="cb-text">Bắc Mỹ Hoang Sơ</span></label>
+            <label class="custom-cb"><input type="checkbox"><span class="cb-mark"></span><span class="cb-text">Châu Đại Dương Tự Nhiên</span></label>
+            <label class="custom-cb"><input type="checkbox"><span class="cb-mark"></span><span class="cb-text">Con Đường Tơ Lụa & Đông Á</span></label>
+        </div>
+
+        <div class="filter-group">
+            <div class="fg-title-flex">
+                <h4>NGÂN SÁCH TUYỂN CHỌN</h4>
+                <span class="fg-val">Dưới 90tr VNĐ</span>
+            </div>
+            <div class="range-slider">
+                <div class="rs-track">
+                    <div class="rs-fill" style="width:50%;"></div>
+                </div>
+                <div class="rs-thumb" style="left:50%;"></div>
+            </div>
+            <div class="rs-labels">
+                <span>30.000.000 đ</span>
+                <span>120.000.000 đ</span>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <h4>THỜI GIAN LƯU TRÚ</h4>
+            <label class="custom-radio"><input type="radio" name="dur"><span class="rd-mark"></span><span class="rd-text">4 đến 5 ngày</span></label>
+            <label class="custom-radio"><input type="radio" name="dur" checked><span class="rd-mark"></span><span class="rd-text">6 đến 8 ngày (Tiêu chuẩn)</span></label>
+            <label class="custom-radio"><input type="radio" name="dur"><span class="rd-mark"></span><span class="rd-text">Trên 9 ngày (Chuyên sâu)</span></label>
+        </div>
+
+        <div class="filter-group border-0">
+            <h4>QUY CHUẨN OMOTENASHI</h4>
+            <div class="check-list">
+                <div class="cl-item"><i class="fas fa-check"></i> Đoàn riêng tối đa 10 - 12 khách</div>
+                <div class="cl-item"><i class="fas fa-check"></i> Khách sạn & Chateaux 5 sao quốc tế</div>
+                <div class="cl-item"><i class="fas fa-check"></i> Concierge & Hướng dẫn viên tinh hoa</div>
+                <div class="cl-item"><i class="fas fa-check"></i> Bảo hiểm lữ hành toàn cầu cao cấp</div>
+            </div>
         </div>
     </aside>
 
     <!-- TOUR LIST -->
     <div>
         <div class="tours-header">
-            <div>
-                <h2>Tất cả Tours</h2>
-                <span class="result-count"><?= count($listTours ?? []) ?> kết quả</span>
+            <div class="th-left">
+                <h2>Tuyển tập</h2>
+                <span class="result-count">(<?= count($listTours ?? []) ?> hành trình)</span>
             </div>
-            <div class="sort-tabs">
-                <button class="sort-tab active">Phổ biến</button>
-                <button class="sort-tab">Mới nhất</button>
-                <button class="sort-tab">Giá thấp</button>
-                <button class="sort-tab">Giá cao</button>
+            <div class="th-center">
+                <a href="#" class="active">Tất cả thế giới</a>
+                <a href="#">Châu Âu Mùa Thu</a>
+                <a href="#">Bắc Âu Tĩnh Lặng</a>
+                <a href="#">Hải Trình Biển Đảo</a>
+            </div>
+            <div class="th-right">
+                Xếp theo: <strong>Được yêu thích <i class="fas fa-chevron-down" style="font-size:0.7rem; margin-left:4px;"></i></strong>
             </div>
         </div>
 
@@ -162,26 +178,24 @@
                                      alt="<?= htmlspecialchars($tour['name'] ?? '') ?>"
                                      loading="lazy"
                                      onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=70'">
-                                <span class="tour-card-badge <?= $isInternational ? '' : 'domestic' ?>">
-                                    <?= $isInternational ? 'Quốc Tế' : 'Nội Địa' ?>
-                                </span>
                                 <div class="tour-card-save" onclick="event.preventDefault(); this.innerHTML='<i class=\'fas fa-heart\'></i>'; this.style.color='#e74c3c';">
                                     <i class="far fa-heart"></i>
                                 </div>
+                                <div class="tour-card-duration">7 Ngày 6 Đêm</div>
                             </div>
                             <div class="tour-card-body">
-                                <div class="tour-cat-tag">
-                                    <i class="fas fa-tag"></i>
-                                    <?= htmlspecialchars($tour['category_name'] ?? 'Du lịch') ?>
+                                <div class="tour-card-meta">
+                                    <span class="cat-name"><?= mb_strtoupper(htmlspecialchars($tour['category_name'] ?? 'DU LỊCH'), 'UTF-8') ?></span>
+                                    <span class="rating"><i class="fas fa-star"></i> 5.0</span>
                                 </div>
-                                <div class="tour-card-title"><?= htmlspecialchars($tour['name'] ?? '') ?></div>
+                                <h3 class="tour-card-title"><?= htmlspecialchars($tour['name'] ?? '') ?></h3>
                                 <div class="tour-card-desc"><?= htmlspecialchars(strip_tags($tour['description'] ?? '')) ?></div>
                                 <div class="tour-card-footer">
-                                    <div class="tour-price">
-                                        Giá từ
-                                        <strong><?= number_format($tour['base_price'] ?? 0, 0, ',', '.') ?><span>đ</span></strong>
+                                    <div class="price-box">
+                                        <span class="pl">Giá trọn gói</span>
+                                        <span class="pv"><?= number_format($tour['base_price'] ?? 0, 0, ',', '.') ?> đ</span>
                                     </div>
-                                    <span class="btn-detail">Chi Tiết</span>
+                                    <span class="btn-detail">CHI TIẾT <i class="fas fa-arrow-right" style="font-size:0.75rem; margin-left:4px;"></i></span>
                                 </div>
                             </div>
                         </a>
@@ -194,6 +208,18 @@
                     <p style="font-size:0.9rem;">Hãy thử thay đổi bộ lọc hoặc tìm kiếm với từ khóa khác.</p>
                 </div>
             <?php endif; ?>
+        </div>
+        
+        <!-- Pagination Mockup -->
+        <div class="pagination-mock">
+            <div class="pm-left">Trang 1 / 3 (18 hành trình tuyển chọn)</div>
+            <div class="pm-right">
+                <a href="#" class="pm-btn"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="pm-btn active">1</a>
+                <a href="#" class="pm-btn">2</a>
+                <a href="#" class="pm-btn">3</a>
+                <a href="#" class="pm-btn"><i class="fas fa-chevron-right"></i></a>
+            </div>
         </div>
     </div>
 </div>
