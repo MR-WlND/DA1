@@ -108,7 +108,7 @@ if (!function_exists('requireAdmin')) {
     function requireAdmin()
     {
         if (empty($_SESSION['user'])) {
-            header('Location: ' . BASE_URL . '?action=login');
+            header('Location: ' . BASE_URL . '?action=admin-login');
             exit();
         }
         if (($_SESSION['user']['role'] ?? '') !== 'admin') {
@@ -130,7 +130,7 @@ if (!function_exists('requireGuide')) {
     function requireGuide()
     {
         if (empty($_SESSION['user'])) {
-            header('Location: ' . BASE_URL . '?action=login');
+            header('Location: ' . BASE_URL . '?action=admin-login');
             exit();
         }
         if (($_SESSION['user']['role'] ?? '') !== 'guide') {

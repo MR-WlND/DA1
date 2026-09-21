@@ -6,6 +6,8 @@ match ($action) {
     '/', 'homepage'     => (new TourController)->publicTours(),
     'login'             => (new AuthController)->index(),
     'handleLogin'       => (new AuthController)->handleLogin(),
+    'admin-login'       => (new AuthController)->adminIndex(),
+    'handleAdminLogin'  => (new AuthController)->handleAdminLogin(),
     'logout'            => (new AuthController)->logout(),
 
     // Dashboard theo vai trò
