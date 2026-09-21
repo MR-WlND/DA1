@@ -1,8 +1,9 @@
-<?php
+﻿<?php
 class DepartureController
 {
     public function listDeparture()
     {
+        requireAdmin();
         $departure = new DepartureModel();
         $listDeparture = $departure->getList();
         $title = "list";
@@ -12,9 +13,10 @@ class DepartureController
 
     public function createDeparture()
     {
+        requireAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $tourModel = new TourModel(); // hoặc TourModel tùy bạn đặt tên
-            $listTours = $tourModel->getList(); // Lấy tất cả tour
+            $tourModel = new TourModel(); // hoáº·c TourModel tĂ¹y báº¡n Ä‘áº·t tĂªn
+            $listTours = $tourModel->getList(); // Láº¥y táº¥t cáº£ tour
             $title = "create";
             $view = "admin/departure/create-departure";
             require_once PATH_VIEW . 'main.php';
@@ -33,8 +35,9 @@ class DepartureController
 
     public function updateDeparture()
     {
+        requireAdmin();
         $departure = new DepartureModel();
-        $data = $departure->getOne($_GET['id']); // Lấy dữ liệu hiện tại
+        $data = $departure->getOne($_GET['id']); // Láº¥y dá»¯ liá»‡u hiá»‡n táº¡i
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $tour = new TourModel();
             $listTour = $tour->getList();
@@ -56,16 +59,17 @@ class DepartureController
 
     public function deleteDeparture()
     {
+        requireAdmin();
         $departureModel = new DepartureModel();
         $id = $_GET['id'];
 
-        // Kiểm tra xem có booking nào liên quan không
+        // Kiá»ƒm tra xem cĂ³ booking nĂ o liĂªn quan khĂ´ng
         if ($departureModel->hasBookings($id)) {
-            // Nếu có, báo lỗi và không cho xóa
-            $errorMessage = "Không thể xóa lịch khởi hành này vì đã có booking tồn tại.";
+            // Náº¿u cĂ³, bĂ¡o lá»—i vĂ  khĂ´ng cho xĂ³a
+            $errorMessage = "KhĂ´ng thá»ƒ xĂ³a lá»‹ch khá»Ÿi hĂ nh nĂ y vĂ¬ Ä‘Ă£ cĂ³ booking tá»“n táº¡i.";
             header('Location:' . BASE_URL . '?action=list-departure&error=' . urlencode($errorMessage));
         } else {
-            // Nếu không, tiến hành xóa
+            // Náº¿u khĂ´ng, tiáº¿n hĂ nh xĂ³a
             $departureModel->delete($id);
             header('Location:' . BASE_URL . '?action=list-departure&success=1');
         }
@@ -73,7 +77,7 @@ class DepartureController
     }
     public function departureDetail()
 {
-    // BẢO VỆ TRANG (chỉ Admin/Staff mới được xem chi tiết)
+    // Báº¢O Vá»† TRANG (chá»‰ Admin/Staff má»›i Ä‘Æ°á»£c xem chi tiáº¿t)
     if (!isset($_SESSION['user']) || ($_SESSION['user']['role'] ?? 'user') !== 'admin') { 
         header('Location: ' . BASE_URL . '?action=homepage');
         exit;
@@ -86,11 +90,11 @@ class DepartureController
         exit;
     }
     
-    // Khởi tạo các Model cần thiết
-    $departureModel = new DepartureModel(); // Giả định Model này tồn tại
+    // Khá»Ÿi táº¡o cĂ¡c Model cáº§n thiáº¿t
+    $departureModel = new DepartureModel(); // Giáº£ Ä‘á»‹nh Model nĂ y tá»“n táº¡i
     $tourLogModel = new TourLogModel();
     
-    // 1. Lấy chi tiết chuyến đi
+    // 1. Láº¥y chi tiáº¿t chuyáº¿n Ä‘i
     $departure = $departureModel->getOne($departureId); 
     
     if (!$departure) {
@@ -98,18 +102,19 @@ class DepartureController
         exit;
     }
 
-    // 2. 🟢 LẤY LỊCH SỬ LOG HOẠT ĐỘNG
+    // 2. đŸŸ¢ Láº¤Y Lá»CH Sá»¬ LOG HOáº T Äá»˜NG
     $departureLogs = $tourLogModel->getLogsByDepartureId($departureId);
     
-    // 3. Truyền dữ liệu sang View
+    // 3. Truyá»n dá»¯ liá»‡u sang View
     $data = [
         'departure' => $departure,
-        'departureLogs' => $departureLogs, // 🟢 Truyền log đi
-        // ... (Thêm list bookings, customers nếu cần)
+        'departureLogs' => $departureLogs, // đŸŸ¢ Truyá»n log Ä‘i
+        // ... (ThĂªm list bookings, customers náº¿u cáº§n)
     ];
 
-    $title = "Chi tiết Chuyến đi";
-    $view = "admin/departure/departure-detail"; // Đảm bảo đường dẫn View này chính xác
+    $title = "Chi tiáº¿t Chuyáº¿n Ä‘i";
+    $view = "admin/departure/departure-detail"; // Äáº£m báº£o Ä‘Æ°á»ng dáº«n View nĂ y chĂ­nh xĂ¡c
     require_once PATH_VIEW . 'main.php';
 }
 }
+

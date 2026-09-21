@@ -1,58 +1,60 @@
-<?php
+﻿<?php
 // File: controllers/DepartureResourceController.php
 
 class DepartureResourceController
 {
-    // 1. Hiển thị danh sách Phân công (READ List)
+    // 1. Hiá»ƒn thá»‹ danh sĂ¡ch PhĂ¢n cĂ´ng (READ List)
     public function listResource()
     {
+        requireAdmin();
         $resourceModel = new DepartureResourceModel();
         $listResources = $resourceModel->getList();
 
-        $title = "Quản lý Phân bổ Tài nguyên";
+        $title = "Quáº£n lĂ½ PhĂ¢n bá»• TĂ i nguyĂªn";
         $view = "admin/logistics/list-resource";
         require_once PATH_VIEW . 'main.php';
     }
 
-    // 2. Thêm Phân công mới (CREATE)
+    // 2. ThĂªm PhĂ¢n cĂ´ng má»›i (CREATE)
     public function createResource()
     {
-        // Khởi tạo Models cục bộ để lấy Master Data cho dropdowns
+        requireAdmin();
+        // Khá»Ÿi táº¡o Models cá»¥c bá»™ Ä‘á»ƒ láº¥y Master Data cho dropdowns
         $departureModel = new DepartureModel();
         $userModel = new UserModel();
         $hotelModel = new HotelModel();
         $transportModel = new TransportSupplierModel();
 
-        // Lấy danh sách cần thiết cho form
+        // Láº¥y danh sĂ¡ch cáº§n thiáº¿t cho form
         $listDepartures = $departureModel->getList();
         $listGuides = $userModel->getAllGuides();
         $listHotels = $hotelModel->getList();
         $listTransport = $transportModel->getList();
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $title = "Phân bổ Tài nguyên & Chi phí";
+            $title = "PhĂ¢n bá»• TĂ i nguyĂªn & Chi phĂ­";
             $view = "admin/logistics/create-resource";
             require_once PATH_VIEW . 'main.php';
         } else {
-            // Xử lý POST submission - cho phép chọn nhiều tài nguyên cùng lúc
+            // Xá»­ lĂ½ POST submission - cho phĂ©p chá»n nhiá»u tĂ i nguyĂªn cĂ¹ng lĂºc
             $resourceModel = new DepartureResourceModel();
 
             $departure_id = isset($_POST['departure_id']) ? (int) $_POST['departure_id'] : null;
             $cost = isset($_POST['cost']) ? (float) $_POST['cost'] : 0;
             $details = $_POST['details'] ?? null;
 
-            // Kiểm tra departure_id
+            // Kiá»ƒm tra departure_id
             if (empty($departure_id)) {
                 header("Location: " . BASE_URL . "?action=create-resource");
                 exit;
             }
 
-            // Xử lý từng loại tài nguyên nếu được chọn
+            // Xá»­ lĂ½ tá»«ng loáº¡i tĂ i nguyĂªn náº¿u Ä‘Æ°á»£c chá»n
             $guide_id = isset($_POST['guide_id']) && !empty($_POST['guide_id']) ? (int) $_POST['guide_id'] : null;
             $hotel_id = isset($_POST['hotel_id']) && !empty($_POST['hotel_id']) ? (int) $_POST['hotel_id'] : null;
             $transport_id = isset($_POST['transport_id']) && !empty($_POST['transport_id']) ? (int) $_POST['transport_id'] : null;
 
-            // Chèn từng tài nguyên được chọn
+            // ChĂ¨n tá»«ng tĂ i nguyĂªn Ä‘Æ°á»£c chá»n
             if ($guide_id) {
                 $resourceModel->insert($departure_id, 'guide', $guide_id, $details, $cost);
             }
@@ -68,13 +70,14 @@ class DepartureResourceController
         }
     }
 
-    // 3. Cập nhật Phân công (UPDATE)
+    // 3. Cáº­p nháº­t PhĂ¢n cĂ´ng (UPDATE)
     public function updateResource()
     {
+        requireAdmin();
         $id = $_GET['id'];
         $resourceModel = new DepartureResourceModel();
 
-        // Load Master Data (đã loại bỏ kiểm tra $resource tồn tại)
+        // Load Master Data (Ä‘Ă£ loáº¡i bá» kiá»ƒm tra $resource tá»“n táº¡i)
         $resource = $resourceModel->getOne($id);
 
         // Load Master Data cho form dropdowns
@@ -88,11 +91,11 @@ class DepartureResourceController
         $listTransport = (new TransportSupplierModel())->getList();
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $title = "Cập nhật Phân bổ";
+            $title = "Cáº­p nháº­t PhĂ¢n bá»•";
             $view = "admin/logistics/update-resource";
             require_once PATH_VIEW . 'main.php';
         } else {
-            // Xử lý POST submission
+            // Xá»­ lĂ½ POST submission
             $departure_id = $_POST['departure_id'];
             $resource_type = $_POST['resource_type'];
             $cost = $_POST['cost'];
@@ -114,9 +117,10 @@ class DepartureResourceController
         }
     }
 
-    // 4. Xóa Phân công (DELETE - Tối giản)
+    // 4. XĂ³a PhĂ¢n cĂ´ng (DELETE - Tá»‘i giáº£n)
     public function deleteResource()
     {
+        requireAdmin();
         $id = $_GET['id'];
         $resourceModel = new DepartureResourceModel();
 
@@ -125,3 +129,4 @@ class DepartureResourceController
         exit;
     }
 }
+

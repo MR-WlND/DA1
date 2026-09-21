@@ -73,7 +73,75 @@ if (!function_exists('checkRole')) {
         checkAuth();
         $userRole = $_SESSION['user']['role'] ?? '';
         if (!in_array($userRole, (array)$allowedRoles)) {
-            echo "<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>";
+            header('Location: ' . BASE_URL . '?action=login');
+            exit();
+        }
+    }
+}
+
+// Yeu cau phai dang nhap va la customer
+if (!function_exists('requireCustomer')) {
+    function requireCustomer()
+    {
+        if (empty($_SESSION['user'])) {
+            // Chua dang nhap -> chuyen den trang dang nhap
+            header('Location: ' . BASE_URL . '?action=login');
+            exit();
+        }
+        if (($_SESSION['user']['role'] ?? '') !== 'customer') {
+            // Dang nhap nhung khong phai customer -> chuyen ve trang cua role do
+            $role = $_SESSION['user']['role'];
+            if ($role === 'admin') {
+                header('Location: ' . BASE_URL . '?action=dashboard');
+            } elseif ($role === 'guide') {
+                header('Location: ' . BASE_URL . '?action=schedule');
+            } else {
+                header('Location: ' . BASE_URL . '?action=login');
+            }
+            exit();
+        }
+    }
+}
+
+// Yeu cau phai dang nhap va la admin
+if (!function_exists('requireAdmin')) {
+    function requireAdmin()
+    {
+        if (empty($_SESSION['user'])) {
+            header('Location: ' . BASE_URL . '?action=login');
+            exit();
+        }
+        if (($_SESSION['user']['role'] ?? '') !== 'admin') {
+            $role = $_SESSION['user']['role'];
+            if ($role === 'guide') {
+                header('Location: ' . BASE_URL . '?action=schedule');
+            } elseif ($role === 'customer') {
+                header('Location: ' . BASE_URL . '?action=public-tours');
+            } else {
+                header('Location: ' . BASE_URL . '?action=login');
+            }
+            exit();
+        }
+    }
+}
+
+// Yeu cau phai dang nhap va la guide
+if (!function_exists('requireGuide')) {
+    function requireGuide()
+    {
+        if (empty($_SESSION['user'])) {
+            header('Location: ' . BASE_URL . '?action=login');
+            exit();
+        }
+        if (($_SESSION['user']['role'] ?? '') !== 'guide') {
+            $role = $_SESSION['user']['role'];
+            if ($role === 'admin') {
+                header('Location: ' . BASE_URL . '?action=dashboard');
+            } elseif ($role === 'customer') {
+                header('Location: ' . BASE_URL . '?action=public-tours');
+            } else {
+                header('Location: ' . BASE_URL . '?action=login');
+            }
             exit();
         }
     }

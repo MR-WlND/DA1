@@ -1,20 +1,22 @@
-<?php
+﻿<?php
 
 class GuideController
 {
     public function listGuide()
     {
+        requireAdmin();
         $guides = new GuideModel();
         $listGuides = $guides->getAll();
-        $title = "Danh sách hướng dẫn viên";
+        $title = "Danh sĂ¡ch hÆ°á»›ng dáº«n viĂªn";
         $view = "admin/guides/list-guide";
         require_once PATH_VIEW . 'main.php';
     }
 
     public function createGuide()
     {
+        requireAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $title = "Thêm hướng dẫn viên";
+            $title = "ThĂªm hÆ°á»›ng dáº«n viĂªn";
             $view = "admin/guides/create-guide";
             require_once PATH_VIEW . 'main.php';
         } else {
@@ -48,11 +50,12 @@ class GuideController
 
     public function updateGuide()
     {
+        requireAdmin();
         $guides = new GuideModel();
         $data = $guides->getOne($_GET['id']);
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $title = "Cập nhật hướng dẫn viên";
+            $title = "Cáº­p nháº­t hÆ°á»›ng dáº«n viĂªn";
             $view = "admin/guides/update-guide";
             require_once PATH_VIEW . 'main.php';
         } else {
@@ -89,6 +92,7 @@ class GuideController
 
     public function deleteGuide()
     {
+        requireAdmin();
         $guides = new GuideModel();
         $data = $guides->getOne($_GET['id']);
         if (isset($data['photo_url']) != "") {
@@ -100,26 +104,29 @@ class GuideController
     }
     public function detailGuide()
     {
+        requireAdmin();
         $guides = new GuideModel();
-        $data = $guides->getOne($_GET['id']); // Lấy thông tin guide theo id
+        $data = $guides->getOne($_GET['id']); // Láº¥y thĂ´ng tin guide theo id
 
-        $title = "Chi tiết hướng dẫn viên";
+        $title = "Chi tiáº¿t hÆ°á»›ng dáº«n viĂªn";
         $view = "admin/guides/detail-guide";
         require_once PATH_VIEW . 'main.php';
     }
 
     public function viewDashboard()
     {
-        // Kiểm tra session để lấy ID HDV đang đăng nhập (Bắt buộc)
+        requireAdmin();
+        // Kiá»ƒm tra session Ä‘á»ƒ láº¥y ID HDV Ä‘ang Ä‘Äƒng nháº­p (Báº¯t buá»™c)
         $guideId = $_SESSION['user']['id'];
         
         $guideModel = new GuideModel();
         
-        // Lấy danh sách các chuyến đi được giao cho HDV này
+        // Láº¥y danh sĂ¡ch cĂ¡c chuyáº¿n Ä‘i Ä‘Æ°á»£c giao cho HDV nĂ y
         $assignedDepartures = $guideModel->getAssignedDepartures($guideId);
         
-        $title = "Dashboard Hướng dẫn viên";
-        $view = "guide/dashboard"; // View dành riêng cho HDV
+        $title = "Dashboard HÆ°á»›ng dáº«n viĂªn";
+        $view = "guide/dashboard"; // View dĂ nh riĂªng cho HDV
         require_once PATH_VIEW . 'main.php'; 
     }
 }
+

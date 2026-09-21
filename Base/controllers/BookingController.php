@@ -9,7 +9,7 @@ class BookingController
     }
     public function listBooking()
     {
-        // 🟢 SỬA LỖI: Dùng $this->bookingModel
+        requireAdmin();
         $listBookings = $this->bookingModel->getList();
 
         $title = "Quản lý Đơn đặt Tour";
@@ -18,6 +18,7 @@ class BookingController
     }
     public function createBooking()
     {
+        requireAdmin();
         // Khởi tạo các Model phụ thuộc nếu cần (Chỉ khởi tạo nếu không có trong __construct)
         $userModel = new UserModel();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -64,6 +65,7 @@ class BookingController
 
     public function updateBooking()
     {
+        requireAdmin();
         $id = $_GET['id'];
         
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -89,8 +91,8 @@ class BookingController
     }
     public function deleteBooking()
     {
+        requireAdmin();
         $id = $_GET['id'];
-        // 🟢 SỬA LỖI: Dùng $this->bookingModel
         $this->bookingModel->delete($id);
 
         header('Location:' . BASE_URL . '?action=list-booking');
@@ -99,6 +101,7 @@ class BookingController
 
     public function detailBooking()
     {
+        requireAdmin();
         $id = $_GET['id'];
         
         // 🟢 SỬA LỖI: Dùng hàm find() đã tối ưu trong Model thay vì getOne() cũ
@@ -119,9 +122,9 @@ class BookingController
     }
 
 
-    // Giao diện thanh toán
     public function checkoutSimple()
     {
+        requireCustomer();
         $bookingId = $_GET['id'] ?? null;
         
         // 🟢 Dùng hàm find() đã tối ưu trong Model
@@ -181,10 +184,7 @@ class BookingController
 
     public function myBookings()
     {
-        if (empty($_SESSION['user']) || empty($_SESSION['user']['id'])) {
-            header('Location: ' . BASE_URL . '?action=login');
-            exit;
-        }
+        requireCustomer();
 
         $userId = $_SESSION['user']['id'];
         

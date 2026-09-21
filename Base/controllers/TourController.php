@@ -17,6 +17,7 @@ class TourController
     // 1. Hiển thị danh sách Tour (Read)
     public function listTour()
     {
+        requireAdmin();
         $listTours = $this->tourModel->getList();
         $title = "Quản lý Sản phẩm Tour";
         $view = "admin/tours/list-tour";
@@ -27,6 +28,7 @@ class TourController
 
     public function createTour()
     {
+        requireAdmin();
         // Loại bỏ khai báo biến cục bộ thừa, sử dụng trực tiếp $this->Model
         $tourModel = $this->tourModel;
         $categoryModel = $this->categoryModel;
@@ -92,6 +94,7 @@ class TourController
 
     public function updateTour()
     {
+        requireAdmin();
         // 1. Kiểm tra ID và Lấy Dữ liệu cũ
         $tour_id = $_GET['id'] ?? null;
         if (!$tour_id || !is_numeric($tour_id)) {
@@ -215,6 +218,7 @@ class TourController
 
     public function detailTour()
     {
+        requireAdmin();
         $model = new TourModel();
         $tour = $model->getOne($_GET['id']);
         $view = "admin/tours/detail-tour";
@@ -224,6 +228,7 @@ class TourController
     // 5. Xóa Tour (Delete)
     public function deleteTour()
     {
+        requireAdmin();
         $id = $_GET['id'];
         $this->tourModel->delete($id);
         header('Location: ' . BASE_URL . '?action=list-tour');
@@ -231,6 +236,7 @@ class TourController
     }
     public function requestTour()
 {
+    requireCustomer();
     $model = $this->customRequestModel;
     $message = null;
     $postData = []; // Khởi tạo để giữ dữ liệu dính (sticky data)
@@ -268,6 +274,7 @@ class TourController
 }
 public function listCustomRequests()
 {
+    requireAdmin();
     // Sử dụng Model đã khởi tạo
     $listRequests = $this->customRequestModel->getListRequests();
 
@@ -277,6 +284,7 @@ public function listCustomRequests()
 }
 public function submitQuote()
 {
+    requireAdmin();
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         header('Location: ' . BASE_URL . '?action=list-requests');
         exit;
@@ -306,6 +314,7 @@ public function submitQuote()
  */
 public function updateRequestStatus()
 {
+    requireAdmin();
     if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_POST['request_id']) || empty($_POST['status'])) {
         header('Location: ' . BASE_URL . '?action=list-requests');
         exit;
@@ -328,6 +337,7 @@ public function updateRequestStatus()
 
 public function viewCustomRequest()
 {
+    requireAdmin();
     $requestId = $_GET['id'] ?? null;
     
     // Cần đảm bảo $this->customRequestModel đã được khởi tạo
@@ -351,10 +361,7 @@ public function viewCustomRequest()
 
 public function viewMyQuotes()
 {
-    if (empty($_SESSION['user']) || empty($_SESSION['user']['id'])) {
-        header('Location: ' . BASE_URL . '?action=login');
-        exit;
-    }
+    requireCustomer();
 
     $userId = $_SESSION['user']['id'];
     

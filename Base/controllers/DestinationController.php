@@ -1,9 +1,10 @@
-<?php
+﻿<?php
 
 class DestinationController
 {
     public function listDestination()
     {
+        requireAdmin();
         $model = new DestinationModel();
         $listDestination = $model->getList();
         $title = "list";
@@ -13,6 +14,7 @@ class DestinationController
 
     public function createDestination()
     {
+        requireAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $listType = ['City', 'Country', 'Region'];
             $title = "create";
@@ -25,10 +27,10 @@ class DestinationController
 
             $model = new DestinationModel();
 
-            // Kiểm tra trùng tên
+            // Kiá»ƒm tra trĂ¹ng tĂªn
             $existing = $model->getOneByName($name);
             if ($existing) {
-                echo "Tên điểm đến đã tồn tại!";
+                echo "TĂªn Ä‘iá»ƒm Ä‘áº¿n Ä‘Ă£ tá»“n táº¡i!";
                 return;
             }
 
@@ -40,10 +42,11 @@ class DestinationController
 
     public function updateDestination()
     {
+        requireAdmin();
         $model = new DestinationModel();
         $data = $model->getOne($_GET['id']);
         if (!$data) {
-            echo "Điểm đến không tồn tại!";
+            echo "Äiá»ƒm Ä‘áº¿n khĂ´ng tá»“n táº¡i!";
             return;
         }
 
@@ -58,10 +61,10 @@ class DestinationController
             $country = $_POST['country'];
             $type = $_POST['type'] ?? 'City';
 
-            // Kiểm tra trùng tên
+            // Kiá»ƒm tra trĂ¹ng tĂªn
             $existing = $model->getOneByName($name);
             if ($existing && $existing['id'] != $_GET['id']) {
-                echo "Tên điểm đến đã tồn tại!";
+                echo "TĂªn Ä‘iá»ƒm Ä‘áº¿n Ä‘Ă£ tá»“n táº¡i!";
                 return;
             }
 
@@ -73,19 +76,21 @@ class DestinationController
 
     public function deleteDestination()
     {
+        requireAdmin();
         $destinationID = $_GET['id'];
         $tourModel = new TourModel();
         $tourCount = $tourModel->countToursByDestinationId($destinationID);
 
         if ($tourCount > 0) {
-            $_SESSION['error'] = "Không thể xóa điểm đến này vì đang có tour thuộc điểm đến này.";
+            $_SESSION['error'] = "KhĂ´ng thá»ƒ xĂ³a Ä‘iá»ƒm Ä‘áº¿n nĂ y vĂ¬ Ä‘ang cĂ³ tour thuá»™c Ä‘iá»ƒm Ä‘áº¿n nĂ y.";
         } else {
             $destinationModel = new DestinationModel();
             $destinationModel->delete($destinationID);
-            $_SESSION['success'] = "Xóa điểm đến thành công!";
+            $_SESSION['success'] = "XĂ³a Ä‘iá»ƒm Ä‘áº¿n thĂ nh cĂ´ng!";
         }
 
         header("Location: " . BASE_URL . "?action=list-destination");
         exit;
     }
 }
+

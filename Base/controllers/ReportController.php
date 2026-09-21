@@ -1,16 +1,17 @@
-<?php
+﻿<?php
 // File: controllers/ReportController.php
 
 class ReportController
 {
     public function listProfitLoss()
     {
-        // 1. GỌI MODEL
+        requireAdmin();
+        // 1. Gá»ŒI MODEL
         $reportModel = new ReportModel();
         $dataReport = $reportModel->getProfitLossReport();
         
-        // 2. CHUYỂN DỮ LIỆU SANG VIEW
-        $title = "Báo cáo Lãi/Lỗ theo Chuyến đi";
+        // 2. CHUYá»‚N Dá»® LIá»†U SANG VIEW
+        $title = "BĂ¡o cĂ¡o LĂ£i/Lá»— theo Chuyáº¿n Ä‘i";
         $view = "admin/reports/list-profit-loss";
         $data = [
             'profitLossReport' => $dataReport

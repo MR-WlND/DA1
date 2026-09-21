@@ -1,29 +1,31 @@
-<?php
+﻿<?php
 
 class TransportSupplierController
 {
     public function listSupplier()
     {
-        $model = new TransportSupplierModel(); // Khởi tạo Model cục bộ
+        requireAdmin();
+        $model = new TransportSupplierModel(); // Khá»Ÿi táº¡o Model cá»¥c bá»™
         $listSuppliers = $model->getList();
-        $title = "Quản lý NCC Vận tải";
+        $title = "Quáº£n lĂ½ NCC Váº­n táº£i";
         $view = "admin/transport/list-supplier";
         require_once PATH_VIEW . 'main.php';
     }
 
-    // 2. Thêm NCC mới (CREATE)
+    // 2. ThĂªm NCC má»›i (CREATE)
     public function createSupplier()
     {
+        requireAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            // Có thể cần TourModel để lấy list Destinations nếu NCC liên kết với địa điểm
+            // CĂ³ thá»ƒ cáº§n TourModel Ä‘á»ƒ láº¥y list Destinations náº¿u NCC liĂªn káº¿t vá»›i Ä‘á»‹a Ä‘iá»ƒm
             // $destinationModel = new DestinationModel(); 
             // $listDestination = $destinationModel->getList(); 
 
-            $title = "Thêm NCC Vận tải";
+            $title = "ThĂªm NCC Váº­n táº£i";
             $view = "admin/transport/create-supplier";
             require_once PATH_VIEW . 'main.php';
         } else {
-            // Lấy dữ liệu từ form và gọi Model
+            // Láº¥y dá»¯ liá»‡u tá»« form vĂ  gá»i Model
             $name = $_POST['supplier_name'];
             $contact = $_POST['contact_person'] ?? null;
             $phone = $_POST['phone'] ?? null;
@@ -34,34 +36,35 @@ class TransportSupplierController
                 $model = new TransportSupplierModel();
                 $model->insert($name, $contact, $phone, $email, $details);
 
-                // Chuyển hướng sau khi tạo thành công
+                // Chuyá»ƒn hÆ°á»›ng sau khi táº¡o thĂ nh cĂ´ng
                 header("Location: " . BASE_URL . "?action=list-supplier");
                 exit;
             } catch (Exception $e) {
-                // Xử lý lỗi CSDL
-                echo "Lỗi: Không thể thêm NCC. " . $e->getMessage();
+                // Xá»­ lĂ½ lá»—i CSDL
+                echo "Lá»—i: KhĂ´ng thá»ƒ thĂªm NCC. " . $e->getMessage();
             }
         }
     }
 
-    // 3. Cập nhật NCC (UPDATE)
+    // 3. Cáº­p nháº­t NCC (UPDATE)
     public function updateSupplier()
     {
+        requireAdmin();
         $id = $_GET['id'] ?? null;
         $model = new TransportSupplierModel();
         $supplier = $model->getOne($id);
         
         if (!$supplier) {
-            echo "Nhà cung cấp không tồn tại!";
+            echo "NhĂ  cung cáº¥p khĂ´ng tá»“n táº¡i!";
             return;
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $title = "Cập nhật NCC Vận tải";
+            $title = "Cáº­p nháº­t NCC Váº­n táº£i";
             $view = "admin/transport/update-supplier";
             require_once PATH_VIEW . 'main.php';
         } else {
-            // Lấy dữ liệu và gọi Model
+            // Láº¥y dá»¯ liá»‡u vĂ  gá»i Model
             $name = $_POST['supplier_name'];
             $contact = $_POST['contact_person'] ?? null;
             $phone = $_POST['phone'] ?? null;
@@ -75,15 +78,16 @@ class TransportSupplierController
         }
     }
 
-    // 4. Xóa NCC (DELETE)
+    // 4. XĂ³a NCC (DELETE)
     public function deleteSupplier()
     {
+        requireAdmin();
         $id = $_GET['id'] ?? null;
         $model = new TransportSupplierModel();
         
-        // Cần lấy dữ liệu trước để kiểm tra tồn tại và xử lý FK (nếu cần)
+        // Cáº§n láº¥y dá»¯ liá»‡u trÆ°á»›c Ä‘á»ƒ kiá»ƒm tra tá»“n táº¡i vĂ  xá»­ lĂ½ FK (náº¿u cáº§n)
         if (!$model->getOne($id)) {
-            echo "Nhà cung cấp không tồn tại!";
+            echo "NhĂ  cung cáº¥p khĂ´ng tá»“n táº¡i!";
             return;
         }
 
@@ -92,8 +96,8 @@ class TransportSupplierController
             header("Location: " . BASE_URL . "?action=list-supplier");
             exit;
         } catch (Exception $e) {
-            // Bắt lỗi FK nếu NCC này còn được tham chiếu trong departure_resources
-            echo "Lỗi: Không thể xóa NCC (Có thể còn liên kết với chuyến khởi hành).";
+            // Báº¯t lá»—i FK náº¿u NCC nĂ y cĂ²n Ä‘Æ°á»£c tham chiáº¿u trong departure_resources
+            echo "Lá»—i: KhĂ´ng thá»ƒ xĂ³a NCC (CĂ³ thá»ƒ cĂ²n liĂªn káº¿t vá»›i chuyáº¿n khá»Ÿi hĂ nh).";
         }
     }
 }

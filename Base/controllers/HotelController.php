@@ -1,8 +1,9 @@
-<?php
+﻿<?php
 class HotelController
 {
     public function listHotel()
     {
+        requireAdmin();
         $model = new HotelModel();
         $listHotel = $model->getList();
         $title = "list";
@@ -12,6 +13,7 @@ class HotelController
 
     public function createHotel()
     {
+        requireAdmin();
         $destinationModel = new DestinationModel();
         $listDestination = $destinationModel->getList();
 
@@ -34,10 +36,11 @@ class HotelController
 
     public function updateHotel()
     {
+        requireAdmin();
         $model = new HotelModel();
         $data = $model->getOne($_GET['id']);
         if (!$data) {
-            echo "Khách sạn không tồn tại!";
+            echo "KhĂ¡ch sáº¡n khĂ´ng tá»“n táº¡i!";
             return;
         }
 
@@ -62,10 +65,11 @@ class HotelController
 
     public function deleteHotel()
     {
+        requireAdmin();
         $model = new HotelModel();
         $data = $model->getOne($_GET['id']);
         if (!$data) {
-            echo "Khách sạn không tồn tại!";
+            echo "KhĂ¡ch sáº¡n khĂ´ng tá»“n táº¡i!";
             return;
         }
 
@@ -75,3 +79,4 @@ class HotelController
     }
 }
 ?>
+

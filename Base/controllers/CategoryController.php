@@ -1,8 +1,9 @@
-<?php
+﻿<?php
 class CategoryController
 {
     public function listCategory()
     {
+        requireAdmin();
         $model = new CategoryModel();
         $listCategory = $model->getList();
 
@@ -12,6 +13,7 @@ class CategoryController
 
     public function createCategory()
     {
+        requireAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $view = "admin/category/create-category";
             require_once PATH_VIEW . 'main.php';
@@ -24,14 +26,14 @@ class CategoryController
             // Validate unique name
             $existingCategory = $model->findByName($name);
             if ($existingCategory) {
-                $_SESSION['error'] = "Tên danh mục đã tồn tại.";
+                $_SESSION['error'] = "TĂªn danh má»¥c Ä‘Ă£ tá»“n táº¡i.";
                 header("Location: " . BASE_URL . "?action=create-category");
                 exit;
             }
 
             $model->insert($name, $description);
 
-            $_SESSION['success'] = "Thêm danh mục thành công!";
+            $_SESSION['success'] = "ThĂªm danh má»¥c thĂ nh cĂ´ng!";
             header("Location: " . BASE_URL . "?action=list-category");
             exit;
         }
@@ -39,6 +41,7 @@ class CategoryController
 
     public function updateCategory()
     {
+        requireAdmin();
         $model = new CategoryModel();
         $categoryID = $_GET['id'];
         $category = $model->getOne($categoryID);
@@ -53,14 +56,14 @@ class CategoryController
             // Validate unique name
             $existingCategory = $model->findByName($name);
             if ($existingCategory && $existingCategory['id'] != $categoryID) {
-                $_SESSION['error'] = "Tên danh mục đã tồn tại.";
+                $_SESSION['error'] = "TĂªn danh má»¥c Ä‘Ă£ tá»“n táº¡i.";
                 header("Location: " . BASE_URL . "?action=update-category&id=" . $categoryID);
                 exit;
             }
 
             $model->update($categoryID, $name, $description);
 
-            $_SESSION['success'] = "Cập nhật danh mục thành công!";
+            $_SESSION['success'] = "Cáº­p nháº­t danh má»¥c thĂ nh cĂ´ng!";
             header("Location: " . BASE_URL . "?action=list-category");
             exit;
         }
@@ -68,16 +71,17 @@ class CategoryController
 
     public function deleteCategory()
     {
+        requireAdmin();
         $categoryID = $_GET['id'];
         $tourModel = new TourModel();
         $tourCount = $tourModel->countToursByCategoryId($categoryID);
 
         if ($tourCount > 0) {
-            $_SESSION['error'] = "Không thể xóa danh mục này vì đang có tour thuộc danh mục này.";
+            $_SESSION['error'] = "KhĂ´ng thá»ƒ xĂ³a danh má»¥c nĂ y vĂ¬ Ä‘ang cĂ³ tour thuá»™c danh má»¥c nĂ y.";
         } else {
             $categoryModel = new CategoryModel();
             $categoryModel->delete($categoryID);
-            $_SESSION['success'] = "Xóa danh mục thành công!";
+            $_SESSION['success'] = "XĂ³a danh má»¥c thĂ nh cĂ´ng!";
         }
 
         header("Location: " . BASE_URL . "?action=list-category");
@@ -85,3 +89,4 @@ class CategoryController
     }
 }
 ?>
+

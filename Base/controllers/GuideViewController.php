@@ -3,11 +3,7 @@ class GuideViewController
 {
     public function schedule()
     {
-        // Ensure user is logged in and is a guide
-        if (empty($_SESSION['user']) || ($_SESSION['user']['role'] ?? '') !== 'guide') {
-            header('Location: ' . BASE_URL . '?action=login');
-            exit;
-        }
+        requireGuide();
 
         $guideId = $_SESSION['user']['id'];
         $guideModel = new GuideModel();
@@ -31,9 +27,14 @@ class GuideViewController
         header('Content-Type: application/json');
         
         // Auth check
-        if (empty($_SESSION['user']) || ($_SESSION['user']['role'] ?? '') !== 'guide') {
+        if (empty($_SESSION['user'])) {
             http_response_code(403);
             echo json_encode(['error' => 'Unauthorized']);
+            exit;
+        }
+        if (($_SESSION['user']['role'] ?? '') !== 'guide') {
+            http_response_code(403);
+            echo json_encode(['error' => 'Forbidden']);
             exit;
         }
 
@@ -56,9 +57,14 @@ class GuideViewController
         header('Content-Type: application/json');
 
         // Auth check
-        if (empty($_SESSION['user']) || ($_SESSION['user']['role'] ?? '') !== 'guide') {
+        if (empty($_SESSION['user'])) {
             http_response_code(403);
             echo json_encode(['error' => 'Unauthorized']);
+            exit;
+        }
+        if (($_SESSION['user']['role'] ?? '') !== 'guide') {
+            http_response_code(403);
+            echo json_encode(['error' => 'Forbidden']);
             exit;
         }
 
