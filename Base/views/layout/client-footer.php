@@ -1,28 +1,29 @@
 <!-- COMMITMENT SECTION -->
 <section class="commitment-section">
     <div class="cs-inner">
-        <h2>Cam Kết Tình Thần Omotenashi</h2>
-        <p class="cs-sub">Sự hài lòng của bạn là ưu tiên số một của chúng tôi. Chúng tôi cam kết mang lại trải nghiệm du lịch trọn vẹn.</p>
+        <div class="cs-top-title">TRIẾT LÝ PHỤNG SỰ</div>
+        <h2>Cam Kết Tinh Thần Omotenashi</h2>
+        <p class="cs-sub">Sự chăm sóc thầm lặng, chu đáo và trân trọng sâu sắc từng khoảnh khắc của quý khách.</p>
         <div class="commit-grid">
             <div class="commit-item">
-                <div class="ci-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>Hoàn Tiền Đảm Bảo</h3>
-                <p>Nếu không hài lòng trong 24 giờ đầu, chúng tôi hoàn tiền 100% không câu hỏi.</p>
+                <div class="ci-icon"><i class="fas fa-money-bill-wave"></i></div>
+                <h3>Minh Bạch Tuyệt Đối</h3>
+                <p>Giá trọn gói minh bạch, không phí ẩn hay phụ phí ngoài kế hoạch.</p>
             </div>
             <div class="commit-item">
                 <div class="ci-icon"><i class="fas fa-headset"></i></div>
-                <h3>Điểm Đón Mọi Nơi</h3>
-                <p>Hỗ trợ đón trả khách tại nhiều điểm trên toàn quốc, tận nơi – tiện lợi tối đa.</p>
+                <h3>Concierge Riêng Biệt</h3>
+                <p>Đội ngũ am hiểu sâu sắc văn hóa, túc trực hỗ trợ 24/7 từ tâm.</p>
             </div>
             <div class="commit-item">
-                <div class="ci-icon"><i class="fas fa-star"></i></div>
-                <h3>Chăm Sóc & Duy Chuẩn</h3>
-                <p>Đội ngũ hướng dẫn viên chuyên nghiệp, dịch vụ 5 sao trong từng hành trình.</p>
+                <div class="ci-icon"><i class="far fa-calendar-alt"></i></div>
+                <h3>Linh Hoạt 100%</h3>
+                <p>Đổi lịch trình hoặc bảo lưu trọn vẹn giá trị dễ dàng đến 7 ngày trước đi.</p>
             </div>
-            <div class="commit-item">
-                <div class="ci-icon"><i class="fas fa-lock"></i></div>
-                <h3>Bảo Tin Tức Quyền Riêng</h3>
-                <p>Thông tin cá nhân và thanh toán của bạn được mã hóa và bảo vệ tuyệt đối.</p>
+            <div class="commit-item border-0">
+                <div class="ci-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Bảo Hiểm Toàn Diện</h3>
+                <p>Gói bảo hiểm quốc tế tự động kích hoạt bảo vệ trọn vẹn hành trình.</p>
             </div>
         </div>
     </div>
@@ -33,52 +34,58 @@
     <div class="cf-inner">
         <div class="cf-top">
             <div>
-                <div class="cf-brand">GlobeTrek</div>
-                <p class="cf-desc">Nền tảng đặt tour du lịch hàng đầu Việt Nam. Kết nối bạn với những hành trình khó quên khắp thế giới.</p>
-                <div class="cf-socials">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="<?= BASE_URL ?>?action=public-tours" class="brand-wrap mb-4" style="text-decoration:none;">
+                    <div class="brand-logo"><div class="red-dot"></div></div>
+                    <div class="brand-text">
+                        <div class="brand-name" style="font-size:1.2rem; color:#333;">GlobeTrek</div>
+                    </div>
+                </a>
+                <p class="cf-desc">Thiết kế những hải trình văn hóa và kỳ nghỉ dưỡng đẳng cấp thế giới theo tinh thần Omotenashi — Phụng sự từ tâm, trọn vẹn từng khoảnh khắc tĩnh tại khắp năm châu.</p>
+                <div class="cf-info-text">
+                    Giấy phép Lữ hành Quốc tế số: 79-1028/2024/TCDL-GP LHQT<br>
+                    Trụ sở: Tòa nhà Zen Tower, 128 Nguyễn Huệ, Quận 1, TP. HCM
                 </div>
             </div>
             <div>
-                <h4>Điểm Đến Nổi Bật</h4>
+                <h4>Điểm Đến Mùa Này</h4>
                 <ul>
-                    <li><a href="#">Phú Quốc, Việt Nam</a></li>
-                    <li><a href="#">Sapa, Việt Nam</a></li>
-                    <li><a href="#">Đà Nẵng, Việt Nam</a></li>
-                    <li><a href="#">Seoul, Hàn Quốc</a></li>
-                    <li><a href="#">Tokyo, Nhật Bản</a></li>
+                    <li><a href="#">Thụy Sĩ Mùa Tuyết Trắng</a></li>
+                    <li><a href="#">Bờ Biển Amalfi</a></li>
+                    <li><a href="#">Cực Quang Iceland</a></li>
+                    <li><a href="#">Kyoto Mùa Lá Đỏ</a></li>
+                    <li><a href="#">New Zealand Vùng Hồ</a></li>
                 </ul>
             </div>
             <div>
-                <h4>Chăm Sóc & Dịch Vụ</h4>
+                <h4>Chăm Sóc & Quy Chuẩn</h4>
                 <ul>
-                    <li><a href="<?= BASE_URL ?>?action=public-tours">Danh Sách Tour</a></li>
-                    <li><a href="<?= BASE_URL ?>?action=request-tour">Tour Tùy Chỉnh</a></li>
-                    <?php if (!empty($_SESSION['user'])): ?>
-                    <li><a href="<?= BASE_URL ?>?action=my-bookings">Đơn Hàng Của Tôi</a></li>
-                    <li><a href="<?= BASE_URL ?>?action=my-quotes">Báo Giá Của Tôi</a></li>
-                    <?php else: ?>
-                    <li><a href="<?= BASE_URL ?>?action=login">Đăng Nhập</a></li>
-                    <?php endif; ?>
+                    <li><a href="#">Quy chuẩn Phục vụ Omotenashi</a></li>
+                    <li><a href="#">Bảo hiểm Du lịch Toàn cầu</a></li>
+                    <li><a href="#">Chính sách Đặt tour & Hoàn hủy</a></li>
+                    <li><a href="#">Giải đáp thắc mắc thường gặp</a></li>
                 </ul>
             </div>
             <div>
-                <h4>Hỗ Trợ Thêm Câu Hỏi</h4>
-                <ul>
-                    <li><a href="#">Câu hỏi thường gặp</a></li>
-                    <li><a href="#">Chính sách hoàn tiền</a></li>
-                    <li><a href="#">Điều khoản dịch vụ</a></li>
-                    <li><a href="#">Liên hệ hỗ trợ</a></li>
-                    <li><a href="#">Hotline: 1800 xxxx</a></li>
-                </ul>
+                <h4>Bản Tin Đặc Quyền</h4>
+                <p class="cf-desc" style="font-size:0.85rem;">Đăng ký nhận tuyển tập hành trình mùa mới và voucher 500.000 VNĐ cho chuyến đi đầu tiên.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Email của quý khách..">
+                    <button type="submit">Đăng Ký</button>
+                </form>
+                <div class="security-badge">
+                    <i class="far fa-check-circle"></i> Bảo mật dữ liệu chuẩn PCI-DSS
+                </div>
             </div>
         </div>
         <div class="cf-bottom">
-            <span>© 2025 GlobeTrek. All rights reserved.</span>
-            <span>Được xây dựng với ❤ tại Việt Nam</span>
+            <div class="cf-copyright">© 2025 GlobeTrek Luxury Travel. Bản quyền được bảo lưu toàn diện.</div>
+            <div class="cf-links">
+                <a href="#">Điều khoản sử dụng</a>
+                <span class="sep">·</span>
+                <a href="#">Chính sách quyền riêng tư</a>
+                <span class="sep">·</span>
+                <a href="#">Chứng thực IATA & JATA</a>
+            </div>
         </div>
     </div>
 </footer>
