@@ -877,9 +877,26 @@ body.client-body {
 
 /* ========== CLIENT FOOTER ========== */
 .client-footer {
-    background: #f5f5f5;
+    background: #f7f7f7;
     color: #555;
-    padding: 60px 24px 0;
+    padding: 70px 24px 0;
+}
+
+.footer-logo-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+.footer-logo-circle .red-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #c0392b;
+    border-radius: 50%;
 }
 
 .client-footer .cf-inner {
@@ -909,10 +926,10 @@ body.client-body {
 
 .client-footer h4 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
+    font-size: 1.35rem;
     font-weight: 600;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .client-footer ul {
@@ -920,7 +937,7 @@ body.client-body {
 }
 
 .client-footer ul li {
-    margin-bottom: 12px;
+    margin-bottom: 18px;
 }
 
 .client-footer ul li a {
@@ -936,28 +953,29 @@ body.client-body {
 
 .newsletter-form {
     display: flex;
-    gap: 8px;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 24px;
 }
 
 .newsletter-form input {
     flex: 1;
-    padding: 10px 16px;
-    border: 1px solid #ddd;
+    padding: 14px 16px;
+    border: 1px solid #e5e5e5;
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     outline: none;
+    background: #fff;
 }
 
 .newsletter-form button {
     background: #a93226;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 14px 28px;
     border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 700;
     cursor: pointer;
     transition: background 0.2s;
 }

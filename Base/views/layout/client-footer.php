@@ -34,10 +34,12 @@
     <div class="cf-inner">
         <div class="cf-top">
             <div>
-                <a href="<?= BASE_URL ?>?action=public-tours" class="brand-wrap mb-4" style="text-decoration:none;">
-                    <div class="brand-logo"><div class="red-dot"></div></div>
+                <a href="<?= BASE_URL ?>?action=public-tours" class="brand-wrap mb-4" style="text-decoration:none; display:flex; align-items:center; gap:12px;">
+                    <div class="footer-logo-circle">
+                        <div class="red-dot"></div>
+                    </div>
                     <div class="brand-text">
-                        <div class="brand-name" style="font-size:1.2rem; color:#333;">GlobeTrek</div>
+                        <div class="brand-name" style="font-size:1.4rem; font-weight:800; letter-spacing:1px; color:#222;">GlobeTrek</div>
                     </div>
                 </a>
                 <p class="cf-desc">Thiết kế những hải trình văn hóa và kỳ nghỉ dưỡng đẳng cấp thế giới theo tinh thần Omotenashi — Phụng sự từ tâm, trọn vẹn từng khoảnh khắc tĩnh tại khắp năm châu.</p>
@@ -60,7 +62,7 @@
                 <h4>Chăm Sóc & Quy Chuẩn</h4>
                 <ul>
                     <li><a href="#">Quy chuẩn Phục vụ Omotenashi</a></li>
-                    <li><a href="#">Bảo hiểm Du lịch Toàn cầu</a></li>
+                    <li><a href="#" style="color: #c0392b;">Bảo hiểm Du lịch Toàn cầu</a></li>
                     <li><a href="#">Chính sách Đặt tour & Hoàn hủy</a></li>
                     <li><a href="#">Giải đáp thắc mắc thường gặp</a></li>
                 </ul>
