@@ -14,8 +14,8 @@
             <span class="hero-tag">• HÀNH TRÌNH VƯƠN RA THẾ GIỚI - TRIẾT LÝ OMOTENASHI</span>
         </div>
         
-        <h1>Khám Phá Thế Giới Qua Lăng Kính Tinh Tế<br>Của Người Nhật</h1>
-        <p class="hero-sub">Những chuyến du ngoạn năm châu được chăm chút tĩnh lặng và tỉ mỉ, kết hợp vẻ đẹp kỳ vĩ<br>của thiên nhiên thế giới cùng lòng hiếu khách Omotenashi.</p>
+        <h1>Khám Phá Thế Giới Qua Lăng Kính Tinh Tế Của Người Nhật</h1>
+        <p class="hero-sub">Những chuyến du ngoạn năm châu được chăm chút tĩnh lặng và tỉ mỉ, kết hợp vẻ đẹp kỳ vĩ của thiên nhiên thế giới cùng lòng hiếu khách Omotenashi.</p>
     </div>
 </section>
 
