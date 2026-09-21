@@ -2,7 +2,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body.client-body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background: #f5f5f5;
     color: #2d2d2d;
 }
@@ -80,7 +80,8 @@ body.client-body {
     flex-direction: column;
 }
 .brand-name {
-    font-size: 1.15rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
     font-weight: 800;
     letter-spacing: 2px;
     color: #222;

@@ -39,7 +39,7 @@
                         <div class="red-dot"></div>
                     </div>
                     <div class="brand-text">
-                        <div class="brand-name" style="font-family:'Inter', sans-serif; font-size:1.45rem; font-weight:800; letter-spacing:0.5px; color:#222;">GlobeTrek</div>
+                        <div class="brand-name" style="font-family:'Playfair Display', serif; font-size:1.6rem; font-weight:800; letter-spacing:0.5px; color:#222;">GlobeTrek</div>
                     </div>
                 </a>
                 <p class="cf-desc">Thiết kế những hải trình văn hóa và kỳ nghỉ dưỡng đẳng cấp thế giới theo tinh thần Omotenashi — Phụng sự từ tâm, trọn vẹn từng khoảnh khắc tĩnh tại khắp năm châu.</p>
