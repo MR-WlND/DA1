@@ -20,6 +20,10 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `da1`
 --
+SET FOREIGN_KEY_CHECKS = 0;
+DROP DATABASE IF EXISTS `da1`;
+CREATE DATABASE IF NOT EXISTS `da1` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `da1`;
 
 -- --------------------------------------------------------
 
