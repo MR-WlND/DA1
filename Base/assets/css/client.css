@@ -906,8 +906,8 @@ body.client-body {
 
 .client-footer .cf-top {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 48px;
+    grid-template-columns: 1.6fr 1.1fr 1.2fr 1.6fr;
+    gap: 32px;
     padding-bottom: 40px;
 }
 
@@ -926,10 +926,11 @@ body.client-body {
 
 .client-footer h4 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: #333;
     margin-bottom: 24px;
+    white-space: nowrap;
 }
 
 .client-footer ul {
@@ -972,12 +973,13 @@ body.client-body {
     background: #a93226;
     color: #fff;
     border: none;
-    padding: 14px 28px;
+    padding: 14px 24px;
     border-radius: 6px;
     font-size: 0.9rem;
     font-weight: 700;
     cursor: pointer;
     transition: background 0.2s;
+    white-space: nowrap;
 }
 
 .newsletter-form button:hover {
