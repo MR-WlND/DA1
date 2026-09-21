@@ -63,7 +63,7 @@ body.client-body {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1.5px solid #e5e5e5;
+    border: 2px solid #c0392b;
     background: #fff;
     display: flex;
     align-items: center;
@@ -887,7 +887,7 @@ body.client-body {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1.5px solid #e5e5e5;
+    border: 2px solid #c0392b;
     background: #fff;
     display: flex;
     align-items: center;
