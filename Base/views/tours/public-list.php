@@ -4,23 +4,18 @@
 <section class="hero-banner">
     <div class="hero-bg"></div>
     <div class="hero-content">
-        <div class="hero-tag">✨ Khám phá · Trải nghiệm · Lưu giữ kỷ niệm</div>
-        <h1>Khám Phá Thế Giới Qua Lăng Kính Tinh Tế Của Người Nhật</h1>
-        <p class="hero-sub">Chúng tôi thiết kế mỗi hành trình như một tác phẩm nghệ thuật – nơi trải nghiệm chân thực gặp gỡ tiện nghi hiện đại.</p>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="num"><?= count($listTours ?? []) ?>+</div>
-                <div class="lbl">Tour đang mở</div>
-            </div>
-            <div class="hero-stat">
-                <div class="num">50+</div>
-                <div class="lbl">Điểm đến</div>
-            </div>
-            <div class="hero-stat">
-                <div class="num">10k+</div>
-                <div class="lbl">Khách hài lòng</div>
-            </div>
+        <div class="hero-breadcrumb">
+            <a href="<?= BASE_URL ?>?action=public-tours">Trang chủ</a>
+            <span class="sep">/</span>
+            <span>Tuyển Tập Trải Nghiệm Tinh Tuyển</span>
         </div>
+        
+        <div class="hero-tag-wrap">
+            <span class="hero-tag">• HÀNH TRÌNH VƯƠN RA THẾ GIỚI - TRIẾT LÝ OMOTENASHI</span>
+        </div>
+        
+        <h1>Khám Phá Thế Giới Qua Lăng Kính Tinh Tế<br>Của Người Nhật</h1>
+        <p class="hero-sub">Những chuyến du ngoạn năm châu được chăm chút tĩnh lặng và tỉ mỉ, kết hợp vẻ đẹp kỳ vĩ<br>của thiên nhiên thế giới cùng lòng hiếu khách Omotenashi.</p>
     </div>
 </section>
 
@@ -31,11 +26,7 @@
             <input type="hidden" name="action" value="public-tours">
             <div class="sb-inner">
                 <div class="sb-field">
-                    <label>Điểm đến</label>
-                    <input type="text" name="q" placeholder="Bạn muốn đi đâu?" value="<?= htmlspecialchars($_GET['q'] ?? '') ?>">
-                </div>
-                <div class="sb-field">
-                    <label>Danh mục tour</label>
+                    <label>ĐIỂM ĐẾN THẾ GIỚI</label>
                     <select name="category_id">
                         <option value="">Tất cả danh mục</option>
                         <?php foreach ($listCategories as $cat): ?>
@@ -46,15 +37,21 @@
                     </select>
                 </div>
                 <div class="sb-field">
-                    <label>Loại tour</label>
+                    <label>THỜI ĐIỂM LÝ TƯỞNG</label>
                     <select name="tour_type">
                         <option value="">Tất cả loại</option>
                         <option value="Nội địa" <?= (($_GET['tour_type'] ?? '') === 'Nội địa') ? 'selected' : '' ?>>Nội địa</option>
                         <option value="Quốc tế" <?= (($_GET['tour_type'] ?? '') === 'Quốc tế') ? 'selected' : '' ?>>Quốc tế</option>
                     </select>
                 </div>
+                <div class="sb-field">
+                    <label>PHONG CÁCH LỮ HÀNH</label>
+                    <select name="style">
+                        <option value="">Tất cả phong cách</option>
+                    </select>
+                </div>
                 <button type="submit" class="sb-btn">
-                    <i class="fas fa-search"></i> Tìm Kiếm
+                    <i class="fas fa-search"></i> KHÁM PHÁ
                 </button>
             </div>
         </form>

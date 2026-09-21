@@ -134,7 +134,8 @@ body.client-body {
 /* ========== HERO BANNER ========== */
 .hero-banner {
     position: relative;
-    height: 380px;
+    height: 60vh;
+    min-height: 500px;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
     overflow: hidden;
     display: flex;
@@ -156,63 +157,73 @@ body.client-body {
     margin: 0 auto;
     padding: 0 24px;
     color: #fff;
+    width: 100%;
+}
+
+.hero-breadcrumb {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.9;
+}
+
+.hero-breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.hero-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.hero-tag-wrap {
+    margin-bottom: 16px;
 }
 
 .hero-banner .hero-tag {
-    display: inline-block;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255,255,255,0.25);
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-bottom: 16px;
-    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #fff;
+    text-transform: uppercase;
 }
 
 .hero-banner h1 {
-    font-size: 2.4rem;
+    font-size: 2.8rem;
     font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 12px;
+    line-height: 1.25;
+    margin-bottom: 16px;
     text-shadow: 0 2px 12px rgba(0,0,0,0.3);
-    max-width: 560px;
+    max-width: 800px;
 }
 
 .hero-banner .hero-sub {
-    font-size: 0.95rem;
-    opacity: 0.85;
-    max-width: 500px;
+    font-size: 1.05rem;
+    opacity: 0.9;
+    max-width: 700px;
     line-height: 1.6;
-    margin-bottom: 24px;
-}
-
-.hero-banner .hero-stats {
-    display: flex;
-    gap: 32px;
-}
-
-.hero-banner .hero-stat .num {
-    font-size: 1.5rem;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.hero-banner .hero-stat .lbl {
-    font-size: 0.78rem;
-    opacity: 0.7;
-    margin-top: 2px;
+    margin-bottom: 0;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
 /* ========== SEARCH BAR ========== */
 .search-bar-wrap {
     background: #fff;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    border-radius: 12px;
-    padding: 20px 24px;
-    max-width: 1280px;
-    margin: -28px auto 32px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 16px 24px;
+    max-width: 1100px;
+    margin: -40px auto 40px;
     position: relative;
     z-index: 10;
 }
@@ -220,51 +231,58 @@ body.client-body {
 .search-bar-wrap .sb-inner {
     display: flex;
     align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+    gap: 0;
+    flex-wrap: nowrap;
 }
 
 .search-bar-wrap .sb-field {
     flex: 1;
-    min-width: 160px;
+    min-width: 200px;
+    position: relative;
+    padding: 0 20px;
+    border-right: 1px solid #eaeaea;
+}
+
+.search-bar-wrap .sb-field:first-child {
+    padding-left: 0;
+}
+
+.search-bar-wrap .sb-field:last-of-type {
+    border-right: none;
+    padding-right: 24px;
 }
 
 .search-bar-wrap .sb-field label {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #888;
-    margin-bottom: 4px;
+    color: #999;
+    margin-bottom: 2px;
     display: block;
 }
 
 .search-bar-wrap .sb-field select,
 .search-bar-wrap .sb-field input {
     width: 100%;
-    padding: 10px 14px;
-    border: 1.5px solid #e5e5e5;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 4px 0;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
     font-family: inherit;
-    background: #fafafa;
+    background: transparent;
     outline: none;
-    transition: border-color 0.2s;
+    cursor: pointer;
     -webkit-appearance: none;
 }
 
-.search-bar-wrap .sb-field select:focus,
-.search-bar-wrap .sb-field input:focus {
-    border-color: #c0392b;
-    background: #fff;
-}
-
 .search-bar-wrap .sb-btn {
-    padding: 12px 28px;
-    background: #c0392b;
+    padding: 14px 32px;
+    background: #b73a25;
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     font-size: 0.95rem;
     font-weight: 700;
     cursor: pointer;
@@ -273,11 +291,29 @@ body.client-body {
     display: flex;
     align-items: center;
     gap: 8px;
+    box-shadow: 0 4px 12px rgba(183, 58, 37, 0.3);
 }
 
 .search-bar-wrap .sb-btn:hover {
-    background: #a93226;
+    background: #9c2e1c;
     transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+    .search-bar-wrap .sb-inner {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .search-bar-wrap .sb-field {
+        border-right: none;
+        border-bottom: 1px solid #eaeaea;
+        padding: 0 0 12px 0;
+        width: 100%;
+    }
+    .search-bar-wrap .sb-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 /* ========== MAIN LAYOUT ========== */
