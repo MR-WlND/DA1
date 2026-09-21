@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <?php $faviconB64 = base64_encode("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='#ffffff' stroke='#c0392b' stroke-width='3'/><circle cx='16' cy='16' r='4.5' fill='#c0392b'/></svg>"); ?>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,<?= $faviconB64 ?>">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

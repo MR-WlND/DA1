@@ -12,8 +12,7 @@ $userRole = $isLoggedIn ? ($_SESSION['user']['role'] ?? '') : null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlobeTrek – Khám Phá Thế Giới</title>
     <meta name="description" content="GlobeTrek – Nền tảng đặt tour du lịch uy tín, chất lượng cao với hàng trăm hành trình hấp dẫn.">
-    <?php $faviconB64 = base64_encode("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='#ffffff' stroke='#c0392b' stroke-width='3'/><circle cx='16' cy='16' r='4.5' fill='#c0392b'/></svg>"); ?>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,<?= $faviconB64 ?>">
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
