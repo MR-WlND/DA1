@@ -23,11 +23,14 @@ public function getList($tour_id = null) {
 
     $sql = "
         SELECT
+            td.id,
             td.id AS departure_id,
+            td.tour_id,
             t.name AS tour_name,
             td.start_date,
             td.end_date,
             td.current_price,
+            td.available_slots,
             td.available_slots AS max_slots,
 
             -- Số chỗ còn lại = available_slots - số khách
